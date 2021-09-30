@@ -26,17 +26,17 @@ Ready to contribute? Here's how to set up `access-eval` for local development.
     1. Download:
 
         - For Linux, download: geckodriver-v{version}-linux{arch}.tar.gz
-        - For Max, download: gechodriver-v{version}-macos{arch}.tar.gz
-        - For Windows, download: gechodriver-v{version}-win{arch}.tar.gz
+        - For Max, download: geckodriver-v{version}-macos{arch}.tar.gz
+        - For Windows, download: geckodriver-v{version}-win{arch}.tar.gz
 
         _(Fill in your version and architecture)_
 
     2. Unzip or un-tar the downloaded file.
 
-    3. **On Mac & Linux**: add the directory where you unzipped the contents to your PATH.
-       If you unzipped the contents to `/home/{user}/Downloads/` then add the `Downloads/`
-       directory to your PATH like so: `export PATH=$PATH:/home/{user}/Downloads/`
-       (Fill in your username)
+    3. **On Mac & Linux**: add the filepath to the executable to your PATH.
+       I.e. `export PATH=$PATH:/home/{user}/Downloads/geckodriver`
+
+        _(Fill in your username)_
 
 4. Install the project in editable mode. (It is also recommended to work in a virtualenv or anaconda environment):
 
