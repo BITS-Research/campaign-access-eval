@@ -15,7 +15,6 @@ setup_requirements = [
 test_requirements = [
     "black>=19.10b0",
     "codecov==2.1.12",
-    "fastparquet~=0.7",
     "flake8>=3.8.3",
     "flake8-debugger>=3.2.1",
     "isort>=5.7.0",
@@ -41,7 +40,10 @@ dev_requirements = [
 ]
 
 requirements = [
-
+    "axe_selenium_python>=2.1.6",
+    "pandas>=1.3.3",
+    "requests>=2.26.0",
+    "selenium>=3.141.0",
 ]
 
 extra_requirements = {
