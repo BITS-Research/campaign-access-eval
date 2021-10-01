@@ -5,8 +5,8 @@ import argparse
 import logging
 import sys
 import traceback
-from typing import Optional
 from pathlib import Path
+from typing import Optional
 
 from access_eval.axe import generate_report
 
@@ -66,7 +66,7 @@ class Args(argparse.Namespace):
 
 
 def _generate(
-    url: Path,
+    url: str,
     output_dir: Optional[Path] = None,
     archive: bool = False,
     geckodriver_path: Optional[Path] = None,
