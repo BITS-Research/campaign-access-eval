@@ -214,6 +214,4 @@ def generate_report(
     if archive:
         shutil.make_archive(f"{resource_name}--report", "tar", output_dir)
 
-    print(list(output_dir.parent.glob("*")))
-
     return output_dir
