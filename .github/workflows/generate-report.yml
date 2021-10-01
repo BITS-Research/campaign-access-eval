@@ -31,8 +31,29 @@ jobs:
         tar -xvzf geckodriver-v0.30.0-linux64.tar.gz
         chmod +x geckodriver
         sudo mv geckodriver /usr/local/bin/
+
+    - name: Get Clean URL name
+      id: get-clean-url-name
+      run: |
+        echo "https://google.com" | sed 's/http:\/\///'
+        echo "https://google.com" | sed 's/https:\/\///'
+
+    - name: Generate Report -- Google
+      if: ${{ github.event_name == 'push' }}
+      run: |
+        access-eval-generate-report \
+          https://google.com \
+          --output_dir https://google.com--report \
+          --archive
+
+    - name: Store Report -- Parametrized
+      if: ${{ github.event_name == 'push' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: https://google.com--report
+        path: https://google.com--report.tar
     
-    - name: Generate Report
+    - name: Generate Report -- Parametrized
       if: ${{ github.event_name == 'workflow_dispatch' }}
       run: |
         access-eval-generate-report \
@@ -40,7 +61,7 @@ jobs:
           --output_dir ${{ github.event.inputs.url }}--report \
           --archive
     
-    - name: Store Report
+    - name: Store Report -- Parametrized
       if: ${{ github.event_name == 'workflow_dispatch' }}
       uses: actions/upload-artifact@v2
       with:
