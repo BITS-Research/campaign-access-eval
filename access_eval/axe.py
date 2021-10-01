@@ -210,6 +210,8 @@ def generate_report(
         output_dir / "accessibility-violations-summarized.csv", index=False
     )
 
+    print(list(output_dir.glob("*")))
+
     # Compile archive
     if archive:
         shutil.make_archive(resource_name, "tar", output_dir)
