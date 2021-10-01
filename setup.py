@@ -41,6 +41,7 @@ dev_requirements = [
 
 requirements = [
     "axe_selenium_python>=2.1.6",
+    "dataclasses-json>=0.5.6",
     "pandas>=1.3.3",
     "requests>=2.26.0",
     "selenium>=3.141.0",
@@ -72,7 +73,9 @@ setup(
         "Digital material accessibility evaluation tools for political campaigns."
     ),
     entry_points={
-        "console_scripts": [],
+        "console_scripts": [
+            ("access-eval-generate-report=access_eval.bin.generate_report:main"),
+        ],
     },
     install_requires=requirements,
     license="MIT license",

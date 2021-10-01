@@ -1,11 +1,53 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import json
+import shutil
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Optional, Union
 
+import pandas as pd
 from axe_selenium_python import Axe
+from dataclasses_json import dataclass_json
 from selenium import webdriver
+
+###############################################################################
+# Axe look up tables and constants
+
+
+# Pulled from: https://github.com/dequelabs/axe-core/blob/55fb7c00e866ab17486ff114932199f8f9661389/build/configure.js#L42
+
+
+class AxeImpact:
+    minor: str = "minor"
+    moderate: str = "moderate"
+    serious: str = "serious"
+    critical: str = "critical"
+
+
+AXE_IMPACT_SCORE_LUT = {
+    AxeImpact.minor: 1,
+    AxeImpact.moderate: 2,
+    AxeImpact.serious: 3,
+    AxeImpact.critical: 4,
+}
+
+
+###############################################################################
+
+
+@dataclass_json
+@dataclass
+class SimplifiedAxeViolation:
+
+    id: str
+    impact: str
+    impact_score: int
+    reason: str
+    number_of_elements_in_violation: int
+    help_url: str
+
 
 ###############################################################################
 
@@ -83,3 +125,84 @@ def generate_axe_evaluation(
 
     # Return as dataframe
     return results
+
+
+def generate_report(
+    url: str,
+    output_dir: Optional[Union[str, Path]] = None,
+    archive: bool = False,
+    geckodriver_path: Optional[Union[str, Path]] = None,
+) -> Path:
+    """
+    Compile a full accessibility report for a URL.
+
+    Parameters
+    ----------
+    url: str
+        The URL to compile a report for.
+    output_dir: Optional[Union[str, Path]]
+        A specific directory to save the report to.
+        Default: None (create new directory in current
+        directory with the same name as the URL base path)
+    archive: bool
+        Should the report additionally be archived as tar/zip
+        Default: False (do not archive)
+    geckodriver_path: Optional[Union[str, Path]]
+        See `access_eval.axe.generate_axe_evaluation` for details.
+
+    Returns
+    -------
+    output_dir: Path
+        The output directory where all report assets were stored.
+    """
+    # TODO: recurse web tree?
+    # TODO: screenshot problematic elements? https://www.geeksforgeeks.org/screenshot-element-method-selenium-python/
+
+    # Store name for many file naming operations
+    resource_name = Path(url).name
+
+    # Get or make output dir
+    if output_dir is None:
+        # Make the dir name the URL name
+        # i.e. https://jacksonmaxfield.github.io -> jacksonmaxfield.github.io/
+        output_dir = Path(resource_name)
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Process URL and compile report
+    axe_results = generate_axe_evaluation(url, geckodriver_path=geckodriver_path)
+
+    # Store axe results to outputs
+    with open(output_dir / "full-axe-evaluation.json", "w") as open_resource:
+        json.dump(axe_results, open_resource, indent=4)
+
+    # Parse axe tree and construct helpful details
+    simplified_violations = []
+    for violation in axe_results["violations"]:
+        simplified_violations.append(
+            SimplifiedAxeViolation(
+                id=violation["id"],
+                impact=violation["impact"],
+                impact_score=AXE_IMPACT_SCORE_LUT[violation["impact"]],
+                reason=violation["help"],
+                number_of_elements_in_violation=len(violation["nodes"]),
+                help_url=violation["helpUrl"],
+            )
+        )
+
+    # Compile simplified violations to table and
+    # sort by the number of elements and severity
+    compiled_simplified_violations = pd.DataFrame(
+        [v.to_dict() for v in simplified_violations]
+    )
+    compiled_simplified_violations = compiled_simplified_violations.sort_values(
+        by=["number_of_elements_in_violation", "impact_score"], ascending=False
+    )
+    compiled_simplified_violations.to_csv(
+        output_dir / "accessibility-violations-summarized.csv", index=False
+    )
+
+    # Compile archive
+    if archive:
+        shutil.make_archive(resource_name, "tar", output_dir)
+
+    return output_dir
