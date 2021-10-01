@@ -212,7 +212,7 @@ def generate_report(
 
     # Compile archive
     if archive:
-        shutil.make_archive(resource_name, "tar", output_dir)
+        shutil.make_archive(f"{resource_name}--report", "tar", output_dir)
 
     print(list(output_dir.parent.glob("*")))
 
