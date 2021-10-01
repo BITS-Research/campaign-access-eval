@@ -35,35 +35,29 @@ jobs:
     - name: Get Clean URL name
       id: get-clean-url-name
       run: |
-        echo "https://google.com" | sed 's/http:\/\///'
-        echo "https://google.com" | sed 's/https:\/\///'
+        name=$(echo "${{ github.event.inputs.url }}" | sed 's/http:\/\///')
+        name=$(echo $name | sed 's/https:\/\///'))
+        echo "::set-output name=name::$name"
 
     - name: Generate Report -- Google
       if: ${{ github.event_name == 'push' }}
       run: |
         access-eval-generate-report \
           https://google.com \
-          --output_dir https://google.com--report \
+          --output_dir ${{ steps.get-clean-url-name.outputs.name }}--report \
           --archive
-
-    - name: Store Report -- Parametrized
-      if: ${{ github.event_name == 'push' }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: https://google.com--report
-        path: https://google.com--report.tar
     
     - name: Generate Report -- Parametrized
       if: ${{ github.event_name == 'workflow_dispatch' }}
       run: |
         access-eval-generate-report \
           ${{ github.event.inputs.url }} \
-          --output_dir ${{ github.event.inputs.url }}--report \
+          --output_dir ${{ steps.get-clean-url-name.outputs.name }}--report \
           --archive
     
-    - name: Store Report -- Parametrized
-      if: ${{ github.event_name == 'workflow_dispatch' }}
+    - name: Store Report
+      if: ${{ github.event_name == 'push' }}
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ github.event.inputs.url }}--report
-        path: ${{ github.event.inputs.url }}--report.tar
+        name: ${{ steps.get-clean-url-name.outputs.name }}--report
+        path: ${{ steps.get-clean-url-name.outputs.name }}--report.tar
