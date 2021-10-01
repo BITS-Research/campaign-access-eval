@@ -32,20 +32,28 @@ jobs:
         chmod +x geckodriver
         sudo mv geckodriver /usr/local/bin/
 
-    - name: Get Clean URL name
-      id: get-clean-url-name
-      run: |
-        name=$(echo "${{ github.event.inputs.url }}" | sed 's/http:\/\///')
-        name=$(echo $name | sed 's/https:\/\///')
-        echo "::set-output name=name::$name"
-
     - name: Generate Report -- Google
       if: ${{ github.event_name == 'push' }}
       run: |
         access-eval-generate-report \
           https://google.com \
-          --output_dir ${{ steps.get-clean-url-name.outputs.name }}--report \
+          --output_dir google.com--report \
           --archive
+    
+    - name: Store Report -- Google
+      if: ${{ github.event_name == 'push' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: google.com--report
+        path: google.com--report.tar
+
+    - name: Get Clean URL Name
+      id: get-clean-url-name
+      if: ${{ github.event_name == 'workflow_dispatch' }}
+      run: |
+        name=$(echo "${{ github.event.inputs.url }}" | sed 's/http:\/\///')
+        name=$(echo $name | sed 's/https:\/\///')
+        echo "::set-output name=name::$name"
     
     - name: Generate Report -- Parametrized
       if: ${{ github.event_name == 'workflow_dispatch' }}
@@ -55,8 +63,8 @@ jobs:
           --output_dir ${{ steps.get-clean-url-name.outputs.name }}--report \
           --archive
     
-    - name: Store Report
-      if: ${{ github.event_name == 'push' }}
+    - name: Store Report -- Parametrized
+      if: ${{ github.event_name == 'workflow_dispatch' }}
       uses: actions/upload-artifact@v2
       with:
         name: ${{ steps.get-clean-url-name.outputs.name }}--report
