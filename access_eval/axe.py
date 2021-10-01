@@ -16,7 +16,7 @@ from selenium import webdriver
 # Axe look up tables and constants
 
 
-# Pulled from: https://github.com/dequelabs/axe-core/blob/55fb7c00e866ab17486ff114932199f8f9661389/build/configure.js#L42
+# Pulled from: https://github.com/dequelabs/axe-core/blob/55fb7c00e866ab17486ff114932199f8f9661389/build/configure.js#L42  # noqa: E501
 
 
 class AxeImpact:
@@ -156,7 +156,7 @@ def generate_report(
         The output directory where all report assets were stored.
     """
     # TODO: recurse web tree?
-    # TODO: screenshot problematic elements? https://www.geeksforgeeks.org/screenshot-element-method-selenium-python/
+    # TODO: screenshot problematic elements? https://www.geeksforgeeks.org/screenshot-element-method-selenium-python/  # noqa: E501
 
     # Store name for many file naming operations
     resource_name = Path(url).name
@@ -167,6 +167,9 @@ def generate_report(
         # i.e. https://jacksonmaxfield.github.io -> jacksonmaxfield.github.io/
         output_dir = Path(resource_name)
         output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Always path output dir
+    output_dir = Path(output_dir)
 
     # Process URL and compile report
     axe_results = generate_axe_evaluation(url, geckodriver_path=geckodriver_path)
@@ -192,7 +195,7 @@ def generate_report(
     # Compile simplified violations to table and
     # sort by the number of elements and severity
     compiled_simplified_violations = pd.DataFrame(
-        [v.to_dict() for v in simplified_violations]
+        [v.to_dict() for v in simplified_violations]  # type: ignore
     )
     compiled_simplified_violations = compiled_simplified_violations.sort_values(
         by=["number_of_elements_in_violation", "impact_score"], ascending=False
