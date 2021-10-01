@@ -36,7 +36,7 @@ jobs:
       id: get-clean-url-name
       run: |
         name=$(echo "${{ github.event.inputs.url }}" | sed 's/http:\/\///')
-        name=$(echo $name | sed 's/https:\/\///'))
+        name=$(echo $name | sed 's/https:\/\///')
         echo "::set-output name=name::$name"
 
     - name: Generate Report -- Google
