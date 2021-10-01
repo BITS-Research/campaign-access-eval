@@ -5,7 +5,7 @@ import json
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union, final
 
 import pandas as pd
 from axe_selenium_python import Axe
@@ -83,45 +83,47 @@ def generate_axe_evaluation(
 
     On Windows, the geckodriver_path must be provided.
     """
-    # Eval driver path
-    if geckodriver_path is not None:
-        if isinstance(geckodriver_path, str):
-            geckodriver_path = Path(geckodriver_path)
-            geckodriver_path = geckodriver_path.resolve(strict=True)
-            if not geckodriver_path.is_file():
-                raise IsADirectoryError(
-                    "Must provide the path to the geckodriver executable, "
-                    "not the directory that contains the executable."
-                )
+    try:
+        # Eval driver path
+        if geckodriver_path is not None:
+            if isinstance(geckodriver_path, str):
+                geckodriver_path = Path(geckodriver_path)
+                geckodriver_path = geckodriver_path.resolve(strict=True)
+                if not geckodriver_path.is_file():
+                    raise IsADirectoryError(
+                        "Must provide the path to the geckodriver executable, "
+                        "not the directory that contains the executable."
+                    )
 
-        # Init driver
-        geckodriver = webdriver.Firefox(str(geckodriver_path))
+            # Init driver
+            geckodriver = webdriver.Firefox(str(geckodriver_path))
 
-    # If geckodriver_path is None, then assume we are getting from OS path
-    else:
-        geckodriver = webdriver.Firefox()
+        # If geckodriver_path is None, then assume we are getting from OS path
+        else:
+            geckodriver = webdriver.Firefox()
 
-    # Determine storage route
-    if output_path is not None:
-        output_path = Path(output_path).resolve()
-        output_path.parent.mkdir(parents=True, exist_ok=True)
+        # Determine storage route
+        if output_path is not None:
+            output_path = Path(output_path).resolve()
+            output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # Load content at the URI
-    geckodriver.get(url)
+        # Load content at the URI
+        geckodriver.get(url)
 
-    # Pass to Axe
-    axe = Axe(geckodriver)
-    axe.inject()
+        # Pass to Axe
+        axe = Axe(geckodriver)
+        axe.inject()
 
-    # Run checks and store results
-    results = axe.run()
+        # Run checks and store results
+        results = axe.run()
 
-    # Optional store
-    if output_path is not None:
-        axe.write_results(results, output_path)
+        # Optional store
+        if output_path is not None:
+            axe.write_results(results, output_path)
 
-    # Close the window
-    geckodriver.close()
+    finally:
+        # Close the window
+        geckodriver.close()
 
     # Return as dataframe
     return results
