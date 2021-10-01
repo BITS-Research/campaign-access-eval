@@ -5,12 +5,13 @@ import json
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, Optional, Union, final
+from typing import Any, Dict, Optional, Union
 
 import pandas as pd
 from axe_selenium_python import Axe
 from dataclasses_json import dataclass_json
 from selenium import webdriver
+from selenium.webdriver import FirefoxOptions
 
 ###############################################################################
 # Axe look up tables and constants
@@ -84,6 +85,9 @@ def generate_axe_evaluation(
     On Windows, the geckodriver_path must be provided.
     """
     try:
+        opts = FirefoxOptions()
+        opts.add_argument("--headless")
+
         # Eval driver path
         if geckodriver_path is not None:
             if isinstance(geckodriver_path, str):
@@ -96,11 +100,11 @@ def generate_axe_evaluation(
                     )
 
             # Init driver
-            geckodriver = webdriver.Firefox(str(geckodriver_path))
+            geckodriver = webdriver.Firefox(str(geckodriver_path), firefox_options=opts)
 
         # If geckodriver_path is None, then assume we are getting from OS path
         else:
-            geckodriver = webdriver.Firefox()
+            geckodriver = webdriver.Firefox(firefox_options=opts)
 
         # Determine storage route
         if output_path is not None:
