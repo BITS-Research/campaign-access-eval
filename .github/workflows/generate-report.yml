@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/package
   workflow_dispatch:
     inputs:
       url:
@@ -45,6 +44,8 @@ jobs:
       with:
         name: google.com--report
         path: google.com--report
+        # default 90 seems unnecessary for these test results
+        retention-days: 1
 
     - name: Get Clean URL Name
       id: get-clean-url-name
@@ -67,3 +68,5 @@ jobs:
       with:
         name: ${{ steps.get-clean-url-name.outputs.name }}--report
         path: ${{ steps.get-clean-url-name.outputs.name }}--report
+        # default 90 seems unnecessary for these test results
+        retention-days: 14
