@@ -172,10 +172,10 @@ def generate_report(
         # Make the dir name the URL name
         # i.e. https://jacksonmaxfield.github.io -> jacksonmaxfield.github.io/
         output_dir = Path(resource_name)
-        output_dir.mkdir(parents=True, exist_ok=True)
 
     # Always path output dir
     output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     # Process URL and compile report
     axe_results = generate_axe_evaluation(url, geckodriver_path=geckodriver_path)
