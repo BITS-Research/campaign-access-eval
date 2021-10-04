@@ -1,0 +1,21 @@
+access\_eval.bin package
+========================
+
+Submodules
+----------
+
+access\_eval.bin.generate\_report module
+----------------------------------------
+
+.. automodule:: access_eval.bin.generate_report
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: access_eval.bin
+   :members:
+   :undoc-members:
+   :show-inheritance:

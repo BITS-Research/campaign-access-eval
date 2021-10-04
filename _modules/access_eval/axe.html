@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>access_eval.axe &mdash; access-eval 0.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> access-eval
+          </a>
+              <div class="version">
+                0.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Package Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../access_eval.html">access_eval package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../access_eval.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../access_eval.bin.html">access_eval.bin package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../access_eval.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../access_eval.html#module-access_eval.axe">access_eval.axe module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../access_eval.html#module-access_eval.version">access_eval.version module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../access_eval.html#module-access_eval">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#developer-installation">Developer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">access-eval</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>access_eval.axe</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for access_eval.axe</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">axe_selenium_python</span> <span class="kn">import</span> <span class="n">Axe</span>
+<span class="kn">from</span> <span class="nn">dataclasses_json</span> <span class="kn">import</span> <span class="n">dataclass_json</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver</span> <span class="kn">import</span> <span class="n">FirefoxOptions</span>
+
+<span class="c1">###############################################################################</span>
+<span class="c1"># Axe look up tables and constants</span>
+
+
+<span class="c1"># Pulled from: https://github.com/dequelabs/axe-core/blob/55fb7c00e866ab17486ff114932199f8f9661389/build/configure.js#L42  # noqa: E501</span>
+
+
+<div class="viewcode-block" id="AxeImpact"><a class="viewcode-back" href="../../access_eval.html#access_eval.axe.AxeImpact">[docs]</a><span class="k">class</span> <span class="nc">AxeImpact</span><span class="p">:</span>
+    <span class="n">minor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;minor&quot;</span>
+    <span class="n">moderate</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;moderate&quot;</span>
+    <span class="n">serious</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;serious&quot;</span>
+    <span class="n">critical</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;critical&quot;</span></div>
+
+
+<span class="n">AXE_IMPACT_SCORE_LUT</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">AxeImpact</span><span class="o">.</span><span class="n">minor</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">AxeImpact</span><span class="o">.</span><span class="n">moderate</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">AxeImpact</span><span class="o">.</span><span class="n">serious</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">AxeImpact</span><span class="o">.</span><span class="n">critical</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="c1">###############################################################################</span>
+
+
+<div class="viewcode-block" id="SimplifiedAxeViolation"><a class="viewcode-back" href="../../access_eval.html#access_eval.axe.SimplifiedAxeViolation">[docs]</a><span class="nd">@dataclass_json</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">SimplifiedAxeViolation</span><span class="p">:</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">impact</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">impact_score</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">reason</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">number_of_elements_in_violation</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">help_url</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<span class="c1">###############################################################################</span>
+
+
+<div class="viewcode-block" id="generate_axe_evaluation"><a class="viewcode-back" href="../../access_eval.html#access_eval.axe.generate_axe_evaluation">[docs]</a><span class="k">def</span> <span class="nf">generate_axe_evaluation</span><span class="p">(</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">output_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">geckodriver_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Use Axe to generate an accessibility violation dataframe.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    url: str</span>
+<span class="sd">        The URL to the website to be evaluated for violations.</span>
+<span class="sd">    output_path: Optional[Union[str, Path]]</span>
+<span class="sd">        An optional path to store the violations to as JSON.</span>
+<span class="sd">        Default: None (do not store to file)</span>
+<span class="sd">    geckodriver_path: Optional[Union[str, Path]]</span>
+<span class="sd">        An optional path to the location of the geckodriver executable.</span>
+<span class="sd">        Default: None (Use OS Path for executable)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    report: Dict[str, Any]</span>
+<span class="sd">        The produced Axe report.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    On Mac and Linux, the geckodriver_path must be stored in OS ENV PATH.</span>
+<span class="sd">    Export to OS ENV PATH with: `export PATH=$PATH:{geckodriver_path}`</span>
+
+<span class="sd">    On Windows, the geckodriver_path must be provided.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">opts</span> <span class="o">=</span> <span class="n">FirefoxOptions</span><span class="p">()</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--headless&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Eval driver path</span>
+        <span class="k">if</span> <span class="n">geckodriver_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">geckodriver_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">geckodriver_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">geckodriver_path</span><span class="p">)</span>
+                <span class="n">geckodriver_path</span> <span class="o">=</span> <span class="n">geckodriver_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">geckodriver_path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                    <span class="k">raise</span> <span class="ne">IsADirectoryError</span><span class="p">(</span>
+                        <span class="s2">&quot;Must provide the path to the geckodriver executable, &quot;</span>
+                        <span class="s2">&quot;not the directory that contains the executable.&quot;</span>
+                    <span class="p">)</span>
+
+            <span class="c1"># Init driver</span>
+            <span class="n">geckodriver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">geckodriver_path</span><span class="p">),</span> <span class="n">firefox_options</span><span class="o">=</span><span class="n">opts</span><span class="p">)</span>
+
+        <span class="c1"># If geckodriver_path is None, then assume we are getting from OS path</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">geckodriver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">(</span><span class="n">firefox_options</span><span class="o">=</span><span class="n">opts</span><span class="p">)</span>
+
+        <span class="c1"># Determine storage route</span>
+        <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">output_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+            <span class="n">output_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Load content at the URI</span>
+        <span class="n">geckodriver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="c1"># Pass to Axe</span>
+        <span class="n">axe</span> <span class="o">=</span> <span class="n">Axe</span><span class="p">(</span><span class="n">geckodriver</span><span class="p">)</span>
+        <span class="n">axe</span><span class="o">.</span><span class="n">inject</span><span class="p">()</span>
+
+        <span class="c1"># Run checks and store results</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">axe</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+        <span class="c1"># Optional store</span>
+        <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">axe</span><span class="o">.</span><span class="n">write_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c1"># Close the window</span>
+        <span class="n">geckodriver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="c1"># Return as dataframe</span>
+    <span class="k">return</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="generate_report"><a class="viewcode-back" href="../../access_eval.html#access_eval.axe.generate_report">[docs]</a><span class="k">def</span> <span class="nf">generate_report</span><span class="p">(</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">output_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">archive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">geckodriver_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compile a full accessibility report for a URL.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    url: str</span>
+<span class="sd">        The URL to compile a report for.</span>
+<span class="sd">    output_dir: Optional[Union[str, Path]]</span>
+<span class="sd">        A specific directory to save the report to.</span>
+<span class="sd">        Default: None (create new directory in current</span>
+<span class="sd">        directory with the same name as the URL base path)</span>
+<span class="sd">    archive: bool</span>
+<span class="sd">        Should the report additionally be archived as tar/zip</span>
+<span class="sd">        Default: False (do not archive)</span>
+<span class="sd">    geckodriver_path: Optional[Union[str, Path]]</span>
+<span class="sd">        See `access_eval.axe.generate_axe_evaluation` for details.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    output_dir: Path</span>
+<span class="sd">        The output directory where all report assets were stored.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO: recurse web tree?</span>
+    <span class="c1"># TODO: screenshot problematic elements? https://www.geeksforgeeks.org/screenshot-element-method-selenium-python/  # noqa: E501</span>
+
+    <span class="c1"># Store name for many file naming operations</span>
+    <span class="n">resource_name</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="c1"># Get or make output dir</span>
+    <span class="k">if</span> <span class="n">output_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Make the dir name the URL name</span>
+        <span class="c1"># i.e. https://jacksonmaxfield.github.io -&gt; jacksonmaxfield.github.io/</span>
+        <span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">resource_name</span><span class="p">)</span>
+
+    <span class="c1"># Always path output dir</span>
+    <span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+    <span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Process URL and compile report</span>
+    <span class="n">axe_results</span> <span class="o">=</span> <span class="n">generate_axe_evaluation</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">geckodriver_path</span><span class="o">=</span><span class="n">geckodriver_path</span><span class="p">)</span>
+
+    <span class="c1"># Store axe results to outputs</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;full-axe-evaluation.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">open_resource</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">axe_results</span><span class="p">,</span> <span class="n">open_resource</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="c1"># Parse axe tree and construct helpful details</span>
+    <span class="n">simplified_violations</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">violation</span> <span class="ow">in</span> <span class="n">axe_results</span><span class="p">[</span><span class="s2">&quot;violations&quot;</span><span class="p">]:</span>
+        <span class="n">simplified_violations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">SimplifiedAxeViolation</span><span class="p">(</span>
+                <span class="nb">id</span><span class="o">=</span><span class="n">violation</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                <span class="n">impact</span><span class="o">=</span><span class="n">violation</span><span class="p">[</span><span class="s2">&quot;impact&quot;</span><span class="p">],</span>
+                <span class="n">impact_score</span><span class="o">=</span><span class="n">AXE_IMPACT_SCORE_LUT</span><span class="p">[</span><span class="n">violation</span><span class="p">[</span><span class="s2">&quot;impact&quot;</span><span class="p">]],</span>
+                <span class="n">reason</span><span class="o">=</span><span class="n">violation</span><span class="p">[</span><span class="s2">&quot;help&quot;</span><span class="p">],</span>
+                <span class="n">number_of_elements_in_violation</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">violation</span><span class="p">[</span><span class="s2">&quot;nodes&quot;</span><span class="p">]),</span>
+                <span class="n">help_url</span><span class="o">=</span><span class="n">violation</span><span class="p">[</span><span class="s2">&quot;helpUrl&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Compile simplified violations to table and</span>
+    <span class="c1"># sort by the number of elements and severity</span>
+    <span class="n">compiled_simplified_violations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">simplified_violations</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+    <span class="p">)</span>
+    <span class="n">compiled_simplified_violations</span> <span class="o">=</span> <span class="n">compiled_simplified_violations</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+        <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;number_of_elements_in_violation&quot;</span><span class="p">,</span> <span class="s2">&quot;impact_score&quot;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="n">compiled_simplified_violations</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+        <span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;accessibility-violations-summarized.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Compile archive</span>
+    <span class="k">if</span> <span class="n">archive</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">make_archive</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">resource_name</span><span class="si">}</span><span class="s2">--report&quot;</span><span class="p">,</span> <span class="s2">&quot;tar&quot;</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">output_dir</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, BITS-Research.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
