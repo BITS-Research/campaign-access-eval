@@ -33,12 +33,14 @@ Ready to contribute? Here's how to set up `access-eval` for local development.
 
     2. Unzip or un-tar the downloaded file.
 
-    3. **On Mac & Linux**: add the filepath to the executable to your PATH.
+    3. **On Mac & Linux**: add the filepath to the directory that contains the
+       executable to your PATH.
        I.e. `export PATH=$PATH:/home/{user}/Downloads/geckodriver`
 
         _(Fill in your username)_
 
-4. Install the project in editable mode. (It is also recommended to work in a virtualenv or anaconda environment):
+4. Install the project in editable mode.
+   (It is also recommended to work in a virtualenv or anaconda environment):
 
     ```bash
     cd access-2020-localelections/

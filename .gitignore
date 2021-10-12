@@ -120,3 +120,6 @@ ENV/
 .keys/
 .credentials/
 .creds/
+
+# Project specific
+driver/
