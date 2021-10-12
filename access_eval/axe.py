@@ -5,13 +5,20 @@ import json
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Iterable, Optional, Union, List
 
 import pandas as pd
-from axe_selenium_python import Axe
 from dataclasses_json import dataclass_json
+from scrapy import http
+from scrapy.crawler import CrawlerProcess
+from scrapy.link import Link
+from scrapy.spiders import CrawlSpider, Rule
+from scrapy.http.response.html import HtmlResponse
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 from selenium.webdriver import FirefoxOptions
+from w3lib.url import url_query_cleaner
+import tldextract
 
 ###############################################################################
 # Axe look up tables and constants
@@ -80,57 +87,92 @@ def generate_axe_evaluation(
     Notes
     -----
     On Mac and Linux, the geckodriver_path must be stored in OS ENV PATH.
-    Export to OS ENV PATH with: `export PATH=$PATH:{geckodriver_path}`
+    Export to OS ENV PATH with: `export PATH=$PATH:{geckodriver_dir}`
 
     On Windows, the geckodriver_path must be provided.
     """
-    try:
-        opts = FirefoxOptions()
-        opts.add_argument("--headless")
+    # try:
+    # opts = FirefoxOptions()
+    # opts.add_argument("--headless")
 
-        # Eval driver path
-        if geckodriver_path is not None:
-            if isinstance(geckodriver_path, str):
-                geckodriver_path = Path(geckodriver_path)
-                geckodriver_path = geckodriver_path.resolve(strict=True)
-                if not geckodriver_path.is_file():
-                    raise IsADirectoryError(
-                        "Must provide the path to the geckodriver executable, "
-                        "not the directory that contains the executable."
-                    )
+    # # Eval driver path
+    # if geckodriver_path is not None:
+    #     if isinstance(geckodriver_path, str):
+    #         geckodriver_path = Path(geckodriver_path)
+    #         geckodriver_path = geckodriver_path.resolve(strict=True)
+    #         if not geckodriver_path.is_file():
+    #             raise IsADirectoryError(
+    #                 "Must provide the path to the geckodriver executable, "
+    #                 "not the directory that contains the executable."
+    #             )
 
-            # Init driver
-            geckodriver = webdriver.Firefox(str(geckodriver_path), firefox_options=opts)
+    #     # Init driver
+    #     geckodriver = webdriver.Firefox(str(geckodriver_path), firefox_options=opts)
 
-        # If geckodriver_path is None, then assume we are getting from OS path
-        else:
-            geckodriver = webdriver.Firefox(firefox_options=opts)
+    # # If geckodriver_path is None, then assume we are getting from OS path
+    # else:
+    #     try:
+    #         geckodriver = webdriver.Firefox(firefox_options=opts)
+    #     except WebDriverException:
+    #         raise WebDriverException(
+    #             "Failed to find geckodriver in PATH, add to PATH with: "
+    #             "`export PATH=$PATH:{geckodriver_dir}`"
+    #         )
 
-        # Determine storage route
-        if output_path is not None:
-            output_path = Path(output_path).resolve()
-            output_path.parent.mkdir(parents=True, exist_ok=True)
+    # Determine storage route
+    if output_path is not None:
+        output_path = Path(output_path).resolve()
+        output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        # Load content at the URI
-        geckodriver.get(url)
+    # Domain
+    parsed_url = tldextract.extract(url)
+    domain = ".".join([parsed_url.domain, parsed_url.suffix])
 
-        # Pass to Axe
-        axe = Axe(geckodriver)
-        axe.inject()
+    def process_links(links: List[Link]) -> Iterable[str]:
+        for link in links:
+            link.url = url_query_cleaner(link.url)
+            yield link
 
-        # Run checks and store results
-        results = axe.run()
+    # Construct crawler
+    class AccessSpider(CrawlSpider):
+        name = domain
+        allowed_domains = [domain]
+        start_urls = [url]
+        rules = Rule(process_links=process_links, callback="parse_item", follow=True)
 
-        # Optional store
-        if output_path is not None:
-            axe.write_results(results, output_path)
+        def __init__(self):
+            opts = FirefoxOptions()
+            opts.add_argument("--headless")
 
-    finally:
-        # Close the window
-        geckodriver.close()
+        def parse_item(self, response: HtmlResponse) -> None:
+            return response.url
 
-    # Return as dataframe
-    return results
+    crawler_proc = CrawlerProcess()
+    crawler_proc.crawl(AccessSpider)
+    crawler_proc.start()
+
+    # Load content at the URI
+    # geckodriver.get(url)
+
+    # # Pass to Axe
+    # axe = Axe(geckodriver)
+    # axe.inject()
+
+    # # Run checks and store results
+    # results = axe.run()
+
+    # # Optional store
+    # if output_path is not None:
+    #     axe.write_results(results, output_path)
+
+    # finally:
+    #     try:
+    #         # Close the window
+    #         geckodriver.close()
+    #     except UnboundLocalError:
+    #         pass
+
+    return {}
 
 
 def generate_report(

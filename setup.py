@@ -44,7 +44,10 @@ requirements = [
     "dataclasses-json>=0.5.6",
     "pandas>=1.3.3",
     "requests>=2.26.0",
+    "scrapy>=2.5.1",
     "selenium>=3.141.0",
+    "tldextract>=3.1.2",
+    "w3lib",  # no pin, pulled in with scrapy
 ]
 
 extra_requirements = {
