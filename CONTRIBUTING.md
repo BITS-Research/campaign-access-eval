@@ -58,7 +58,7 @@ Ready to contribute? Here's how to set up `access-eval` for local development.
     All Python packages will now be stored in this environment.
     Each time you want to work on this project be sure to create or active your environment.
 
-    While the maintainers of this project use miniconda for environment manager,
+    While the maintainers of this project use miniconda as our environment manager,
     there are many other Python environment managers, use what works for you.
 
 5. Install the project in editable mode. (It is also recommended to work in a virtualenv or anaconda environment):
