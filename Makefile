@@ -58,3 +58,9 @@ gen-docs: ## Generate Sphinx HTML documentation, including API docs
 docs: ## Generate Sphinx HTML documentation, including API docs, and serve to browser
 	make gen-docs
 	$(BROWSER) docs/_build/html/index.html
+
+test-generate-report: ## Generate an accessibility report for jacksonmaxfield.github.io as a test
+	scrapy crawl AccessEvalSpider -a url=https://jacksonmaxfield.github.io/ -L INFO
+
+generate-report: ## Generate an accessibility evaluation report for provided url
+	scrapy crawl AccessEvalSpider -a url=$(url) -L INFO
