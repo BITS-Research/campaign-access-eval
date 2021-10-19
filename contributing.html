@@ -115,7 +115,7 @@ project as it will always be the most up-to-date.</p>
 </pre></div>
 </div>
 </li>
-<li><p>Install <a class="reference external" href="https://github.com/mozilla/geckodriver/releases">geckodriver</a></p>
+<li><p>Install <a class="reference external" href="https://github.com/mozilla/geckodriver/releases">geckodriver</a>:</p>
 <ol class="arabic">
 <li><p>Download:</p>
 <ul>
@@ -127,11 +127,31 @@ project as it will always be the most up-to-date.</p>
 </ul>
 </li>
 <li><p>Unzip or un-tar the downloaded file.</p></li>
-<li><p><strong>On Mac &amp; Linux</strong>: add the filepath to the executable to your PATH.
-I.e. <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=$PATH:/home/{user}/Downloads/geckodriver</span></code></p>
+<li><p><strong>On Mac &amp; Linux</strong>: add the path to the directory that contains
+the executable to your PATH.
+I.e. <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=$PATH:/home/{user}/Downloads/</span></code></p>
 <blockquote>
 <div><p><em>(Fill in your username)</em></p>
 </div></blockquote>
+</li>
+</ol>
+</li>
+<li><p>Create a Python 3.9 environment:</p>
+<ol class="arabic">
+<li><p>Install <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html#latest-miniconda-installer-links">miniconda</a></p></li>
+<li><p>Create environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create --name <span class="o">{</span>some-name<span class="o">}</span> <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.9
+</pre></div>
+</div>
+</li>
+<li><p>Activate environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate <span class="o">{</span>some-name<span class="o">}</span>
+</pre></div>
+</div>
+<p>All Python packages will now be stored in this environment.
+Each time you want to work on this project be sure to create or active your environment.</p>
+<p>While the maintainers of this project use miniconda as our environment manager,
+there are many other Python environment managers, use what works for you.</p>
 </li>
 </ol>
 </li>
