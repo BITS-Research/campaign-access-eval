@@ -52,8 +52,13 @@ from shutil import which
 
 SELENIUM_DRIVER_NAME = "firefox"
 SELENIUM_DRIVER_EXECUTABLE_PATH = which("geckodriver")
+
+if SELENIUM_DRIVER_EXECUTABLE_PATH is None:
+    raise EnvironmentError("No geckodriver executable found in PATH")
+else:
+    print(f"Using geckodriver executable: '{SELENIUM_DRIVER_EXECUTABLE_PATH}'")
+
 SELENIUM_DRIVER_ARGUMENTS = ["-headless"]
-print(f"Using geckodriver executable: '{SELENIUM_DRIVER_EXECUTABLE_PATH}'")
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
