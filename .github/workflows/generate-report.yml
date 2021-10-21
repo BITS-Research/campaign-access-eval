@@ -36,13 +36,14 @@ jobs:
       if: ${{ github.event_name == 'push' }}
       run: |
         make test-generate-report
+        zip -r jacksonmaxfield.github.io.zip jacksonmaxfield.github.io
       
     - name: Store Report -- Test
       if: ${{ github.event_name == 'push' }}
       uses: actions/upload-artifact@v2
       with:
-        name: test-report
-        path: test-report
+        name: jacksonmaxfield.github.io--archive
+        path: jacksonmaxfield.github.io.zip
         # default 90 seems unnecessary for these test results
         retention-days: 1
 
