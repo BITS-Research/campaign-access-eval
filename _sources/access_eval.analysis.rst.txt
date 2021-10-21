@@ -1,0 +1,21 @@
+access\_eval.analysis package
+=============================
+
+Submodules
+----------
+
+access\_eval.analysis.parse\_axe\_results module
+------------------------------------------------
+
+.. automodule:: access_eval.analysis.parse_axe_results
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: access_eval.analysis
+   :members:
+   :undoc-members:
+   :show-inheritance:

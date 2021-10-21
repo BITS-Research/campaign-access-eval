@@ -18,7 +18,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="access_eval.bin package" href="access_eval.bin.html" /> 
+    <link rel="prev" title="access_eval.spiders package" href="access_eval.spiders.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,11 +50,15 @@
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Package Modules</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="access_eval.html">access_eval package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="access_eval.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access_eval.analysis.html">access_eval.analysis package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="access_eval.bin.html">access_eval.bin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="access_eval.middlewares.html">access_eval.middlewares package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="access_eval.spiders.html">access_eval.spiders package</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="access_eval.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="access_eval.html#module-access_eval.axe">access_eval.axe module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_eval.html#module-access_eval.constants">access_eval.constants module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access_eval.html#module-access_eval.settings">access_eval.settings module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="access_eval.html#module-access_eval.version">access_eval.version module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="access_eval.html#module-access_eval">Module contents</a></li>
 </ul>
@@ -88,7 +92,7 @@
             <a href="_sources/contributing.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
-        <a href="access_eval.bin.html" class="btn btn-neutral float-left" title="access_eval.bin package" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="access_eval.spiders.html" class="btn btn-neutral float-left" title="access_eval.spiders package" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
   </div>
   <hr/>
 </div>
@@ -115,20 +119,17 @@ project as it will always be the most up-to-date.</p>
 </pre></div>
 </div>
 </li>
-<li><p>Install <a class="reference external" href="https://github.com/mozilla/geckodriver/releases">geckodriver</a>:</p>
+<li><p>Install <code class="docutils literal notranslate"><span class="pre">geckodriver</span></code>:</p>
+<blockquote>
+<div><p><strong>Using Mac:</strong></p>
+</div></blockquote>
 <ol class="arabic">
-<li><p>Download:</p>
-<ul>
-<li><p>For Linux, download: geckodriver-v{version}-linux{arch}.tar.gz</p></li>
-<li><p>For Max, download: geckodriver-v{version}-macos{arch}.tar.gz</p></li>
-<li><p>For Windows, download: geckodriver-v{version}-win{arch}.tar.gz</p>
-<p><em>(Fill in your version and architecture)</em></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">geckodriver</span></code></p>
+<p><strong>Using Linux:</strong></p>
 </li>
-</ul>
-</li>
+<li><p>Download from <a class="reference external" href="(https://github.com/mozilla/geckodriver/releases">geckodriver releases</a>)</p></li>
 <li><p>Unzip or un-tar the downloaded file.</p></li>
-<li><p><strong>On Mac &amp; Linux</strong>: add the path to the directory that contains
-the executable to your PATH.
+<li><p>Add the path to the directory that contains the executable to your PATH.
 I.e. <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=$PATH:/home/{user}/Downloads/</span></code></p>
 <blockquote>
 <div><p><em>(Fill in your username)</em></p>

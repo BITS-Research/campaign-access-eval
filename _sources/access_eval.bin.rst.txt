@@ -4,10 +4,10 @@ access\_eval.bin package
 Submodules
 ----------
 
-access\_eval.bin.generate\_report module
-----------------------------------------
+access\_eval.bin.parse\_axe\_results module
+-------------------------------------------
 
-.. automodule:: access_eval.bin.generate_report
+.. automodule:: access_eval.bin.parse_axe_results
    :members:
    :undoc-members:
    :show-inheritance:
