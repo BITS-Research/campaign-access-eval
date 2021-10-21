@@ -31,6 +31,14 @@ access\_eval.settings module
    :undoc-members:
    :show-inheritance:
 
+access\_eval.utils module
+-------------------------
+
+.. automodule:: access_eval.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 access\_eval.version module
 ---------------------------
 
