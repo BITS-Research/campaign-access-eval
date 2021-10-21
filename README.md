@@ -22,6 +22,7 @@ But we can also study correlations between web accessibility and campaign spendi
 
 In general, follow the instructions described in [CONTRIBUTING.md](./CONTRIBUTING.md) to
 install required packages.
+
 Once installation and setup are complete, to generate a full accessibility evaluation
 report for a website, run:
 
