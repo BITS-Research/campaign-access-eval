@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import logging
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -84,6 +85,7 @@ class AccessEvalSpider(CrawlSpider):
             )
 
     def parse(self, response: "HtmlResponse", **kwargs: "Any") -> SeleniumRequest:
+        self.log(f"Parsing: {response.request.url}", level=logging.INFO)
         # Process with axe
         self.parse_result(response)
 
