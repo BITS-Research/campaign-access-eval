@@ -12,6 +12,8 @@ from scrapy_selenium import SeleniumRequest
 from selenium import webdriver
 from selenium.webdriver import FirefoxOptions
 
+from .. import constants
+
 if TYPE_CHECKING:
     from typing import Any
 
@@ -60,8 +62,14 @@ class AccessEvalSpider(CrawlSpider):
         url = response.request.url.replace("https://", "").replace("http://", "")
         storage_dir = Path(url)
         storage_dir.mkdir(exist_ok=True, parents=True)
-        axe.write_results(results, str(storage_dir / "full-axe-results.json"))
-        with open(storage_dir / "entry-screenshot.png", "wb") as open_f:
+        axe.write_results(
+            results,
+            str(storage_dir / constants.SINGLE_PAGE_AXE_RESULTS_FILENAME),
+        )
+        with open(
+            storage_dir / constants.SINGLE_PAGE_ENTRY_SCREENSHOT_FILENAME,
+            "wb",
+        ) as open_f:
             open_f.write(response.meta["screenshot"])
 
     def start_requests(self) -> SeleniumRequest:
