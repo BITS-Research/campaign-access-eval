@@ -2,15 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from dataclasses import dataclass
-from pathlib import Path
-from typing import TYPE_CHECKING
 
-from axe_selenium_python import Axe
 from dataclasses_json import dataclass_json
-
-if TYPE_CHECKING:
-    from scrapy.http.response.html import HtmlResponse
-
 
 ###############################################################################
 # Axe look up tables and constants
@@ -45,20 +38,3 @@ class SimplifiedAxeViolation:
 
 
 ###############################################################################
-
-
-def parse_result(response: "HtmlResponse") -> None:
-    # Connect Axe to driver
-    print(response)
-    print(response.request)
-    axe = Axe(response.request.meta["driver"])
-    axe.inject()
-
-    # Run checks and store results
-    results = axe.run()
-
-    # Construct storage path
-    url = response.request.url.replace("https://", "").replace("http://", "")
-    storage_dir = Path(url)
-    storage_dir.mkdir(exist_ok=True, parents=True)
-    axe.write_results(results, str(storage_dir / "full-axe-results.json"))
