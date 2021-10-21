@@ -78,7 +78,7 @@ setup(
     ),
     entry_points={
         "console_scripts": [
-            ("access-eval-generate-report=access_eval.bin.generate_report:main"),
+            ("parse-axe-results=access_eval.bin.parse_axe_results:main"),
         ],
     },
     install_requires=requirements,
