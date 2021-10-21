@@ -42,7 +42,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: jacksonmaxfield.github.io--archive
-        path: jacksonmaxfield.github.io.zip
+        path: jacksonmaxfield.github.io
         # default 90 seems unnecessary for these test results
         retention-days: 1
 
