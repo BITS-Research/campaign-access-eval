@@ -148,9 +148,7 @@
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../access_eval.bin.html#access_eval.bin.parse_axe_results.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">args</span> <span class="o">=</span> <span class="n">Args</span><span class="p">()</span>
-        <span class="n">generate_high_level_statistics</span><span class="p">(</span>
-            <span class="n">head_dir</span><span class="o">=</span><span class="n">clean_url</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">head_dir</span><span class="p">),</span>
-        <span class="p">)</span>
+        <span class="n">generate_high_level_statistics</span><span class="p">(</span><span class="n">head_dir</span><span class="o">=</span><span class="n">clean_url</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">head_dir</span><span class="p">))</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;=============================================&quot;</span><span class="p">)</span>
         <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
