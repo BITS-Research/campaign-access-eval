@@ -35,13 +35,10 @@ i.e.
 make generate-report url="https://jacksonmaxfield.github.io/"
 ```
 
-## Produced Data
+### Maintainer Usage
 
-... to be filled out
+If you are a maintainer of this library (or of a fork of this library),
+you can generate accessibility reports for any URL by using the
+[Generate Report GitHub Action](https://github.com/BITS-Research/access-2020-localelections/actions/workflows/generate-report.yml).
 
-Planned:
-
-1. AXE basic info -- some normalized score?
-2. campaign spending on digital services
-3. language localization
-4. reading level?
+![Screenshot of using workflow dispatch with URL parameter](https://raw.githubusercontent.com/BITS-Research/access-2020-localelections/main/docs/_static/workflow-dispatch.png)
