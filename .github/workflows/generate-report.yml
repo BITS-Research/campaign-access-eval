@@ -36,7 +36,6 @@ jobs:
       if: ${{ github.event_name == 'push' }}
       run: |
         make test-generate-report
-        zip -r jacksonmaxfield.github.io.zip jacksonmaxfield.github.io
       
     - name: Store Report -- Test
       if: ${{ github.event_name == 'push' }}
@@ -59,15 +58,12 @@ jobs:
       if: ${{ github.event_name == 'workflow_dispatch' }}
       run: |
         make generate-report ${{ github.event.inputs.url }}
-        zip -r \
-          ${{ steps.get-clean-url-name.outputs.name }}.zip \
-          ${{ steps.get-clean-url-name.outputs.name }}
     
     - name: Store Report -- Parametrized
       if: ${{ github.event_name == 'workflow_dispatch' }}
       uses: actions/upload-artifact@v2
       with:
         name: ${{ steps.get-clean-url-name.outputs.name }}--archive
-        path: ${{ steps.get-clean-url-name.outputs.name }}.zip
+        path: ${{ steps.get-clean-url-name.outputs.name }}
         # default 90 seems unnecessary for these test results
         retention-days: 14
