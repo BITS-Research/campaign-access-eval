@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 import tldextract
 from axe_selenium_python import Axe
 from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import CrawlSpider, Rule
+from scrapy.spiders import CrawlSpider
 from scrapy_selenium import SeleniumRequest
 from selenium import webdriver
 from selenium.webdriver import FirefoxOptions
@@ -35,14 +35,13 @@ class AccessEvalSpider(CrawlSpider):
         domain_parts = [parsed_url.domain, parsed_url.suffix]
         if len(parsed_url.subdomain) > 0:
             domain_parts.insert(0, parsed_url.subdomain)
-        
+
         # Generate allowed domain
         domain = ".".join(domain_parts)
 
         # Apply params
         self.allowed_domains = [domain]
         self.start_urls = [url]
-        self.rules = []
 
         # Super
         super().__init__(**kwargs)
@@ -75,11 +74,6 @@ class AccessEvalSpider(CrawlSpider):
             results,
             str(storage_dir / constants.SINGLE_PAGE_AXE_RESULTS_FILENAME),
         )
-        with open(
-            storage_dir / constants.SINGLE_PAGE_ENTRY_SCREENSHOT_FILENAME,
-            "wb",
-        ) as open_f:
-            open_f.write(response.meta["screenshot"])
 
     def start_requests(self) -> SeleniumRequest:
         # Spawn Selenium requests for each link
@@ -89,7 +83,6 @@ class AccessEvalSpider(CrawlSpider):
                 url=url,
                 wait_time=5,
                 callback=self.parse,
-                screenshot=True,
             )
 
     def parse(self, response: "HtmlResponse", **kwargs: "Any") -> SeleniumRequest:
@@ -104,5 +97,4 @@ class AccessEvalSpider(CrawlSpider):
                 url=link.url,
                 wait_time=5,
                 callback=self.parse,
-                screenshot=True,
             )
