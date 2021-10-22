@@ -30,12 +30,19 @@ class AccessEvalSpider(CrawlSpider):
     def __init__(self, url: str, **kwargs: "Any"):
         # Parse domain
         parsed_url = tldextract.extract(url)
-        domain = ".".join([parsed_url.subdomain, parsed_url.domain, parsed_url.suffix])
+
+        # Optionally insert subdomain
+        domain_parts = [parsed_url.domain, parsed_url.suffix]
+        if len(parsed_url.subdomain) > 0:
+            domain_parts.insert(0, parsed_url.subdomain)
+        
+        # Generate allowed domain
+        domain = ".".join(domain_parts)
 
         # Apply params
         self.allowed_domains = [domain]
         self.start_urls = [url]
-        self.rules = [Rule(callback=self.parse, follow=True)]
+        self.rules = []
 
         # Super
         super().__init__(**kwargs)
