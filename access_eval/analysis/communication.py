@@ -8,7 +8,6 @@ import pandas as pd
 
 from .. import constants
 
-
 ###############################################################################
 
 TEMPLATE_TEXT = """
@@ -24,7 +23,7 @@ Most Common Violations:
 
 {violations_tree}
 
-If you would like any further instruction or help, please see our documentation explaining the layout and the content of the attached ZIP file which contains the full accessibility violation results: https://bits-research.github.io/access-2020-localelections/
+If you would like any further instruction or help, please see our documentation explaining the layout and the content of the attached ZIP file which contains the full accessibility violation results: https://bits-research.github.io/access-2020-localelections/results_explainer.html
 
 Additionally please feel free to respond to this email and we will be happy to talk with any of your staff. We are not trying to sell you any services or consultation, we simply want to help ensure that all voters are able to view and interact with each candidate's website for the upcoming election.
 
@@ -33,7 +32,7 @@ Thank you for your time and attention – And best of luck with your campaign.
 Nic Weber
 University of Washington School of Information
 nmweber@uw.edu
-""".strip()
+""".strip()  # noqa: 501
 
 
 def generate_email_text(head_dir: Union[str, Path]) -> Path:
