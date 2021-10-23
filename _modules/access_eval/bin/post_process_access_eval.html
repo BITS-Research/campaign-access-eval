@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>access_eval.bin.parse_axe_results &mdash; access-eval 0.0.0 documentation</title>
+  <title>access_eval.bin.post_process_access_eval &mdash; access-eval 0.0.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -59,6 +59,17 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../results_explainer.html">Understanding the Produced Results</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../results_explainer.html#report">Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../results_explainer.html#basic-contents">Basic Contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../results_explainer.html#accessibility-violations-summarized">Accessibility Violations Summarized</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../results_explainer.html#full-axe-results">Full Axe Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../results_explainer.html#aggregated-accessibility-violations-summarized">Aggregated Accessibility Violations Summarized</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../results_explainer.html#pages-not-included">Pages Not Included</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#developer-installation">Developer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
@@ -82,7 +93,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>access_eval.bin.parse_axe_results</li>
+      <li>access_eval.bin.post_process_access_eval</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -91,7 +102,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for access_eval.bin.parse_axe_results</h1><div class="highlight"><pre>
+  <h1>Source code for access_eval.bin.post_process_access_eval</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
@@ -100,6 +111,7 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
 
+<span class="kn">from</span> <span class="nn">access_eval.analysis.communication</span> <span class="kn">import</span> <span class="n">generate_email_text</span>
 <span class="kn">from</span> <span class="nn">access_eval.analysis.parse_axe_results</span> <span class="kn">import</span> <span class="n">generate_high_level_statistics</span>
 <span class="kn">from</span> <span class="nn">access_eval.utils</span> <span class="kn">import</span> <span class="n">clean_url</span>
 
@@ -114,15 +126,16 @@
 <span class="c1">###############################################################################</span>
 
 
-<div class="viewcode-block" id="Args"><a class="viewcode-back" href="../../../access_eval.bin.html#access_eval.bin.parse_axe_results.Args">[docs]</a><span class="k">class</span> <span class="nc">Args</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
+<div class="viewcode-block" id="Args"><a class="viewcode-back" href="../../../access_eval.bin.html#access_eval.bin.post_process_access_eval.Args">[docs]</a><span class="k">class</span> <span class="nc">Args</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__parse</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__parse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
-            <span class="n">prog</span><span class="o">=</span><span class="s2">&quot;parse-axe-results&quot;</span><span class="p">,</span>
+            <span class="n">prog</span><span class="o">=</span><span class="s2">&quot;post_process_access_eval&quot;</span><span class="p">,</span>
             <span class="n">description</span><span class="o">=</span><span class="p">(</span>
-                <span class="s2">&quot;Generate high level statistics from a directory of axe results.&quot;</span>
+                <span class="s2">&quot;Process the access evaluation results and generate any extra metadata &quot;</span>
+                <span class="s2">&quot;and documentation.&quot;</span>
             <span class="p">),</span>
         <span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -140,10 +153,13 @@
 <span class="c1">###############################################################################</span>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../access_eval.bin.html#access_eval.bin.parse_axe_results.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../access_eval.bin.html#access_eval.bin.post_process_access_eval.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">args</span> <span class="o">=</span> <span class="n">Args</span><span class="p">()</span>
-        <span class="n">generate_high_level_statistics</span><span class="p">(</span><span class="n">head_dir</span><span class="o">=</span><span class="n">clean_url</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">head_dir</span><span class="p">))</span>
+        <span class="n">cleaned_url</span> <span class="o">=</span> <span class="n">clean_url</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">head_dir</span><span class="p">)</span>
+        <span class="n">generate_high_level_statistics</span><span class="p">(</span><span class="n">head_dir</span><span class="o">=</span><span class="n">cleaned_url</span><span class="p">)</span>
+        <span class="n">generate_email_text</span><span class="p">(</span><span class="n">head_dir</span><span class="o">=</span><span class="n">cleaned_url</span><span class="p">)</span>
+
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;=============================================&quot;</span><span class="p">)</span>
         <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>

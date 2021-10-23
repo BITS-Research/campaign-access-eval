@@ -4,10 +4,10 @@ access\_eval.bin package
 Submodules
 ----------
 
-access\_eval.bin.parse\_axe\_results module
--------------------------------------------
+access\_eval.bin.post\_process\_access\_eval module
+---------------------------------------------------
 
-.. automodule:: access_eval.bin.parse_axe_results
+.. automodule:: access_eval.bin.post_process_access_eval
    :members:
    :undoc-members:
    :show-inheritance:

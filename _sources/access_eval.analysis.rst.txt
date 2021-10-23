@@ -4,6 +4,14 @@ access\_eval.analysis package
 Submodules
 ----------
 
+access\_eval.analysis.communication module
+------------------------------------------
+
+.. automodule:: access_eval.analysis.communication
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 access\_eval.analysis.parse\_axe\_results module
 ------------------------------------------------
 

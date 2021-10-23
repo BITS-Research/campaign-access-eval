@@ -62,6 +62,17 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="results_explainer.html">Understanding the Produced Results</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="results_explainer.html#report">Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="results_explainer.html#basic-contents">Basic Contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="results_explainer.html#accessibility-violations-summarized">Accessibility Violations Summarized</a></li>
+<li class="toctree-l3"><a class="reference internal" href="results_explainer.html#full-axe-results">Full Axe Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="results_explainer.html#aggregated-accessibility-violations-summarized">Aggregated Accessibility Violations Summarized</a></li>
+<li class="toctree-l3"><a class="reference internal" href="results_explainer.html#pages-not-included">Pages Not Included</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#developer-installation">Developer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
@@ -103,6 +114,26 @@
 <h1>access_eval.analysis package<a class="headerlink" href="#access-eval-analysis-package" title="Permalink to this headline"></a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-access_eval.analysis.communication">
+<span id="access-eval-analysis-communication-module"></span><h2>access_eval.analysis.communication module<a class="headerlink" href="#module-access_eval.analysis.communication" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="access_eval.analysis.communication.generate_email_text">
+<span class="sig-prename descclassname"><span class="pre">access_eval.analysis.communication.</span></span><span class="sig-name descname"><span class="pre">generate_email_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">head_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pathlib.Path</span></span></span><a class="reference internal" href="_modules/access_eval/analysis/communication.html#generate_email_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.communication.generate_email_text" title="Permalink to this definition"></a></dt>
+<dd><p>Generate email text from data found in the provided directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>head_dir</strong> (<em>Union[str, Path]</em>) – The directory with all results.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>email_text</strong> – Path to text file containing suggested email message.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Path</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-access_eval.analysis.parse_axe_results">
 <span id="access-eval-analysis-parse-axe-results-module"></span><h2>access_eval.analysis.parse_axe_results module<a class="headerlink" href="#module-access_eval.analysis.parse_axe_results" title="Permalink to this headline"></a></h2>
