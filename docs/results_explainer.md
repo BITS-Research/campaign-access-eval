@@ -1,19 +1,14 @@
 # Understanding the Produced Results
+This document will explain how to interpret the results of a website accessibility test that was run against your campaign website. 
 
-This document will explain how to parse and understand the `axe` results
-and our produced archive.
-
-## The Archive
-
-Our tool finds any link that is self-referencing to your own website and generates
-an accessibility evaluation for it using the [axe](https://www.deque.com/axe/) toolset.
-
-I.e. if the starting page is `www.a.com` and on that page there are links to
+## Report
+Our tool analyzes any link that is self-referencing to your own website and generates
+an accessibility report [^1]. As a simple example - If the starting page is `www.a.com` and on that page there are links to
 `www.a.com/subsection` and `www.b.com`, our tool will create an accessibility evaluation
 for both `www.a.com` and `www.a.com/subsection` but will skip-over `www.b.com`
 as it is not the same website.
 
-Using our prior example, the produced archive for `www.a.com`
+Using our prior example, the produced report for `www.a.com`
 would include:
 
 ```
@@ -27,13 +22,12 @@ www.a.com/
     └── full-axe-results.json
 ```
 
-Where `subsection` is now a child folder in the parent `www.a.com` folder.
+Notice that `subsection` is now a child folder in the parent `www.a.com` folder.
 
-This structure should mirror your websites layout and make it possible to
-quickly check the accessibility evaluation for individual pages.
+This structure should mirror your website's page layout. This structure also makes it possible to
+quickly check the accessibility evaluation that we have run for each individual page on your site.
 
 ## Basic Contents
-
 Each directory, regardless of it is the starting page or a found page,
 will contain the following files:
 
@@ -153,8 +147,7 @@ We can see that this particular link's font color does not
 contrast enough from the background color.
 
 ### Aggregated Accessibility Violations Summarized
-
-This file will always live at the top of the archive and
+This file will always live at the top of the report and
 stores the violation results from aggregating each child
 [Accessibility Violations Summarized](#accessibility-violations-summarized).
 
@@ -169,7 +162,7 @@ The only additional field added to this CSV over each
 Pages on your website may not be picked up by our tool for a variety of reasons
 however the most common would be:
 
--   The webpage that is missing from the archive was not linked to by
+-   The webpage that is missing from the report was not linked to by
     any of the found webpages.
 -   The webpage was a document. It is very common to store policy proposals
     on a website as a PDF or similar static file however our tools
@@ -179,6 +172,6 @@ however the most common would be:
 ---
 
 If you have any questions or would like clarification on this documentation
-please simply respond to our original email. We are happy to answer.
+please simply respond to our original email. We are happy to work with you to improve your site's accessibility to all voters. 
 
-Thanks for caring about web accessibility.
+[^1]: This report is generated with support from the [axe](https://www.deque.com/axe/) toolset.
