@@ -226,7 +226,15 @@
         <span class="c1"># Compile simplified violations to table and</span>
         <span class="c1"># sort by the number of elements and severity</span>
         <span class="n">compiled_simplified_violations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">simplified_violations</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+            <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">simplified_violations</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+            <span class="n">columns</span><span class="o">=</span><span class="p">[</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;impact&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;impact_score&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;reason&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;number_of_elements_in_violation&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;help_url&quot;</span><span class="p">,</span>
+            <span class="p">],</span>
         <span class="p">)</span>
         <span class="n">compiled_simplified_violations</span> <span class="o">=</span> <span class="n">compiled_simplified_violations</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
             <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;number_of_elements_in_violation&quot;</span><span class="p">,</span> <span class="s2">&quot;impact_score&quot;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
