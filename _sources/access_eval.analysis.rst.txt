@@ -12,6 +12,14 @@ access\_eval.analysis.communication module
    :undoc-members:
    :show-inheritance:
 
+access\_eval.analysis.constants module
+--------------------------------------
+
+.. automodule:: access_eval.analysis.constants
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 access\_eval.analysis.parse\_axe\_results module
 ------------------------------------------------
 

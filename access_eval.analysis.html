@@ -135,6 +135,598 @@
 </dd></dl>
 
 </section>
+<section id="module-access_eval.analysis.constants">
+<span id="access-eval-analysis-constants-module"></span><h2>access_eval.analysis.constants module<a class="headerlink" href="#module-access_eval.analysis.constants" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">access_eval.analysis.constants.</span></span><span class="sig-name descname"><span class="pre">DatasetFields</span></span><a class="reference internal" href="_modules/access_eval/analysis/constants.html#DatasetFields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class stores all of the headers for the analysis dataset.</p>
+<p>Each header will have a description and some examples.
+Use this class as a data dictionary.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.candidate_history">
+<span class="sig-name descname"><span class="pre">candidate_history</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'candidate_history'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.candidate_history" title="Permalink to this definition"></a></dt>
+<dd><p>Categorical value for the electoral history of the candidate.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>“In-Office”</p></li>
+<li><p>“Previously-Elected”</p></li>
+<li><p>“Never-Held-Office”</p></li>
+</ul>
+<p class="rubric">Notes</p>
+<p>Pulled from external data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.candidate_position">
+<span class="sig-name descname"><span class="pre">candidate_position</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'candidate_position'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.candidate_position" title="Permalink to this definition"></a></dt>
+<dd><p>Categorical value for if the candidate is the incumbent, a challenger, or open.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>“Incumbent”</p></li>
+<li><p>“Challenger”</p></li>
+<li><p>“Open”</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.candidate_votes">
+<span class="sig-name descname"><span class="pre">candidate_votes</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_votes_for_candidate'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.candidate_votes" title="Permalink to this definition"></a></dt>
+<dd><p>The number of votes the candidate ultimately received.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>12345</p></li>
+<li><p>2468</p></li>
+</ul>
+<p class="rubric">Notes</p>
+<p>Pulled from external data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.contacted">
+<span class="sig-name descname"><span class="pre">contacted</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'contacted'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.contacted" title="Permalink to this definition"></a></dt>
+<dd><p>Was the campaign contacted with the aXe evaluation summarization.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>“Contacted”</p></li>
+<li><p>“Not-Contacted”</p></li>
+</ul>
+<p class="rubric">Notes</p>
+<p>If the campaign was not contacted, the values for pre and post features are set to
+equal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_critical_errors">
+<span class="sig-name descname"><span class="pre">diff_critical_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'diff_critical_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_critical_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The difference in the number of errors categorized as “critical” by aXe
+before and after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>12</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_errors">
+<span class="sig-name descname"><span class="pre">diff_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'diff_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The difference in the number of errors before and after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>12</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_minor_errors">
+<span class="sig-name descname"><span class="pre">diff_minor_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'diff_minor_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_minor_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The difference in the number of errors categorized as “minor” by aXe
+before and after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>12</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_moderate_errors">
+<span class="sig-name descname"><span class="pre">diff_moderate_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'diff_moderate_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_moderate_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The difference in the number of errors categorized as “moderate” by aXe
+before and after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>12</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_pages">
+<span class="sig-name descname"><span class="pre">diff_pages</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'diff_pages'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_pages" title="Permalink to this definition"></a></dt>
+<dd><p>The difference in the number of pages before and after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>1</p></li>
+<li><p>2</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_serious_errors">
+<span class="sig-name descname"><span class="pre">diff_serious_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'diff_serious_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_serious_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The difference in the number of errors categorized as “serious” by aXe
+before and after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>12</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.ease_of_reading">
+<span class="sig-name descname"><span class="pre">ease_of_reading</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'ease_of_reading'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.ease_of_reading" title="Permalink to this definition"></a></dt>
+<dd><p>The lexical complexity of the entire website.
+Calculated on the latest version of the website.</p>
+<p>See: <a class="reference external" href="https://github.com/shivam5992/textstat#the-flesch-reading-ease-formula">https://github.com/shivam5992/textstat#the-flesch-reading-ease-formula</a>
+for more information.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123.45</p></li>
+<li><p>-12.34</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.election_funding">
+<span class="sig-name descname"><span class="pre">election_funding</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'election_funding'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.election_funding" title="Permalink to this definition"></a></dt>
+<dd><p>The amount of money the candidate received in donations during the campaign.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>100000.00</p></li>
+<li><p>350000.00</p></li>
+</ul>
+<p class="rubric">Notes</p>
+<p>Calculated as sum of all other candidates election funding in same race.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.election_result">
+<span class="sig-name descname"><span class="pre">election_result</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'election_result'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.election_result" title="Permalink to this definition"></a></dt>
+<dd><p>Categorical value for is the candidate won (or progressed) or not.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>“Won”</p></li>
+<li><p>“Lost”</p></li>
+</ul>
+<p class="rubric">Notes</p>
+<p>Pulled from external data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.election_type">
+<span class="sig-name descname"><span class="pre">election_type</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'election_type'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.election_type" title="Permalink to this definition"></a></dt>
+<dd><p>Categorical value for the type of election.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>“Primary”</p></li>
+<li><p>“General”</p></li>
+<li><p>“Runoff”</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.electoral_position">
+<span class="sig-name descname"><span class="pre">electoral_position</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'electoral_position'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.electoral_position" title="Permalink to this definition"></a></dt>
+<dd><p>The position the candidate was running for.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>“Mayor”</p></li>
+<li><p>“Council”</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.funding_share">
+<span class="sig-name descname"><span class="pre">funding_share</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'funding_share'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.funding_share" title="Permalink to this definition"></a></dt>
+<dd><p>The amount of money the candidate received in donations over the amount of
+money all candidates received during the campaign.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>0.21</p></li>
+<li><p>0.47</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.post_critical_errors">
+<span class="sig-name descname"><span class="pre">post_critical_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_critical_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.post_critical_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “critical” by aXe for the
+entire website after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.post_errors">
+<span class="sig-name descname"><span class="pre">post_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_total_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.post_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The total number of errors for the entire website after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>234</p></li>
+<li><p>450</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.post_minor_errors">
+<span class="sig-name descname"><span class="pre">post_minor_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_minor_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.post_minor_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “minor” by aXe for the
+entire website after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.post_moderate_errors">
+<span class="sig-name descname"><span class="pre">post_moderate_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_moderate_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.post_moderate_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “moderate” by aXe for the
+entire website after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.post_pages">
+<span class="sig-name descname"><span class="pre">post_pages</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_pages_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.post_pages" title="Permalink to this definition"></a></dt>
+<dd><p>The total number of pages found in the whole campaign website after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>12</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.post_serious_errors">
+<span class="sig-name descname"><span class="pre">post_serious_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_serious_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.post_serious_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “serious” by aXe for the
+entire website after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.pre_critical_errors">
+<span class="sig-name descname"><span class="pre">pre_critical_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_critical_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.pre_critical_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “critical” by aXe for the
+entire website before contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.pre_errors">
+<span class="sig-name descname"><span class="pre">pre_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_total_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.pre_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The total number of errors for the entire website before contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>234</p></li>
+<li><p>450</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.pre_minor_errors">
+<span class="sig-name descname"><span class="pre">pre_minor_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_minor_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.pre_minor_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “minor” by aXe for the
+entire website before contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.pre_moderate_errors">
+<span class="sig-name descname"><span class="pre">pre_moderate_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_moderate_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.pre_moderate_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “moderate” by aXe for the
+entire website before contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.pre_pages">
+<span class="sig-name descname"><span class="pre">pre_pages</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_pages_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.pre_pages" title="Permalink to this definition"></a></dt>
+<dd><p>The total number of pages found in the whole campaign website before contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>12</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.pre_serious_errors">
+<span class="sig-name descname"><span class="pre">pre_serious_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_serious_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.pre_serious_errors" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “serious” by aXe for the
+entire website before contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.race_funding">
+<span class="sig-name descname"><span class="pre">race_funding</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'race_funding'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.race_funding" title="Permalink to this definition"></a></dt>
+<dd><p>The amount of money all candidates in the race received during the campaign.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>10000000.00</p></li>
+<li><p>24500000.00</p></li>
+</ul>
+<p class="rubric">Notes</p>
+<p>Pulled from external data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.total_words">
+<span class="sig-name descname"><span class="pre">total_words</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_words'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.total_words" title="Permalink to this definition"></a></dt>
+<dd><p>The total number of words found in the whole campaign website.
+Calculated on the latest version of the website.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>9999</p></li>
+<li><p>12345</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.unique_words">
+<span class="sig-name descname"><span class="pre">unique_words</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_unique_words'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.unique_words" title="Permalink to this definition"></a></dt>
+<dd><p>The total number of unique words found in the whole campaign website.
+Calculated on the latest version of the website.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>999</p></li>
+<li><p>1234</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.vote_share">
+<span class="sig-name descname"><span class="pre">vote_share</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'vote_share'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.vote_share" title="Permalink to this definition"></a></dt>
+<dd><p>The number of votes the candidate received over the number of votes possible.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>0.21</p></li>
+<li><p>0.47</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.voting_population">
+<span class="sig-name descname"><span class="pre">voting_population</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'eligible_voting_population'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.voting_population" title="Permalink to this definition"></a></dt>
+<dd><p>The total number of people eligible to vote in the election.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123456</p></li>
+<li><p>24680</p></li>
+</ul>
+<p class="rubric">Notes</p>
+<p>Pulled from external data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.website">
+<span class="sig-name descname"><span class="pre">website</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'campaign_website_url'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.website" title="Permalink to this definition"></a></dt>
+<dd><p>The public URL for the campaign website.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>“<a class="reference external" href="https://www.google.com">https://www.google.com</a>”</p></li>
+<li><p>“<a class="reference external" href="https://jacksonmaxfield.github.io">https://jacksonmaxfield.github.io</a>”</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-access_eval.analysis.parse_axe_results">
 <span id="access-eval-analysis-parse-axe-results-module"></span><h2>access_eval.analysis.parse_axe_results module<a class="headerlink" href="#module-access_eval.analysis.parse_axe_results" title="Permalink to this headline"></a></h2>
 <dl class="py class">
