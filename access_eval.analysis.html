@@ -119,7 +119,7 @@
 <span id="access-eval-analysis-communication-module"></span><h2>access_eval.analysis.communication module<a class="headerlink" href="#module-access_eval.analysis.communication" title="Permalink to this headline"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="access_eval.analysis.communication.generate_email_text">
-<span class="sig-prename descclassname"><span class="pre">access_eval.analysis.communication.</span></span><span class="sig-name descname"><span class="pre">generate_email_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">head_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pathlib.Path</span></span></span><a class="reference internal" href="_modules/access_eval/analysis/communication.html#generate_email_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.communication.generate_email_text" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">access_eval.analysis.communication.</span></span><span class="sig-name descname"><span class="pre">generate_email_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">head_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pathlib.Path</span></span></span><a class="reference internal" href="_modules/access_eval/analysis/communication.html#generate_email_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.communication.generate_email_text" title="Permalink to this definition"></a></dt>
 <dd><p>Generate email text from data found in the provided directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -139,14 +139,49 @@
 <span id="access-eval-analysis-constants-module"></span><h2>access_eval.analysis.constants module<a class="headerlink" href="#module-access_eval.analysis.constants" title="Permalink to this headline"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">access_eval.analysis.constants.</span></span><span class="sig-name descname"><span class="pre">DatasetFields</span></span><a class="reference internal" href="_modules/access_eval/analysis/constants.html#DatasetFields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">access_eval.analysis.constants.</span></span><span class="sig-name descname"><span class="pre">DatasetFields</span></span><a class="reference internal" href="_modules/access_eval/analysis/constants.html#DatasetFields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This class stores all of the headers for the analysis dataset.</p>
 <p>Each header will have a description and some examples.
 Use this class as a data dictionary.</p>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.campaign_website_url">
+<span class="sig-name descname"><span class="pre">campaign_website_url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'campaign_website_url'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.campaign_website_url" title="Permalink to this definition"></a></dt>
+<dd><p>The public URL for the campaign website.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>“<a class="reference external" href="https://www.google.com">https://www.google.com</a>”</p></li>
+<li><p>“<a class="reference external" href="https://jacksonmaxfield.github.io">https://jacksonmaxfield.github.io</a>”</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.candidate_funding">
+<span class="sig-name descname"><span class="pre">candidate_funding</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'candidate_funding'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.candidate_funding" title="Permalink to this definition"></a></dt>
+<dd><p>The amount of money the candidate received in donations during the campaign.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>100000.00</p></li>
+<li><p>350000.00</p></li>
+</ul>
+<p class="rubric">Notes</p>
+<p>Calculated as sum of all other candidates funding in same race.</p>
+<p>Pulled from external data. (Not all candidates had websites scraped scraped)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.candidate_history">
-<span class="sig-name descname"><span class="pre">candidate_history</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'candidate_history'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.candidate_history" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">candidate_history</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'candidate_history'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.candidate_history" title="Permalink to this definition"></a></dt>
 <dd><p>Categorical value for the electoral history of the candidate.</p>
 <p class="rubric">Examples</p>
 <ul class="simple">
@@ -165,7 +200,7 @@ Use this class as a data dictionary.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.candidate_position">
-<span class="sig-name descname"><span class="pre">candidate_position</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'candidate_position'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.candidate_position" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">candidate_position</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'candidate_position'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.candidate_position" title="Permalink to this definition"></a></dt>
 <dd><p>Categorical value for if the candidate is the incumbent, a challenger, or open.</p>
 <p class="rubric">Examples</p>
 <ul class="simple">
@@ -181,26 +216,8 @@ Use this class as a data dictionary.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.candidate_votes">
-<span class="sig-name descname"><span class="pre">candidate_votes</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_votes_for_candidate'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.candidate_votes" title="Permalink to this definition"></a></dt>
-<dd><p>The number of votes the candidate ultimately received.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>12345</p></li>
-<li><p>2468</p></li>
-</ul>
-<p class="rubric">Notes</p>
-<p>Pulled from external data source.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.contacted">
-<span class="sig-name descname"><span class="pre">contacted</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'contacted'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.contacted" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">contacted</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'contacted'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.contacted" title="Permalink to this definition"></a></dt>
 <dd><p>Was the campaign contacted with the aXe evaluation summarization.</p>
 <p class="rubric">Examples</p>
 <ul class="simple">
@@ -219,7 +236,7 @@ equal.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_critical_errors">
-<span class="sig-name descname"><span class="pre">diff_critical_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'diff_critical_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_critical_errors" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">diff_critical_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'diff_critical_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_critical_errors" title="Permalink to this definition"></a></dt>
 <dd><p>The difference in the number of errors categorized as “critical” by aXe
 before and after contact.</p>
 <p class="rubric">Examples</p>
@@ -236,7 +253,7 @@ before and after contact.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_errors">
-<span class="sig-name descname"><span class="pre">diff_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'diff_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_errors" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">diff_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'diff_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_errors" title="Permalink to this definition"></a></dt>
 <dd><p>The difference in the number of errors before and after contact.</p>
 <p class="rubric">Examples</p>
 <ul class="simple">
@@ -252,7 +269,7 @@ before and after contact.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_minor_errors">
-<span class="sig-name descname"><span class="pre">diff_minor_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'diff_minor_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_minor_errors" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">diff_minor_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'diff_minor_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_minor_errors" title="Permalink to this definition"></a></dt>
 <dd><p>The difference in the number of errors categorized as “minor” by aXe
 before and after contact.</p>
 <p class="rubric">Examples</p>
@@ -269,7 +286,7 @@ before and after contact.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_moderate_errors">
-<span class="sig-name descname"><span class="pre">diff_moderate_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'diff_moderate_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_moderate_errors" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">diff_moderate_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'diff_moderate_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_moderate_errors" title="Permalink to this definition"></a></dt>
 <dd><p>The difference in the number of errors categorized as “moderate” by aXe
 before and after contact.</p>
 <p class="rubric">Examples</p>
@@ -286,7 +303,7 @@ before and after contact.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_pages">
-<span class="sig-name descname"><span class="pre">diff_pages</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'diff_pages'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_pages" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">diff_pages</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'diff_pages'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_pages" title="Permalink to this definition"></a></dt>
 <dd><p>The difference in the number of pages before and after contact.</p>
 <p class="rubric">Examples</p>
 <ul class="simple">
@@ -302,7 +319,7 @@ before and after contact.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_serious_errors">
-<span class="sig-name descname"><span class="pre">diff_serious_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'diff_serious_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_serious_errors" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">diff_serious_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'diff_serious_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_serious_errors" title="Permalink to this definition"></a></dt>
 <dd><p>The difference in the number of errors categorized as “serious” by aXe
 before and after contact.</p>
 <p class="rubric">Examples</p>
@@ -319,7 +336,7 @@ before and after contact.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.ease_of_reading">
-<span class="sig-name descname"><span class="pre">ease_of_reading</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'ease_of_reading'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.ease_of_reading" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ease_of_reading</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ease_of_reading'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.ease_of_reading" title="Permalink to this definition"></a></dt>
 <dd><p>The lexical complexity of the entire website.
 Calculated on the latest version of the website.</p>
 <p>See: <a class="reference external" href="https://github.com/shivam5992/textstat#the-flesch-reading-ease-formula">https://github.com/shivam5992/textstat#the-flesch-reading-ease-formula</a>
@@ -337,26 +354,8 @@ for more information.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.election_funding">
-<span class="sig-name descname"><span class="pre">election_funding</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'election_funding'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.election_funding" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of money the candidate received in donations during the campaign.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>100000.00</p></li>
-<li><p>350000.00</p></li>
-</ul>
-<p class="rubric">Notes</p>
-<p>Calculated as sum of all other candidates election funding in same race.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.election_result">
-<span class="sig-name descname"><span class="pre">election_result</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'election_result'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.election_result" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">election_result</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'election_result'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.election_result" title="Permalink to this definition"></a></dt>
 <dd><p>Categorical value for is the candidate won (or progressed) or not.</p>
 <p class="rubric">Examples</p>
 <ul class="simple">
@@ -374,7 +373,7 @@ for more information.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.election_type">
-<span class="sig-name descname"><span class="pre">election_type</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'election_type'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.election_type" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">election_type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'election_type'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.election_type" title="Permalink to this definition"></a></dt>
 <dd><p>Categorical value for the type of election.</p>
 <p class="rubric">Examples</p>
 <ul class="simple">
@@ -391,7 +390,7 @@ for more information.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.electoral_position">
-<span class="sig-name descname"><span class="pre">electoral_position</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'electoral_position'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.electoral_position" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">electoral_position</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'electoral_position'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.electoral_position" title="Permalink to this definition"></a></dt>
 <dd><p>The position the candidate was running for.</p>
 <p class="rubric">Examples</p>
 <ul class="simple">
@@ -406,293 +405,8 @@ for more information.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.funding_share">
-<span class="sig-name descname"><span class="pre">funding_share</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'funding_share'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.funding_share" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of money the candidate received in donations over the amount of
-money all candidates received during the campaign.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>0.21</p></li>
-<li><p>0.47</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.post_critical_errors">
-<span class="sig-name descname"><span class="pre">post_critical_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_critical_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.post_critical_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The number of errors categorized as “critical” by aXe for the
-entire website after contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>123</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.post_errors">
-<span class="sig-name descname"><span class="pre">post_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_total_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.post_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The total number of errors for the entire website after contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>234</p></li>
-<li><p>450</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.post_minor_errors">
-<span class="sig-name descname"><span class="pre">post_minor_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_minor_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.post_minor_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The number of errors categorized as “minor” by aXe for the
-entire website after contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>123</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.post_moderate_errors">
-<span class="sig-name descname"><span class="pre">post_moderate_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_moderate_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.post_moderate_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The number of errors categorized as “moderate” by aXe for the
-entire website after contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>123</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.post_pages">
-<span class="sig-name descname"><span class="pre">post_pages</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_pages_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.post_pages" title="Permalink to this definition"></a></dt>
-<dd><p>The total number of pages found in the whole campaign website after contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>12</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.post_serious_errors">
-<span class="sig-name descname"><span class="pre">post_serious_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_serious_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.post_serious_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The number of errors categorized as “serious” by aXe for the
-entire website after contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>123</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.pre_critical_errors">
-<span class="sig-name descname"><span class="pre">pre_critical_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_critical_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.pre_critical_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The number of errors categorized as “critical” by aXe for the
-entire website before contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>123</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.pre_errors">
-<span class="sig-name descname"><span class="pre">pre_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_total_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.pre_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The total number of errors for the entire website before contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>234</p></li>
-<li><p>450</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.pre_minor_errors">
-<span class="sig-name descname"><span class="pre">pre_minor_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_minor_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.pre_minor_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The number of errors categorized as “minor” by aXe for the
-entire website before contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>123</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.pre_moderate_errors">
-<span class="sig-name descname"><span class="pre">pre_moderate_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_moderate_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.pre_moderate_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The number of errors categorized as “moderate” by aXe for the
-entire website before contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>123</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.pre_pages">
-<span class="sig-name descname"><span class="pre">pre_pages</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_pages_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.pre_pages" title="Permalink to this definition"></a></dt>
-<dd><p>The total number of pages found in the whole campaign website before contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>12</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.pre_serious_errors">
-<span class="sig-name descname"><span class="pre">pre_serious_errors</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_serious_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.pre_serious_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The number of errors categorized as “serious” by aXe for the
-entire website before contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>123</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.race_funding">
-<span class="sig-name descname"><span class="pre">race_funding</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'race_funding'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.race_funding" title="Permalink to this definition"></a></dt>
-<dd><p>The amount of money all candidates in the race received during the campaign.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>10000000.00</p></li>
-<li><p>24500000.00</p></li>
-</ul>
-<p class="rubric">Notes</p>
-<p>Pulled from external data source.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.total_words">
-<span class="sig-name descname"><span class="pre">total_words</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_words'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.total_words" title="Permalink to this definition"></a></dt>
-<dd><p>The total number of words found in the whole campaign website.
-Calculated on the latest version of the website.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>9999</p></li>
-<li><p>12345</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.unique_words">
-<span class="sig-name descname"><span class="pre">unique_words</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'number_of_unique_words'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.unique_words" title="Permalink to this definition"></a></dt>
-<dd><p>The total number of unique words found in the whole campaign website.
-Calculated on the latest version of the website.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>999</p></li>
-<li><p>1234</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.vote_share">
-<span class="sig-name descname"><span class="pre">vote_share</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'vote_share'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.vote_share" title="Permalink to this definition"></a></dt>
-<dd><p>The number of votes the candidate received over the number of votes possible.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>0.21</p></li>
-<li><p>0.47</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.voting_population">
-<span class="sig-name descname"><span class="pre">voting_population</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'eligible_voting_population'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.voting_population" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.eligible_voting_population">
+<span class="sig-name descname"><span class="pre">eligible_voting_population</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'eligible_voting_population'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.eligible_voting_population" title="Permalink to this definition"></a></dt>
 <dd><p>The total number of people eligible to vote in the election.</p>
 <p class="rubric">Examples</p>
 <ul class="simple">
@@ -709,17 +423,304 @@ Calculated on the latest version of the website.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.website">
-<span class="sig-name descname"><span class="pre">website</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'campaign_website_url'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.website" title="Permalink to this definition"></a></dt>
-<dd><p>The public URL for the campaign website.</p>
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.funding_share">
+<span class="sig-name descname"><span class="pre">funding_share</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'funding_share'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.funding_share" title="Permalink to this definition"></a></dt>
+<dd><p>The amount of money the candidate received in donations over the amount of
+money all candidates received during the campaign.</p>
 <p class="rubric">Examples</p>
 <ul class="simple">
-<li><p>“<a class="reference external" href="https://www.google.com">https://www.google.com</a>”</p></li>
-<li><p>“<a class="reference external" href="https://jacksonmaxfield.github.io">https://jacksonmaxfield.github.io</a>”</p></li>
+<li><p>0.21</p></li>
+<li><p>0.47</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_critical_errors_post">
+<span class="sig-name descname"><span class="pre">number_of_critical_errors_post</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_critical_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_critical_errors_post" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “critical” by aXe for the
+entire website after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_critical_errors_pre">
+<span class="sig-name descname"><span class="pre">number_of_critical_errors_pre</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_critical_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_critical_errors_pre" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “critical” by aXe for the
+entire website before contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_minor_errors_post">
+<span class="sig-name descname"><span class="pre">number_of_minor_errors_post</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_minor_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_minor_errors_post" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “minor” by aXe for the
+entire website after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_minor_errors_pre">
+<span class="sig-name descname"><span class="pre">number_of_minor_errors_pre</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_minor_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_minor_errors_pre" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “minor” by aXe for the
+entire website before contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_moderate_errors_post">
+<span class="sig-name descname"><span class="pre">number_of_moderate_errors_post</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_moderate_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_moderate_errors_post" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “moderate” by aXe for the
+entire website after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_moderate_errors_pre">
+<span class="sig-name descname"><span class="pre">number_of_moderate_errors_pre</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_moderate_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_moderate_errors_pre" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “moderate” by aXe for the
+entire website before contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_pages_post">
+<span class="sig-name descname"><span class="pre">number_of_pages_post</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_pages_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_pages_post" title="Permalink to this definition"></a></dt>
+<dd><p>The total number of pages found in the whole campaign website after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>12</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_pages_pre">
+<span class="sig-name descname"><span class="pre">number_of_pages_pre</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_pages_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_pages_pre" title="Permalink to this definition"></a></dt>
+<dd><p>The total number of pages found in the whole campaign website before contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>12</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_serious_errors_post">
+<span class="sig-name descname"><span class="pre">number_of_serious_errors_post</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_serious_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_serious_errors_post" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “serious” by aXe for the
+entire website after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_serious_errors_pre">
+<span class="sig-name descname"><span class="pre">number_of_serious_errors_pre</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_serious_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_serious_errors_pre" title="Permalink to this definition"></a></dt>
+<dd><p>The number of errors categorized as “serious” by aXe for the
+entire website before contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123</p></li>
+<li><p>42</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_total_errors_post">
+<span class="sig-name descname"><span class="pre">number_of_total_errors_post</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_total_errors_post'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_total_errors_post" title="Permalink to this definition"></a></dt>
+<dd><p>The total number of errors for the entire website after contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>234</p></li>
+<li><p>450</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_total_errors_pre">
+<span class="sig-name descname"><span class="pre">number_of_total_errors_pre</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_total_errors_pre'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_total_errors_pre" title="Permalink to this definition"></a></dt>
+<dd><p>The total number of errors for the entire website before contact.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>234</p></li>
+<li><p>450</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_unique_words">
+<span class="sig-name descname"><span class="pre">number_of_unique_words</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_unique_words'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_unique_words" title="Permalink to this definition"></a></dt>
+<dd><p>The total number of unique words found in the whole campaign website.
+Calculated on the latest version of the website.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>999</p></li>
+<li><p>1234</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_votes_for_candidate">
+<span class="sig-name descname"><span class="pre">number_of_votes_for_candidate</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_votes_for_candidate'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_votes_for_candidate" title="Permalink to this definition"></a></dt>
+<dd><p>The number of votes the candidate ultimately received.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>12345</p></li>
+<li><p>2468</p></li>
+</ul>
+<p class="rubric">Notes</p>
+<p>Pulled from external data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_words">
+<span class="sig-name descname"><span class="pre">number_of_words</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_words'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_words" title="Permalink to this definition"></a></dt>
+<dd><p>The total number of words found in the whole campaign website.
+Calculated on the latest version of the website.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>9999</p></li>
+<li><p>12345</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.race_funding">
+<span class="sig-name descname"><span class="pre">race_funding</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'race_funding'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.race_funding" title="Permalink to this definition"></a></dt>
+<dd><p>The amount of money all candidates in the race received during the campaign.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>10000000.00</p></li>
+<li><p>24500000.00</p></li>
+</ul>
+<p class="rubric">Notes</p>
+<p>Pulled from external data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.vote_share">
+<span class="sig-name descname"><span class="pre">vote_share</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'vote_share'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.vote_share" title="Permalink to this definition"></a></dt>
+<dd><p>The number of votes the candidate received over the number of votes possible.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>0.21</p></li>
+<li><p>0.47</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -731,160 +732,160 @@ Calculated on the latest version of the website.</p>
 <span id="access-eval-analysis-parse-axe-results-module"></span><h2>access_eval.analysis.parse_axe_results module<a class="headerlink" href="#module-access_eval.analysis.parse_axe_results" title="Permalink to this headline"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AggregateAxeViolation">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">access_eval.analysis.parse_axe_results.</span></span><span class="sig-name descname"><span class="pre">AggregateAxeViolation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impact</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impact_score</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reason</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_pages_affected</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_elements_in_violation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">help_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/access_eval/analysis/parse_axe_results.html#AggregateAxeViolation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">access_eval.analysis.parse_axe_results.</span></span><span class="sig-name descname"><span class="pre">AggregateAxeViolation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impact_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reason</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_pages_affected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_elements_in_violation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">help_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/access_eval/analysis/parse_axe_results.html#AggregateAxeViolation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AggregateAxeViolation.from_dict">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kvs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infer_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dataclasses_json.api.A</span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.from_dict" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kvs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infer_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dataclasses_json.api.A</span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.from_dict" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AggregateAxeViolation.from_json">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytearray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse_float</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse_constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infer_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dataclasses_json.api.A</span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.from_json" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytearray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse_float</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse_constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infer_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dataclasses_json.api.A</span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.from_json" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AggregateAxeViolation.help_url">
-<span class="sig-name descname"><span class="pre">help_url</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.help_url" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">help_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.help_url" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AggregateAxeViolation.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.id" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.id" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AggregateAxeViolation.impact">
-<span class="sig-name descname"><span class="pre">impact</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.impact" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">impact</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.impact" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AggregateAxeViolation.impact_score">
-<span class="sig-name descname"><span class="pre">impact_score</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.impact_score" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">impact_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.impact_score" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AggregateAxeViolation.number_of_elements_in_violation">
-<span class="sig-name descname"><span class="pre">number_of_elements_in_violation</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.number_of_elements_in_violation" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">number_of_elements_in_violation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.number_of_elements_in_violation" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AggregateAxeViolation.number_of_pages_affected">
-<span class="sig-name descname"><span class="pre">number_of_pages_affected</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.number_of_pages_affected" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">number_of_pages_affected</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.number_of_pages_affected" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AggregateAxeViolation.reason">
-<span class="sig-name descname"><span class="pre">reason</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.reason" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">reason</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.reason" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AggregateAxeViolation.schema">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infer_missing</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dataclasses_json.mm.SchemaF</span><span class="p"><span class="pre">[</span></span><span class="pre">dataclasses_json.mm.A</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.schema" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infer_missing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dataclasses_json.mm.SchemaF</span><span class="p"><span class="pre">[</span></span><span class="pre">dataclasses_json.mm.A</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.schema" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AggregateAxeViolation.to_dict">
-<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encode_json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.to_dict" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encode_json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.to_dict" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AggregateAxeViolation.to_json">
-<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skipkeys</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_ascii</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_circular</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_nan</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separators</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_keys</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.to_json" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skipkeys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_ascii</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_circular</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_nan</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separators</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AggregateAxeViolation.to_json" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AxeImpact">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">access_eval.analysis.parse_axe_results.</span></span><span class="sig-name descname"><span class="pre">AxeImpact</span></span><a class="reference internal" href="_modules/access_eval/analysis/parse_axe_results.html#AxeImpact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AxeImpact" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">access_eval.analysis.parse_axe_results.</span></span><span class="sig-name descname"><span class="pre">AxeImpact</span></span><a class="reference internal" href="_modules/access_eval/analysis/parse_axe_results.html#AxeImpact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AxeImpact" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AxeImpact.critical">
-<span class="sig-name descname"><span class="pre">critical</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">=</span> <span class="pre">'critical'</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AxeImpact.critical" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">critical</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'critical'</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AxeImpact.critical" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AxeImpact.minor">
-<span class="sig-name descname"><span class="pre">minor</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">=</span> <span class="pre">'minor'</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AxeImpact.minor" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">minor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'minor'</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AxeImpact.minor" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AxeImpact.moderate">
-<span class="sig-name descname"><span class="pre">moderate</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">=</span> <span class="pre">'moderate'</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AxeImpact.moderate" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">moderate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'moderate'</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AxeImpact.moderate" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.AxeImpact.serious">
-<span class="sig-name descname"><span class="pre">serious</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">=</span> <span class="pre">'serious'</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AxeImpact.serious" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">serious</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'serious'</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.AxeImpact.serious" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.SimplifiedAxeViolation">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">access_eval.analysis.parse_axe_results.</span></span><span class="sig-name descname"><span class="pre">SimplifiedAxeViolation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impact</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impact_score</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reason</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_elements_in_violation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">help_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/access_eval/analysis/parse_axe_results.html#SimplifiedAxeViolation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">access_eval.analysis.parse_axe_results.</span></span><span class="sig-name descname"><span class="pre">SimplifiedAxeViolation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impact_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reason</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_elements_in_violation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">help_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/access_eval/analysis/parse_axe_results.html#SimplifiedAxeViolation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.from_dict">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kvs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infer_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dataclasses_json.api.A</span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.from_dict" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kvs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infer_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dataclasses_json.api.A</span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.from_dict" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.from_json">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span> </span><span class="pre">bytearray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse_float</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse_constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infer_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dataclasses_json.api.A</span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.from_json" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytearray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse_float</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse_constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infer_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dataclasses_json.api.A</span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.from_json" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.help_url">
-<span class="sig-name descname"><span class="pre">help_url</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.help_url" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">help_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.help_url" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.id" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.id" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.impact">
-<span class="sig-name descname"><span class="pre">impact</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.impact" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">impact</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.impact" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.impact_score">
-<span class="sig-name descname"><span class="pre">impact_score</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.impact_score" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">impact_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.impact_score" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.number_of_elements_in_violation">
-<span class="sig-name descname"><span class="pre">number_of_elements_in_violation</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.number_of_elements_in_violation" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">number_of_elements_in_violation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.number_of_elements_in_violation" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.reason">
-<span class="sig-name descname"><span class="pre">reason</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.reason" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">reason</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.reason" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.schema">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infer_missing</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dataclasses_json.mm.SchemaF</span><span class="p"><span class="pre">[</span></span><span class="pre">dataclasses_json.mm.A</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.schema" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infer_missing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dataclasses_json.mm.SchemaF</span><span class="p"><span class="pre">[</span></span><span class="pre">dataclasses_json.mm.A</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.schema" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.to_dict">
-<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encode_json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span> </span><span class="pre">list</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.to_dict" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encode_json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.to_dict" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.to_json">
-<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skipkeys</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_ascii</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_circular</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_nan</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separators</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_keys</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.to_json" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skipkeys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_ascii</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_circular</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_nan</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separators</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.to_json" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="access_eval.analysis.parse_axe_results.generate_high_level_statistics">
-<span class="sig-prename descclassname"><span class="pre">access_eval.analysis.parse_axe_results.</span></span><span class="sig-name descname"><span class="pre">generate_high_level_statistics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">head_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/access_eval/analysis/parse_axe_results.html#generate_high_level_statistics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.parse_axe_results.generate_high_level_statistics" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">access_eval.analysis.parse_axe_results.</span></span><span class="sig-name descname"><span class="pre">generate_high_level_statistics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">head_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/access_eval/analysis/parse_axe_results.html#generate_high_level_statistics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.parse_axe_results.generate_high_level_statistics" title="Permalink to this definition"></a></dt>
 <dd><p>Recursive glob of all directories for axe results and generate high level
 statistics both for single page and whole website.</p>
 <dl class="field-list simple">
