@@ -2,17 +2,17 @@
 # -*- coding: utf-8 -*-
 
 import json
-from dataclasses import dataclass
-from typing import Dict, Union
-from pathlib import Path
-from dataclasses_json import dataclass_json
 import logging
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Dict, Union
 
 import pandas as pd
+from dataclasses_json import dataclass_json
 
-from .constants import DatasetFields
 from ..constants import SINGLE_PAGE_AXE_RESULTS_FILENAME
 from ..utils import clean_url
+from .constants import DatasetFields
 
 ###############################################################################
 

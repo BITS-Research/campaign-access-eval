@@ -6,9 +6,9 @@ import logging
 import sys
 import traceback
 
+from access_eval.analysis import constants
 from access_eval.analysis.core import combine_election_data_with_axe_results
 from access_eval.analysis.utils import unpack_data
-from access_eval.analysis import constants
 
 ###############################################################################
 
