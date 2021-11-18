@@ -12,6 +12,14 @@ access\_eval.bin.post\_process\_access\_eval module
    :undoc-members:
    :show-inheritance:
 
+access\_eval.bin.process\_access\_eval\_2021\_results module
+------------------------------------------------------------
+
+.. automodule:: access_eval.bin.process_access_eval_2021_results
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

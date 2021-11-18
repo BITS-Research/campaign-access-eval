@@ -128,8 +128,21 @@ campaigns ensuring that their materials are available in multiple languages?</p>
 regarding disability populations and language-spoken-at-home statistics.
 But we can also study correlations between web accessibility and campaign spending.</p>
 </section>
-<section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
+<section id="recreating-analysis">
+<h2>Recreating Analysis<a class="headerlink" href="#recreating-analysis" title="Permalink to this headline"></a></h2>
+<p>To recreate our analysis of our preliminary 2021 study:</p>
+<ol class="arabic simple">
+<li><p>Clone the repo</p></li>
+<li><p>In a terminal navigate to the cloned repo</p></li>
+<li><p>In the repo directory run</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install .
+process-access-eval-2021-results
+</pre></div>
+</div>
+</section>
+<section id="axe-scraper-usage">
+<h2>aXe Scraper Usage<a class="headerlink" href="#axe-scraper-usage" title="Permalink to this headline"></a></h2>
 <p>In general, follow the instructions described in <a class="reference external" href="./CONTRIBUTING.md">CONTRIBUTING.md</a> to
 install required packages.</p>
 <p>Once installation and setup are complete, to generate a full accessibility evaluation
@@ -141,8 +154,8 @@ report for a website, run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make generate-report <span class="nv">url</span><span class="o">=</span><span class="s2">&quot;https://jacksonmaxfield.github.io/&quot;</span>
 </pre></div>
 </div>
-<section id="maintainer-usage">
-<h3>Maintainer Usage<a class="headerlink" href="#maintainer-usage" title="Permalink to this headline"></a></h3>
+<section id="maintainer-github-action">
+<h3>Maintainer GitHub Action<a class="headerlink" href="#maintainer-github-action" title="Permalink to this headline"></a></h3>
 <p>If you are a maintainer of this library (or of a fork of this library),
 you can generate accessibility reports for any URL by using the
 <a class="reference external" href="https://github.com/BITS-Research/campaign-access-eval/actions/workflows/generate-report.yml">Generate Report GitHub Action</a>.</p>

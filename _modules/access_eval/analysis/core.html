@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>access_eval.analysis.core &mdash; access-eval 0.0.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> access-eval
+          </a>
+              <div class="version">
+                0.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Package Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../access_eval.html">access_eval package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../access_eval.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../access_eval.analysis.html">access_eval.analysis package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../access_eval.bin.html">access_eval.bin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../access_eval.middlewares.html">access_eval.middlewares package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../access_eval.spiders.html">access_eval.spiders package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../access_eval.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../access_eval.html#module-access_eval.constants">access_eval.constants module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../access_eval.html#module-access_eval.settings">access_eval.settings module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../access_eval.html#module-access_eval.utils">access_eval.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../access_eval.html#module-access_eval.version">access_eval.version module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../access_eval.html#module-access_eval">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../results_explainer.html">Understanding the Produced Results</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../results_explainer.html#report">Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../results_explainer.html#basic-contents">Basic Contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../results_explainer.html#accessibility-violations-summarized">Accessibility Violations Summarized</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../results_explainer.html#full-axe-results">Full Axe Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../results_explainer.html#aggregated-accessibility-violations-summarized">Aggregated Accessibility Violations Summarized</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../results_explainer.html#pages-not-included">Pages Not Included</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#developer-installation">Developer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">access-eval</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>access_eval.analysis.core</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for access_eval.analysis.core</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">dataclasses_json</span> <span class="kn">import</span> <span class="n">dataclass_json</span>
+
+<span class="kn">from</span> <span class="nn">..constants</span> <span class="kn">import</span> <span class="n">SINGLE_PAGE_AXE_RESULTS_FILENAME</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">clean_url</span>
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="n">DatasetFields</span>
+
+<span class="c1">###############################################################################</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1">###############################################################################</span>
+
+
+<div class="viewcode-block" id="ViolationCounts"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.ViolationCounts">[docs]</a><span class="nd">@dataclass_json</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">ViolationCounts</span><span class="p">:</span>
+    <span class="n">pages</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">minor</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">moderate</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">serious</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">critical</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+<span class="k">def</span> <span class="nf">_get_counts</span><span class="p">(</span>
+    <span class="n">axe_results_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">counts</span><span class="p">:</span> <span class="n">ViolationCounts</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ViolationCounts</span><span class="p">:</span>
+    <span class="c1"># Run _get_counts for all children dirs -- recursive</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">axe_results_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="n">counts</span> <span class="o">=</span> <span class="n">_get_counts</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">counts</span><span class="o">=</span><span class="n">counts</span><span class="p">)</span>
+
+    <span class="c1"># Get this dirs result file</span>
+    <span class="n">this_dir_results</span> <span class="o">=</span> <span class="n">axe_results_dir</span> <span class="o">/</span> <span class="n">SINGLE_PAGE_AXE_RESULTS_FILENAME</span>
+    <span class="k">if</span> <span class="n">this_dir_results</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">this_dir_results</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">open_f</span><span class="p">:</span>
+            <span class="n">this_dir_loaded_results</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">open_f</span><span class="p">)</span>
+
+        <span class="c1"># Increment pages</span>
+        <span class="n">counts</span><span class="o">.</span><span class="n">pages</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># Sum different violation levels for this page</span>
+        <span class="k">for</span> <span class="n">violation</span> <span class="ow">in</span> <span class="n">this_dir_loaded_results</span><span class="p">[</span><span class="s2">&quot;violations&quot;</span><span class="p">]:</span>
+            <span class="n">impact</span> <span class="o">=</span> <span class="n">violation</span><span class="p">[</span><span class="s2">&quot;impact&quot;</span><span class="p">]</span>
+            <span class="n">current_count</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">impact</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">impact</span><span class="p">,</span> <span class="n">current_count</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">violation</span><span class="p">[</span><span class="s2">&quot;nodes&quot;</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">counts</span>
+
+
+<div class="viewcode-block" id="sum_axe_violation_levels"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.sum_axe_violation_levels">[docs]</a><span class="k">def</span> <span class="nf">sum_axe_violation_levels</span><span class="p">(</span><span class="n">axe_results_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ViolationCounts</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sum the various levels of axe violations for a whole axe result tree.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    axe_results_dir: Union[str, Path]</span>
+<span class="sd">        The directory for a specific website that has been processed using the access</span>
+<span class="sd">        eval scraper.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    violation_counts: ViolationCounts</span>
+<span class="sd">        The counts of all violation levels summed for the whole axe results tree.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Handle path and dir checking</span>
+    <span class="n">axe_results_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">axe_results_dir</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">axe_results_dir</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">NotADirectoryError</span><span class="p">(</span><span class="n">axe_results_dir</span><span class="p">)</span>
+
+    <span class="c1"># Run _get_counts for whole tree</span>
+    <span class="k">return</span> <span class="n">_get_counts</span><span class="p">(</span><span class="n">axe_results_dir</span><span class="p">,</span> <span class="n">ViolationCounts</span><span class="p">())</span></div>
+
+
+<span class="k">def</span> <span class="nf">_convert_violation_counts_to_expanded_data</span><span class="p">(</span>
+    <span class="n">counts</span><span class="p">:</span> <span class="n">ViolationCounts</span><span class="p">,</span>
+    <span class="n">phase</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="sa">f</span><span class="s2">&quot;number_of_pages_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">counts</span><span class="o">.</span><span class="n">pages</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;number_of_total_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="n">counts</span><span class="o">.</span><span class="n">critical</span> <span class="o">+</span> <span class="n">counts</span><span class="o">.</span><span class="n">serious</span> <span class="o">+</span> <span class="n">counts</span><span class="o">.</span><span class="n">moderate</span> <span class="o">+</span> <span class="n">counts</span><span class="o">.</span><span class="n">minor</span>
+        <span class="p">),</span>
+        <span class="sa">f</span><span class="s2">&quot;number_of_critical_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">counts</span><span class="o">.</span><span class="n">critical</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;number_of_serious_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">counts</span><span class="o">.</span><span class="n">serious</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;number_of_moderate_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">counts</span><span class="o">.</span><span class="n">moderate</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;number_of_minor_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">counts</span><span class="o">.</span><span class="n">minor</span><span class="p">,</span>
+    <span class="p">}</span>
+
+
+<div class="viewcode-block" id="combine_election_data_with_axe_results"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.combine_election_data_with_axe_results">[docs]</a><span class="k">def</span> <span class="nf">combine_election_data_with_axe_results</span><span class="p">(</span>
+    <span class="n">election_data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span>
+    <span class="n">pre_contact_axe_scraping_results</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">post_contact_axe_scraping_results</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Combine election data CSV (or in memory DataFrame) with the axe results for each</span>
+<span class="sd">    campaign website.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    election_data: Union[str, Path, pd.DataFrame]</span>
+<span class="sd">        The path to, or the in-memory dataframe, containing basic election data.</span>
+<span class="sd">        This CSV or dataframe should contain a column &quot;campaign_website_url&quot;</span>
+<span class="sd">        that can be used to find the associated directory of axe results for that</span>
+<span class="sd">        campaigns website.</span>
+<span class="sd">    pre_contact_axe_scraping_results: Union[str, Path]</span>
+<span class="sd">        The path to the directory that contains sub-directories for each campaign</span>
+<span class="sd">        website&#39;s axe results. I.e. data/site-a and data/site-b, provide the directory</span>
+<span class="sd">        &quot;data&quot; as both &quot;site-a&quot; and &quot;site-b&quot; are direct children.</span>
+<span class="sd">    post_contact_axe_scraping_results: Union[str, Path]</span>
+<span class="sd">        The path to the directory that contains sub-directories for each campaign</span>
+<span class="sd">        website&#39;s axe results. I.e. data/site-a and data/site-b, provide the directory</span>
+<span class="sd">        &quot;data&quot; as both &quot;site-a&quot; and &quot;site-b&quot; are direct children.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    full_data: pd.DataFrame</span>
+<span class="sd">        The original election data and the summed violation counts for both pre and post</span>
+<span class="sd">        contact for each campaign website combined into a single dataframe.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    For both the *_axe_scraping_results parameters, provide the parent directory of all</span>
+<span class="sd">    individual campaign axe scraping result directories.</span>
+
+<span class="sd">    I.e. if the data is stored like so:</span>
+<span class="sd">    |- pre-data/</span>
+<span class="sd">        |- site-a/</span>
+<span class="sd">        |- site-b/</span>
+<span class="sd">    |- post-data/</span>
+<span class="sd">        |- site-a/</span>
+<span class="sd">        |- site-b/</span>
+
+<span class="sd">    Provide the parameters as `&quot;pre-data/&quot;` and `&quot;post-data/&quot;` respectively.</span>
+
+<span class="sd">    Additionally, if the provided campaign website url is missing from either the pre</span>
+<span class="sd">    or post axe results directories, the site is skipped / dropped from the expanded</span>
+<span class="sd">    dataset.</span>
+
+<span class="sd">    Finally, any `https://` or `http://` is dropped from the campaign url.</span>
+<span class="sd">    I.e. in the spreadsheet the value is `https://website.org` but the associated</span>
+<span class="sd">    directory should be: `pre-data/website.org`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Confirm paths</span>
+    <span class="n">pre_contact_axe_scraping_results</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">pre_contact_axe_scraping_results</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span>
+        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">post_contact_axe_scraping_results</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">post_contact_axe_scraping_results</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span>
+        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">election_data</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
+        <span class="n">election_data</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">election_data</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">election_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">election_data</span><span class="p">)</span>
+
+    <span class="c1"># Confirm axe scraping results is dir</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">pre_contact_axe_scraping_results</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">NotADirectoryError</span><span class="p">(</span><span class="n">pre_contact_axe_scraping_results</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">post_contact_axe_scraping_results</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">NotADirectoryError</span><span class="p">(</span><span class="n">post_contact_axe_scraping_results</span><span class="p">)</span>
+
+    <span class="c1"># Iter election data and create List of expanded dicts with added</span>
+    <span class="n">expanded_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">election_data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">cleaned_url</span> <span class="o">=</span> <span class="n">clean_url</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">campaign_website_url</span><span class="p">])</span>
+        <span class="n">pre_access_eval</span> <span class="o">=</span> <span class="n">pre_contact_axe_scraping_results</span> <span class="o">/</span> <span class="n">cleaned_url</span>
+        <span class="n">post_access_eval</span> <span class="o">=</span> <span class="n">post_contact_axe_scraping_results</span> <span class="o">/</span> <span class="n">cleaned_url</span>
+
+        <span class="c1"># Only continue with the addition if pre and post both exist</span>
+        <span class="k">if</span> <span class="n">pre_access_eval</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">post_access_eval</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="c1"># Run summing</span>
+            <span class="n">pre_access_eval_counts</span> <span class="o">=</span> <span class="n">sum_axe_violation_levels</span><span class="p">(</span><span class="n">pre_access_eval</span><span class="p">)</span>
+            <span class="n">post_access_eval_counts</span> <span class="o">=</span> <span class="n">sum_axe_violation_levels</span><span class="p">(</span><span class="n">post_access_eval</span><span class="p">)</span>
+
+            <span class="c1"># Combine and merge to expanded data</span>
+            <span class="n">expanded_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="o">**</span><span class="n">row</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">_convert_violation_counts_to_expanded_data</span><span class="p">(</span>
+                        <span class="n">pre_access_eval_counts</span><span class="p">,</span>
+                        <span class="s2">&quot;pre&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="o">**</span><span class="n">_convert_violation_counts_to_expanded_data</span><span class="p">(</span>
+                        <span class="n">post_access_eval_counts</span><span class="p">,</span>
+                        <span class="s2">&quot;post&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Dropped </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">election_data</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">expanded_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> rows from dataset &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;because they were missing a pre or post aXe result directory.&quot;</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">expanded_data</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, BITS-Research.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-H8TQGX35PM"
+></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-H8TQGX35PM");
+</script>
+
+
+</body>
+</html>

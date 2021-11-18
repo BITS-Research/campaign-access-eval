@@ -20,10 +20,26 @@ access\_eval.analysis.constants module
    :undoc-members:
    :show-inheritance:
 
+access\_eval.analysis.core module
+---------------------------------
+
+.. automodule:: access_eval.analysis.core
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 access\_eval.analysis.parse\_axe\_results module
 ------------------------------------------------
 
 .. automodule:: access_eval.analysis.parse_axe_results
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+access\_eval.analysis.utils module
+----------------------------------
+
+.. automodule:: access_eval.analysis.utils
    :members:
    :undoc-members:
    :show-inheritance:
