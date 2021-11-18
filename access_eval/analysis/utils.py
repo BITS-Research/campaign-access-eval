@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from typing import Union
-from pathlib import Path
 import shutil
+from pathlib import Path
+from typing import Union
 
 from . import constants
 
