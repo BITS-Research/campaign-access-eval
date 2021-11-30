@@ -156,7 +156,7 @@ def process_axe_evaluations_and_extras(
 
     Returns
     -------
-    violation_counts: CompiledMetrics
+    metrics: CompiledMetrics
         The counts of all violation levels summed for the whole axe results tree
         (and optional extra features).
     """
@@ -254,8 +254,9 @@ def combine_election_data_with_axe_results(
     Returns
     -------
     full_data: pd.DataFrame
-        The original election data and the summed violation counts for both pre and post
-        contact for each campaign website combined into a single dataframe.
+        The original election data, the summed violation counts for both pre and post
+        contact, and the scraped text features using the post-contact aXe URLs
+        for each campaign website combined into a single dataframe.
 
     Notes
     -----
