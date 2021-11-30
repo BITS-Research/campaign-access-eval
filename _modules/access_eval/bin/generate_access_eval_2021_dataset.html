@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>access_eval.bin.process_access_eval_2021_results &mdash; access-eval 0.0.0 documentation</title>
+  <title>access_eval.bin.generate_access_eval_2021_dataset &mdash; access-eval 0.0.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -93,7 +93,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>access_eval.bin.process_access_eval_2021_results</li>
+      <li>access_eval.bin.generate_access_eval_2021_dataset</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -102,7 +102,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for access_eval.bin.process_access_eval_2021_results</h1><div class="highlight"><pre>
+  <h1>Source code for access_eval.bin.generate_access_eval_2021_dataset</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
@@ -126,15 +126,15 @@
 <span class="c1">###############################################################################</span>
 
 
-<div class="viewcode-block" id="Args"><a class="viewcode-back" href="../../../access_eval.bin.html#access_eval.bin.process_access_eval_2021_results.Args">[docs]</a><span class="k">class</span> <span class="nc">Args</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
+<div class="viewcode-block" id="Args"><a class="viewcode-back" href="../../../access_eval.bin.html#access_eval.bin.generate_access_eval_2021_dataset.Args">[docs]</a><span class="k">class</span> <span class="nc">Args</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__parse</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__parse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
-            <span class="n">prog</span><span class="o">=</span><span class="s2">&quot;process-access-eval-2021-results&quot;</span><span class="p">,</span>
+            <span class="n">prog</span><span class="o">=</span><span class="s2">&quot;generate-access-eval-2021-dataset&quot;</span><span class="p">,</span>
             <span class="n">description</span><span class="o">=</span><span class="p">(</span>
-                <span class="s2">&quot;Process the access evaluation results for all races covered in the &quot;</span>
+                <span class="s2">&quot;Generate the access evaluation dataset for all races covered in the &quot;</span>
                 <span class="s2">&quot;2021 preliminary study.&quot;</span>
             <span class="p">),</span>
         <span class="p">)</span>
@@ -144,7 +144,7 @@
 <span class="c1">###############################################################################</span>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../access_eval.bin.html#access_eval.bin.process_access_eval_2021_results.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../access_eval.bin.html#access_eval.bin.generate_access_eval_2021_dataset.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">_</span> <span class="o">=</span> <span class="n">Args</span><span class="p">()</span>
 
@@ -167,8 +167,8 @@
             <span class="n">post_eval_data</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="c1"># Store local</span>
-        <span class="n">expanded_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;combined-study-data.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># Store to data dir</span>
+        <span class="n">expanded_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">ACCESS_EVAL_2021_DATASET</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;=============================================&quot;</span><span class="p">)</span>

@@ -122,6 +122,7 @@
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
  
 </div>
 <h2 id="A">A</h2>
@@ -184,17 +185,17 @@
 </li>
       </ul></li>
       <li>
+    access_eval.bin.generate_access_eval_2021_dataset
+
+      <ul>
+        <li><a href="access_eval.bin.html#module-access_eval.bin.generate_access_eval_2021_dataset">module</a>
+</li>
+      </ul></li>
+      <li>
     access_eval.bin.post_process_access_eval
 
       <ul>
         <li><a href="access_eval.bin.html#module-access_eval.bin.post_process_access_eval">module</a>
-</li>
-      </ul></li>
-      <li>
-    access_eval.bin.process_access_eval_2021_results
-
-      <ul>
-        <li><a href="access_eval.bin.html#module-access_eval.bin.process_access_eval_2021_results">module</a>
 </li>
       </ul></li>
   </ul></td>
@@ -259,10 +260,10 @@
 </li>
       <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AggregateAxeViolation">AggregateAxeViolation (class in access_eval.analysis.parse_axe_results)</a>
 </li>
-      <li><a href="access_eval.bin.html#access_eval.bin.post_process_access_eval.Args">Args (class in access_eval.bin.post_process_access_eval)</a>
+      <li><a href="access_eval.bin.html#access_eval.bin.generate_access_eval_2021_dataset.Args">Args (class in access_eval.bin.generate_access_eval_2021_dataset)</a>
 
       <ul>
-        <li><a href="access_eval.bin.html#access_eval.bin.process_access_eval_2021_results.Args">(class in access_eval.bin.process_access_eval_2021_results)</a>
+        <li><a href="access_eval.bin.html#access_eval.bin.post_process_access_eval.Args">(class in access_eval.bin.post_process_access_eval)</a>
 </li>
       </ul></li>
       <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AxeImpact">AxeImpact (class in access_eval.analysis.parse_axe_results)</a>
@@ -281,18 +282,22 @@
 </li>
       <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.candidate_position">candidate_position (access_eval.analysis.constants.DatasetFields attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="access_eval.html#access_eval.utils.clean_url">clean_url() (in module access_eval.utils)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="access_eval.analysis.html#access_eval.analysis.core.combine_election_data_with_axe_results">combine_election_data_with_axe_results() (in module access_eval.analysis.core)</a>
+</li>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics">CompiledMetrics (class in access_eval.analysis.core)</a>
 </li>
       <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.contacted">contacted (access_eval.analysis.constants.DatasetFields attribute)</a>
 </li>
-      <li><a href="access_eval.analysis.html#access_eval.analysis.core.ViolationCounts.critical">critical (access_eval.analysis.core.ViolationCounts attribute)</a>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AxeImpact.critical">critical (access_eval.analysis.parse_axe_results.AxeImpact attribute)</a>
+</li>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics.critical_violations">critical_violations (access_eval.analysis.core.CompiledMetrics attribute)</a>
 
       <ul>
-        <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AxeImpact.critical">(access_eval.analysis.parse_axe_results.AxeImpact attribute)</a>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.RunningMetrics.critical_violations">(access_eval.analysis.core.RunningMetrics attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -324,11 +329,17 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.ease_of_reading">ease_of_reading (access_eval.analysis.constants.DatasetFields attribute)</a>
+
+      <ul>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics.ease_of_reading">(access_eval.analysis.core.CompiledMetrics attribute)</a>
 </li>
-      <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.election_result">election_result (access_eval.analysis.constants.DatasetFields attribute)</a>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.WordMetric.ease_of_reading">(access_eval.analysis.core.WordMetric attribute)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.election_result">election_result (access_eval.analysis.constants.DatasetFields attribute)</a>
+</li>
       <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.election_type">election_type (access_eval.analysis.constants.DatasetFields attribute)</a>
 </li>
       <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.electoral_position">electoral_position (access_eval.analysis.constants.DatasetFields attribute)</a>
@@ -341,9 +352,13 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="access_eval.analysis.html#access_eval.analysis.core.ViolationCounts.from_dict">from_dict() (access_eval.analysis.core.ViolationCounts class method)</a>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics.from_dict">from_dict() (access_eval.analysis.core.CompiledMetrics class method)</a>
 
       <ul>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.RunningMetrics.from_dict">(access_eval.analysis.core.RunningMetrics class method)</a>
+</li>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.WordMetric.from_dict">(access_eval.analysis.core.WordMetric class method)</a>
+</li>
         <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AggregateAxeViolation.from_dict">(access_eval.analysis.parse_axe_results.AggregateAxeViolation class method)</a>
 </li>
         <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.from_dict">(access_eval.analysis.parse_axe_results.SimplifiedAxeViolation class method)</a>
@@ -351,9 +366,13 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="access_eval.analysis.html#access_eval.analysis.core.ViolationCounts.from_json">from_json() (access_eval.analysis.core.ViolationCounts class method)</a>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics.from_json">from_json() (access_eval.analysis.core.CompiledMetrics class method)</a>
 
       <ul>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.RunningMetrics.from_json">(access_eval.analysis.core.RunningMetrics class method)</a>
+</li>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.WordMetric.from_json">(access_eval.analysis.core.WordMetric class method)</a>
+</li>
         <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AggregateAxeViolation.from_json">(access_eval.analysis.parse_axe_results.AggregateAxeViolation class method)</a>
 </li>
         <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.from_json">(access_eval.analysis.parse_axe_results.SimplifiedAxeViolation class method)</a>
@@ -417,22 +436,26 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="access_eval.bin.html#access_eval.bin.post_process_access_eval.main">main() (in module access_eval.bin.post_process_access_eval)</a>
+      <li><a href="access_eval.bin.html#access_eval.bin.generate_access_eval_2021_dataset.main">main() (in module access_eval.bin.generate_access_eval_2021_dataset)</a>
 
       <ul>
-        <li><a href="access_eval.bin.html#access_eval.bin.process_access_eval_2021_results.main">(in module access_eval.bin.process_access_eval_2021_results)</a>
+        <li><a href="access_eval.bin.html#access_eval.bin.post_process_access_eval.main">(in module access_eval.bin.post_process_access_eval)</a>
 </li>
       </ul></li>
-      <li><a href="access_eval.analysis.html#access_eval.analysis.core.ViolationCounts.minor">minor (access_eval.analysis.core.ViolationCounts attribute)</a>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AxeImpact.minor">minor (access_eval.analysis.parse_axe_results.AxeImpact attribute)</a>
+</li>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics.minor_violations">minor_violations (access_eval.analysis.core.CompiledMetrics attribute)</a>
 
       <ul>
-        <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AxeImpact.minor">(access_eval.analysis.parse_axe_results.AxeImpact attribute)</a>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.RunningMetrics.minor_violations">(access_eval.analysis.core.RunningMetrics attribute)</a>
 </li>
       </ul></li>
-      <li><a href="access_eval.analysis.html#access_eval.analysis.core.ViolationCounts.moderate">moderate (access_eval.analysis.core.ViolationCounts attribute)</a>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AxeImpact.moderate">moderate (access_eval.analysis.parse_axe_results.AxeImpact attribute)</a>
+</li>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics.moderate_violations">moderate_violations (access_eval.analysis.core.CompiledMetrics attribute)</a>
 
       <ul>
-        <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AxeImpact.moderate">(access_eval.analysis.parse_axe_results.AxeImpact attribute)</a>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.RunningMetrics.moderate_violations">(access_eval.analysis.core.RunningMetrics attribute)</a>
 </li>
       </ul></li>
       <li>
@@ -455,9 +478,9 @@
 </li>
         <li><a href="access_eval.bin.html#module-access_eval.bin">access_eval.bin</a>
 </li>
-        <li><a href="access_eval.bin.html#module-access_eval.bin.post_process_access_eval">access_eval.bin.post_process_access_eval</a>
+        <li><a href="access_eval.bin.html#module-access_eval.bin.generate_access_eval_2021_dataset">access_eval.bin.generate_access_eval_2021_dataset</a>
 </li>
-        <li><a href="access_eval.bin.html#module-access_eval.bin.process_access_eval_2021_results">access_eval.bin.process_access_eval_2021_results</a>
+        <li><a href="access_eval.bin.html#module-access_eval.bin.post_process_access_eval">access_eval.bin.post_process_access_eval</a>
 </li>
         <li><a href="access_eval.html#module-access_eval.constants">access_eval.constants</a>
 </li>
@@ -502,10 +525,10 @@
 </li>
       <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.number_of_moderate_errors_pre">number_of_moderate_errors_pre (access_eval.analysis.constants.DatasetFields attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AggregateAxeViolation.number_of_pages_affected">number_of_pages_affected (access_eval.analysis.parse_axe_results.AggregateAxeViolation attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.number_of_pages_post">number_of_pages_post (access_eval.analysis.constants.DatasetFields attribute)</a>
 </li>
       <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.number_of_pages_pre">number_of_pages_pre (access_eval.analysis.constants.DatasetFields attribute)</a>
@@ -519,11 +542,19 @@
       <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.number_of_total_errors_pre">number_of_total_errors_pre (access_eval.analysis.constants.DatasetFields attribute)</a>
 </li>
       <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.number_of_unique_words">number_of_unique_words (access_eval.analysis.constants.DatasetFields attribute)</a>
+
+      <ul>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics.number_of_unique_words">(access_eval.analysis.core.CompiledMetrics attribute)</a>
 </li>
+      </ul></li>
       <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.number_of_votes_for_candidate">number_of_votes_for_candidate (access_eval.analysis.constants.DatasetFields attribute)</a>
 </li>
       <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.number_of_words">number_of_words (access_eval.analysis.constants.DatasetFields attribute)</a>
+
+      <ul>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics.number_of_words">(access_eval.analysis.core.CompiledMetrics attribute)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -538,13 +569,19 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="access_eval.analysis.html#access_eval.analysis.core.ViolationCounts.pages">pages (access_eval.analysis.core.ViolationCounts attribute)</a>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics.pages">pages (access_eval.analysis.core.CompiledMetrics attribute)</a>
+
+      <ul>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.RunningMetrics.pages">(access_eval.analysis.core.RunningMetrics attribute)</a>
 </li>
+      </ul></li>
       <li><a href="access_eval.spiders.html#access_eval.spiders.access_eval_spider.AccessEvalSpider.parse">parse() (access_eval.spiders.access_eval_spider.AccessEvalSpider method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="access_eval.spiders.html#access_eval.spiders.access_eval_spider.AccessEvalSpider.parse_result">parse_result() (access_eval.spiders.access_eval_spider.AccessEvalSpider method)</a>
+</li>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.process_axe_evaluations_and_extras">process_axe_evaluations_and_extras() (in module access_eval.analysis.core)</a>
 </li>
       <li><a href="access_eval.middlewares.html#access_eval.middlewares.redirected_offsite.OffsiteDownloaderMiddleware.process_request">process_request() (access_eval.middlewares.redirected_offsite.OffsiteDownloaderMiddleware method)</a>
 </li>
@@ -556,8 +593,6 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.race_funding">race_funding (access_eval.analysis.constants.DatasetFields attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AggregateAxeViolation.reason">reason (access_eval.analysis.parse_axe_results.AggregateAxeViolation attribute)</a>
 
       <ul>
@@ -565,32 +600,40 @@
 </li>
       </ul></li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.RunningMetrics">RunningMetrics (class in access_eval.analysis.core)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="access_eval.analysis.html#access_eval.analysis.core.ViolationCounts.schema">schema() (access_eval.analysis.core.ViolationCounts class method)</a>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics.schema">schema() (access_eval.analysis.core.CompiledMetrics class method)</a>
 
       <ul>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.RunningMetrics.schema">(access_eval.analysis.core.RunningMetrics class method)</a>
+</li>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.WordMetric.schema">(access_eval.analysis.core.WordMetric class method)</a>
+</li>
         <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AggregateAxeViolation.schema">(access_eval.analysis.parse_axe_results.AggregateAxeViolation class method)</a>
 </li>
         <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.schema">(access_eval.analysis.parse_axe_results.SimplifiedAxeViolation class method)</a>
 </li>
       </ul></li>
-      <li><a href="access_eval.analysis.html#access_eval.analysis.core.ViolationCounts.serious">serious (access_eval.analysis.core.ViolationCounts attribute)</a>
-
-      <ul>
-        <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AxeImpact.serious">(access_eval.analysis.parse_axe_results.AxeImpact attribute)</a>
-</li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AxeImpact.serious">serious (access_eval.analysis.parse_axe_results.AxeImpact attribute)</a>
+</li>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics.serious_violations">serious_violations (access_eval.analysis.core.CompiledMetrics attribute)</a>
+
+      <ul>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.RunningMetrics.serious_violations">(access_eval.analysis.core.RunningMetrics attribute)</a>
+</li>
+      </ul></li>
       <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation">SimplifiedAxeViolation (class in access_eval.analysis.parse_axe_results)</a>
 </li>
       <li><a href="access_eval.spiders.html#access_eval.spiders.access_eval_spider.AccessEvalSpider.start_requests">start_requests() (access_eval.spiders.access_eval_spider.AccessEvalSpider method)</a>
-</li>
-      <li><a href="access_eval.analysis.html#access_eval.analysis.core.sum_axe_violation_levels">sum_axe_violation_levels() (in module access_eval.analysis.core)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -598,9 +641,13 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="access_eval.analysis.html#access_eval.analysis.core.ViolationCounts.to_dict">to_dict() (access_eval.analysis.core.ViolationCounts method)</a>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics.to_dict">to_dict() (access_eval.analysis.core.CompiledMetrics method)</a>
 
       <ul>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.RunningMetrics.to_dict">(access_eval.analysis.core.RunningMetrics method)</a>
+</li>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.WordMetric.to_dict">(access_eval.analysis.core.WordMetric method)</a>
+</li>
         <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AggregateAxeViolation.to_dict">(access_eval.analysis.parse_axe_results.AggregateAxeViolation method)</a>
 </li>
         <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.to_dict">(access_eval.analysis.parse_axe_results.SimplifiedAxeViolation method)</a>
@@ -608,9 +655,13 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="access_eval.analysis.html#access_eval.analysis.core.ViolationCounts.to_json">to_json() (access_eval.analysis.core.ViolationCounts method)</a>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics.to_json">to_json() (access_eval.analysis.core.CompiledMetrics method)</a>
 
       <ul>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.RunningMetrics.to_json">(access_eval.analysis.core.RunningMetrics method)</a>
+</li>
+        <li><a href="access_eval.analysis.html#access_eval.analysis.core.WordMetric.to_json">(access_eval.analysis.core.WordMetric method)</a>
+</li>
         <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.AggregateAxeViolation.to_json">(access_eval.analysis.parse_axe_results.AggregateAxeViolation method)</a>
 </li>
         <li><a href="access_eval.analysis.html#access_eval.analysis.parse_axe_results.SimplifiedAxeViolation.to_json">(access_eval.analysis.parse_axe_results.SimplifiedAxeViolation method)</a>
@@ -622,6 +673,10 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.WordMetric.unique_words">unique_words (access_eval.analysis.core.WordMetric attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="access_eval.analysis.html#access_eval.analysis.utils.unpack_data">unpack_data() (in module access_eval.analysis.utils)</a>
 </li>
   </ul></td>
@@ -630,11 +685,21 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="access_eval.analysis.html#access_eval.analysis.core.ViolationCounts">ViolationCounts (class in access_eval.analysis.core)</a>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.vote_share">vote_share (access_eval.analysis.constants.DatasetFields attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.RunningMetrics.word_metrics">word_metrics (access_eval.analysis.core.RunningMetrics attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="access_eval.analysis.html#access_eval.analysis.constants.DatasetFields.vote_share">vote_share (access_eval.analysis.constants.DatasetFields attribute)</a>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.WordMetric">WordMetric (class in access_eval.analysis.core)</a>
+</li>
+      <li><a href="access_eval.analysis.html#access_eval.analysis.core.WordMetric.words">words (access_eval.analysis.core.WordMetric attribute)</a>
 </li>
   </ul></td>
 </tr></table>

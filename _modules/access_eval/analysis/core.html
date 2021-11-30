@@ -108,12 +108,18 @@
 
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">dataclasses_json</span> <span class="kn">import</span> <span class="n">dataclass_json</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.common.exceptions</span> <span class="kn">import</span> <span class="n">WebDriverException</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver</span> <span class="kn">import</span> <span class="n">FirefoxOptions</span>
+<span class="kn">from</span> <span class="nn">textstat</span> <span class="kn">import</span> <span class="n">flesch_reading_ease</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
 <span class="kn">from</span> <span class="nn">..constants</span> <span class="kn">import</span> <span class="n">SINGLE_PAGE_AXE_RESULTS_FILENAME</span>
 <span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">clean_url</span>
@@ -126,24 +132,83 @@
 <span class="c1">###############################################################################</span>
 
 
-<div class="viewcode-block" id="ViolationCounts"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.ViolationCounts">[docs]</a><span class="nd">@dataclass_json</span>
+<div class="viewcode-block" id="WordMetric"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.WordMetric">[docs]</a><span class="nd">@dataclass_json</span>
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">ViolationCounts</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">WordMetric</span><span class="p">:</span>
+    <span class="n">words</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">unique_words</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">ease_of_reading</span><span class="p">:</span> <span class="nb">float</span></div>
+
+
+<div class="viewcode-block" id="RunningMetrics"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.RunningMetrics">[docs]</a><span class="nd">@dataclass_json</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">RunningMetrics</span><span class="p">:</span>
     <span class="n">pages</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">minor</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">moderate</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">serious</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">critical</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span></div>
+    <span class="n">minor_violations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">moderate_violations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">serious_violations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">critical_violations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">word_metrics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">WordMetric</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<span class="k">def</span> <span class="nf">_get_counts</span><span class="p">(</span>
+<div class="viewcode-block" id="CompiledMetrics"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.CompiledMetrics">[docs]</a><span class="nd">@dataclass_json</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">CompiledMetrics</span><span class="p">:</span>
+    <span class="n">pages</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">minor_violations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">moderate_violations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">serious_violations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">critical_violations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">number_of_words</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">number_of_unique_words</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">ease_of_reading</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span></div>
+
+
+<span class="c1">###############################################################################</span>
+
+
+<span class="k">def</span> <span class="nf">_process_page_words</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">WordMetric</span><span class="p">]:</span>
+    <span class="c1"># Spawn webdriver process</span>
+    <span class="n">opts</span> <span class="o">=</span> <span class="n">FirefoxOptions</span><span class="p">()</span>
+    <span class="n">opts</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--headless&quot;</span><span class="p">)</span>
+    <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">(</span><span class="n">firefox_options</span><span class="o">=</span><span class="n">opts</span><span class="p">)</span>
+
+    <span class="c1"># Load site</span>
+    <span class="n">metric</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">WordMetric</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_tag_name</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">metric</span> <span class="o">=</span> <span class="n">WordMetric</span><span class="p">(</span>
+            <span class="n">words</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">),</span>
+            <span class="c1"># Lowercase</span>
+            <span class="c1"># Keep only alphanumeric characters</span>
+            <span class="c1"># Convert to set</span>
+            <span class="n">unique_words</span><span class="o">=</span><span class="nb">set</span><span class="p">([</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^a-z0-9]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]),</span>
+            <span class="n">ease_of_reading</span><span class="o">=</span><span class="n">flesch_reading_ease</span><span class="p">(</span><span class="n">text</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">WebDriverException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Failed to create webdriver for page word metrics for page: &#39;</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&#39; -- </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="n">metric</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c1"># Run checks and store results</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">metric</span>
+
+
+<span class="k">def</span> <span class="nf">_recurse_axe_results</span><span class="p">(</span>
     <span class="n">axe_results_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
-    <span class="n">counts</span><span class="p">:</span> <span class="n">ViolationCounts</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ViolationCounts</span><span class="p">:</span>
-    <span class="c1"># Run _get_counts for all children dirs -- recursive</span>
+    <span class="n">metrics</span><span class="p">:</span> <span class="n">RunningMetrics</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RunningMetrics</span><span class="p">:</span>
+    <span class="c1"># Run _recurse_axe_results for all children dirs -- recursive</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">axe_results_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
-            <span class="n">counts</span> <span class="o">=</span> <span class="n">_get_counts</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">counts</span><span class="o">=</span><span class="n">counts</span><span class="p">)</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="n">_recurse_axe_results</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">)</span>
 
     <span class="c1"># Get this dirs result file</span>
     <span class="n">this_dir_results</span> <span class="o">=</span> <span class="n">axe_results_dir</span> <span class="o">/</span> <span class="n">SINGLE_PAGE_AXE_RESULTS_FILENAME</span>
@@ -152,54 +217,117 @@
             <span class="n">this_dir_loaded_results</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">open_f</span><span class="p">)</span>
 
         <span class="c1"># Increment pages</span>
-        <span class="n">counts</span><span class="o">.</span><span class="n">pages</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">metrics</span><span class="o">.</span><span class="n">pages</span> <span class="o">+=</span> <span class="mi">1</span>
 
         <span class="c1"># Sum different violation levels for this page</span>
         <span class="k">for</span> <span class="n">violation</span> <span class="ow">in</span> <span class="n">this_dir_loaded_results</span><span class="p">[</span><span class="s2">&quot;violations&quot;</span><span class="p">]:</span>
             <span class="n">impact</span> <span class="o">=</span> <span class="n">violation</span><span class="p">[</span><span class="s2">&quot;impact&quot;</span><span class="p">]</span>
-            <span class="n">current_count</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">impact</span><span class="p">)</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">impact</span><span class="p">,</span> <span class="n">current_count</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">violation</span><span class="p">[</span><span class="s2">&quot;nodes&quot;</span><span class="p">]))</span>
+            <span class="n">metric_storage_target</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">impact</span><span class="si">}</span><span class="s2">_violations&quot;</span>
+            <span class="n">current_count</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">metric_storage_target</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span>
+                <span class="n">metrics</span><span class="p">,</span>
+                <span class="n">metric_storage_target</span><span class="p">,</span>
+                <span class="n">current_count</span>
+                <span class="o">+</span> <span class="nb">len</span><span class="p">(</span>
+                    <span class="n">violation</span><span class="p">[</span><span class="s2">&quot;nodes&quot;</span><span class="p">],</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">counts</span>
+        <span class="c1"># Calc page word metrics</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">this_dir_loaded_results</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">metrics</span><span class="o">.</span><span class="n">word_metrics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">word_metrics</span><span class="p">[</span><span class="n">url</span><span class="p">]</span> <span class="o">=</span> <span class="n">_process_page_words</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">metrics</span>
 
 
-<div class="viewcode-block" id="sum_axe_violation_levels"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.sum_axe_violation_levels">[docs]</a><span class="k">def</span> <span class="nf">sum_axe_violation_levels</span><span class="p">(</span><span class="n">axe_results_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ViolationCounts</span><span class="p">:</span>
+<div class="viewcode-block" id="process_axe_evaluations_and_extras"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.process_axe_evaluations_and_extras">[docs]</a><span class="k">def</span> <span class="nf">process_axe_evaluations_and_extras</span><span class="p">(</span>
+    <span class="n">axe_results_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">generate_extras</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CompiledMetrics</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Sum the various levels of axe violations for a whole axe result tree.</span>
+<span class="sd">    Process all aXe evaluations and generate extra features</span>
+<span class="sd">    (words, ease of reading, etc.) for the provided aXe result tree.</span>
+<span class="sd">    Extras are optional to generate.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    axe_results_dir: Union[str, Path]</span>
 <span class="sd">        The directory for a specific website that has been processed using the access</span>
 <span class="sd">        eval scraper.</span>
+<span class="sd">    generate_extras: bool</span>
+<span class="sd">        Should the extra features be generated?</span>
+<span class="sd">        Default: False (do not generate extra features)</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    violation_counts: ViolationCounts</span>
-<span class="sd">        The counts of all violation levels summed for the whole axe results tree.</span>
+<span class="sd">    metrics: CompiledMetrics</span>
+<span class="sd">        The counts of all violation levels summed for the whole axe results tree</span>
+<span class="sd">        (and optional extra features).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Handle path and dir checking</span>
     <span class="n">axe_results_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">axe_results_dir</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">axe_results_dir</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
         <span class="k">raise</span> <span class="ne">NotADirectoryError</span><span class="p">(</span><span class="n">axe_results_dir</span><span class="p">)</span>
 
-    <span class="c1"># Run _get_counts for whole tree</span>
-    <span class="k">return</span> <span class="n">_get_counts</span><span class="p">(</span><span class="n">axe_results_dir</span><span class="p">,</span> <span class="n">ViolationCounts</span><span class="p">())</span></div>
+    <span class="c1"># Prep for recursive processing</span>
+    <span class="n">word_metrics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">generate_extras</span><span class="p">:</span>
+        <span class="n">word_metrics</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">word_metrics</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Process</span>
+    <span class="n">parsed_metrics</span> <span class="o">=</span> <span class="n">_recurse_axe_results</span><span class="p">(</span>
+        <span class="n">axe_results_dir</span><span class="p">,</span> <span class="n">RunningMetrics</span><span class="p">(</span><span class="n">word_metrics</span><span class="o">=</span><span class="n">word_metrics</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Any post-processing of metrics to get to compiled state</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">unique_words</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">reading_measures</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">parsed_metrics</span><span class="o">.</span><span class="n">word_metrics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">page_metrics</span> <span class="ow">in</span> <span class="n">parsed_metrics</span><span class="o">.</span><span class="n">word_metrics</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">page_metrics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">words</span> <span class="o">+=</span> <span class="n">page_metrics</span><span class="o">.</span><span class="n">words</span>
+                <span class="c1"># Union equal (set addition)</span>
+                <span class="n">unique_words</span> <span class="o">|=</span> <span class="n">page_metrics</span><span class="o">.</span><span class="n">unique_words</span>
+                <span class="n">reading_measures</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">page_metrics</span><span class="o">.</span><span class="n">ease_of_reading</span><span class="p">)</span>
+
+    <span class="c1"># Handle div zero for mean reading measure</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">reading_measures</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ease_of_reading</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ease_of_reading</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">reading_measures</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">reading_measures</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">CompiledMetrics</span><span class="p">(</span>
+        <span class="n">pages</span><span class="o">=</span><span class="n">parsed_metrics</span><span class="o">.</span><span class="n">pages</span><span class="p">,</span>
+        <span class="n">minor_violations</span><span class="o">=</span><span class="n">parsed_metrics</span><span class="o">.</span><span class="n">minor_violations</span><span class="p">,</span>
+        <span class="n">moderate_violations</span><span class="o">=</span><span class="n">parsed_metrics</span><span class="o">.</span><span class="n">moderate_violations</span><span class="p">,</span>
+        <span class="n">serious_violations</span><span class="o">=</span><span class="n">parsed_metrics</span><span class="o">.</span><span class="n">serious_violations</span><span class="p">,</span>
+        <span class="n">critical_violations</span><span class="o">=</span><span class="n">parsed_metrics</span><span class="o">.</span><span class="n">critical_violations</span><span class="p">,</span>
+        <span class="n">number_of_words</span><span class="o">=</span><span class="n">words</span><span class="p">,</span>
+        <span class="n">number_of_unique_words</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_words</span><span class="p">),</span>
+        <span class="n">ease_of_reading</span><span class="o">=</span><span class="n">ease_of_reading</span><span class="p">,</span>
+    <span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_convert_violation_counts_to_expanded_data</span><span class="p">(</span>
-    <span class="n">counts</span><span class="p">:</span> <span class="n">ViolationCounts</span><span class="p">,</span>
+<span class="k">def</span> <span class="nf">_convert_metrics_to_expanded_data</span><span class="p">(</span>
+    <span class="n">metrics</span><span class="p">:</span> <span class="n">CompiledMetrics</span><span class="p">,</span>
     <span class="n">phase</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
     <span class="k">return</span> <span class="p">{</span>
-        <span class="sa">f</span><span class="s2">&quot;number_of_pages_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">counts</span><span class="o">.</span><span class="n">pages</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;number_of_pages_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">pages</span><span class="p">,</span>
         <span class="sa">f</span><span class="s2">&quot;number_of_total_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">(</span>
-            <span class="n">counts</span><span class="o">.</span><span class="n">critical</span> <span class="o">+</span> <span class="n">counts</span><span class="o">.</span><span class="n">serious</span> <span class="o">+</span> <span class="n">counts</span><span class="o">.</span><span class="n">moderate</span> <span class="o">+</span> <span class="n">counts</span><span class="o">.</span><span class="n">minor</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">critical_violations</span>
+            <span class="o">+</span> <span class="n">metrics</span><span class="o">.</span><span class="n">serious_violations</span>
+            <span class="o">+</span> <span class="n">metrics</span><span class="o">.</span><span class="n">moderate_violations</span>
+            <span class="o">+</span> <span class="n">metrics</span><span class="o">.</span><span class="n">minor_violations</span>
         <span class="p">),</span>
-        <span class="sa">f</span><span class="s2">&quot;number_of_critical_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">counts</span><span class="o">.</span><span class="n">critical</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;number_of_serious_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">counts</span><span class="o">.</span><span class="n">serious</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;number_of_moderate_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">counts</span><span class="o">.</span><span class="n">moderate</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;number_of_minor_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">counts</span><span class="o">.</span><span class="n">minor</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;number_of_critical_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">critical_violations</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;number_of_serious_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">serious_violations</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;number_of_moderate_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">moderate_violations</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;number_of_minor_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">minor_violations</span><span class="p">,</span>
     <span class="p">}</span>
 
 
@@ -231,8 +359,9 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    full_data: pd.DataFrame</span>
-<span class="sd">        The original election data and the summed violation counts for both pre and post</span>
-<span class="sd">        contact for each campaign website combined into a single dataframe.</span>
+<span class="sd">        The original election data, the summed violation counts for both pre and post</span>
+<span class="sd">        contact, and the scraped text features using the post-contact aXe URLs</span>
+<span class="sd">        for each campaign website combined into a single dataframe.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -276,29 +405,42 @@
 
     <span class="c1"># Iter election data and create List of expanded dicts with added</span>
     <span class="n">expanded_data</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">election_data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">election_data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">()):</span>
         <span class="n">cleaned_url</span> <span class="o">=</span> <span class="n">clean_url</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">campaign_website_url</span><span class="p">])</span>
         <span class="n">pre_access_eval</span> <span class="o">=</span> <span class="n">pre_contact_axe_scraping_results</span> <span class="o">/</span> <span class="n">cleaned_url</span>
         <span class="n">post_access_eval</span> <span class="o">=</span> <span class="n">post_contact_axe_scraping_results</span> <span class="o">/</span> <span class="n">cleaned_url</span>
 
         <span class="c1"># Only continue with the addition if pre and post both exist</span>
         <span class="k">if</span> <span class="n">pre_access_eval</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">post_access_eval</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="c1"># Run summing</span>
-            <span class="n">pre_access_eval_counts</span> <span class="o">=</span> <span class="n">sum_axe_violation_levels</span><span class="p">(</span><span class="n">pre_access_eval</span><span class="p">)</span>
-            <span class="n">post_access_eval_counts</span> <span class="o">=</span> <span class="n">sum_axe_violation_levels</span><span class="p">(</span><span class="n">post_access_eval</span><span class="p">)</span>
+            <span class="c1"># Run metric generation</span>
+            <span class="n">pre_access_eval_metrics</span> <span class="o">=</span> <span class="n">process_axe_evaluations_and_extras</span><span class="p">(</span>
+                <span class="n">pre_access_eval</span><span class="p">,</span>
+                <span class="n">generate_extras</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">post_access_eval_metrics</span> <span class="o">=</span> <span class="n">process_axe_evaluations_and_extras</span><span class="p">(</span>
+                <span class="n">post_access_eval</span><span class="p">,</span>
+                <span class="n">generate_extras</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
 
             <span class="c1"># Combine and merge to expanded data</span>
             <span class="n">expanded_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="p">{</span>
+                    <span class="c1"># Original row details</span>
                     <span class="o">**</span><span class="n">row</span><span class="p">,</span>
-                    <span class="o">**</span><span class="n">_convert_violation_counts_to_expanded_data</span><span class="p">(</span>
-                        <span class="n">pre_access_eval_counts</span><span class="p">,</span>
+                    <span class="c1"># Pre-contact info</span>
+                    <span class="o">**</span><span class="n">_convert_metrics_to_expanded_data</span><span class="p">(</span>
+                        <span class="n">pre_access_eval_metrics</span><span class="p">,</span>
                         <span class="s2">&quot;pre&quot;</span><span class="p">,</span>
                     <span class="p">),</span>
-                    <span class="o">**</span><span class="n">_convert_violation_counts_to_expanded_data</span><span class="p">(</span>
-                        <span class="n">post_access_eval_counts</span><span class="p">,</span>
+                    <span class="c1"># Post-contact info</span>
+                    <span class="o">**</span><span class="n">_convert_metrics_to_expanded_data</span><span class="p">(</span>
+                        <span class="n">post_access_eval_metrics</span><span class="p">,</span>
                         <span class="s2">&quot;post&quot;</span><span class="p">,</span>
                     <span class="p">),</span>
+                    <span class="c1"># Extra features only apply for post-contact</span>
+                    <span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_words</span><span class="p">:</span> <span class="n">post_access_eval_metrics</span><span class="o">.</span><span class="n">number_of_words</span><span class="p">,</span>  <span class="c1"># noqa: E501</span>
+                    <span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_unique_words</span><span class="p">:</span> <span class="n">post_access_eval_metrics</span><span class="o">.</span><span class="n">number_of_unique_words</span><span class="p">,</span>  <span class="c1"># noqa: E501</span>
+                    <span class="n">DatasetFields</span><span class="o">.</span><span class="n">ease_of_reading</span><span class="p">:</span> <span class="n">post_access_eval_metrics</span><span class="o">.</span><span class="n">ease_of_reading</span><span class="p">,</span>  <span class="c1"># noqa: E501</span>
                 <span class="p">}</span>
             <span class="p">)</span>
 

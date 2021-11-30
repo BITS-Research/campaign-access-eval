@@ -4,18 +4,18 @@ access\_eval.bin package
 Submodules
 ----------
 
-access\_eval.bin.post\_process\_access\_eval module
----------------------------------------------------
+access\_eval.bin.generate\_access\_eval\_2021\_dataset module
+-------------------------------------------------------------
 
-.. automodule:: access_eval.bin.post_process_access_eval
+.. automodule:: access_eval.bin.generate_access_eval_2021_dataset
    :members:
    :undoc-members:
    :show-inheritance:
 
-access\_eval.bin.process\_access\_eval\_2021\_results module
-------------------------------------------------------------
+access\_eval.bin.post\_process\_access\_eval module
+---------------------------------------------------
 
-.. automodule:: access_eval.bin.process_access_eval_2021_results
+.. automodule:: access_eval.bin.post_process_access_eval
    :members:
    :undoc-members:
    :show-inheritance:
