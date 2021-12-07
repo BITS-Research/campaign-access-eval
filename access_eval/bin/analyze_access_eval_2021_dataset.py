@@ -6,9 +6,8 @@ import logging
 import sys
 import traceback
 
-from access_eval.analysis import constants
+from access_eval.analysis import constants, plotting
 from access_eval.analysis.core import load_access_eval_2021_dataset
-from access_eval.analysis import plotting
 
 ###############################################################################
 
