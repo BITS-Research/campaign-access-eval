@@ -18,7 +18,12 @@ from tqdm import tqdm
 
 from ..constants import SINGLE_PAGE_AXE_RESULTS_FILENAME
 from ..utils import clean_url
-from .constants import DatasetFields
+from .constants import (
+    ACCESS_EVAL_2021_DATASET,
+    ComputedField,
+    ComputedFields,
+    DatasetFields,
+)
 
 ###############################################################################
 
@@ -344,3 +349,36 @@ def combine_election_data_with_axe_results(
         f"because they were missing a pre or post aXe result directory."
     )
     return pd.DataFrame(expanded_data)
+
+
+def load_access_eval_2021_dataset(
+    path: Optional[Union[str, Path]] = None
+) -> pd.DataFrame:
+    """
+    Load the default access eval 2021 dataset or a provided custom dataset
+    and add all computed fields.
+
+    Parameters
+    ----------
+    path: Optional[Union[str, Path]]
+        An optional path for custom data to load.
+        Default: None (load official 2021 access eval dataset)
+
+    Returns
+    -------
+    data: pd.DataFrame
+        The loaded dataframe object with all extra computed fields added.
+    """
+
+    if path is None:
+        path = ACCESS_EVAL_2021_DATASET
+
+    # Load base data
+    data = pd.read_csv(ACCESS_EVAL_2021_DATASET)
+
+    # Add computed fields
+    for attr in ComputedFields.__dict__.values():
+        if isinstance(attr, ComputedField):
+            data[attr.name] = attr.func(data)
+
+    return data
