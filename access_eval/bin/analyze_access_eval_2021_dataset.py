@@ -6,7 +6,7 @@ import logging
 import sys
 import traceback
 
-from access_eval.analysis import constants, plotting
+from access_eval.analysis import plotting
 from access_eval.analysis.core import load_access_eval_2021_dataset
 
 ###############################################################################
@@ -46,25 +46,10 @@ def main() -> None:
         data = load_access_eval_2021_dataset()
 
         # Generate full plots
-        plotting.plot_computed_fields_over_vote_share()
-        plotting.plot_pre_post_fields_compare()
-
-        # For each subsetting field, subset by each unique value and
-        # plot again with just that subset
-        for field in [
-            constants.DatasetFields.electoral_position,
-            constants.DatasetFields.candidate_position,
-            constants.DatasetFields.candidate_history,
-        ]:
-            for val in data[field].unique():
-                plotting.plot_computed_fields_over_vote_share(
-                    data[data[field] == val],
-                    save_path=f"vote-share--{field}=={val}.png",
-                )
-                plotting.plot_pre_post_fields_compare(
-                    data[data[field] == val],
-                    save_path=f"pre-post--{field}=={val}.png",
-                )
+        plotting.plot_computed_fields_over_vote_share(data)
+        plotting.plot_pre_post_fields_compare(data)
+        plotting.plot_categorical_against_errors_boxplots()
+        plotting.plot_locations_against_errors_boxplots()
 
     except Exception as e:
         log.error("=============================================")
