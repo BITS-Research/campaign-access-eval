@@ -16,7 +16,7 @@ from selenium.webdriver import FirefoxOptions
 from textstat import flesch_reading_ease
 from tqdm import tqdm
 
-from ..constants import SINGLE_PAGE_AXE_RESULTS_FILENAME
+from ..constants import AGGREGATE_AXE_RESULTS_FILENAME, SINGLE_PAGE_AXE_RESULTS_FILENAME
 from ..utils import clean_url
 from .constants import (
     ACCESS_EVAL_2021_DATASET,
@@ -62,6 +62,7 @@ class CompiledMetrics:
     number_of_words: int = 0
     number_of_unique_words: int = 0
     ease_of_reading: float = 0.0
+    error_types: Optional[Dict[str, int]] = None
 
 
 ###############################################################################
@@ -200,6 +201,14 @@ def process_axe_evaluations_and_extras(
     else:
         ease_of_reading = sum(reading_measures) / len(reading_measures)
 
+    # Compile error types
+    agg_error_results = pd.read_csv(axe_results_dir / AGGREGATE_AXE_RESULTS_FILENAME)
+    error_types = {}
+    for _, row in agg_error_results[
+        ["id", "number_of_elements_in_violation"]
+    ].iterrows():
+        error_types[row.id] = row.number_of_elements_in_violation
+
     return CompiledMetrics(
         pages=parsed_metrics.pages,
         minor_violations=parsed_metrics.minor_violations,
@@ -209,6 +218,7 @@ def process_axe_evaluations_and_extras(
         number_of_words=words,
         number_of_unique_words=len(unique_words),
         ease_of_reading=ease_of_reading,
+        error_types=error_types,
     )
 
 
@@ -216,7 +226,16 @@ def _convert_metrics_to_expanded_data(
     metrics: CompiledMetrics,
     phase: str,
 ) -> Dict[str, int]:
+    # Unpack error types
+    if metrics.error_types is not None:
+        error_types = {
+            f"error-type_{k}_{phase}": v for k, v in metrics.error_types.items()
+        }
+    else:
+        error_types = {}
+
     return {
+        **error_types,
         f"number_of_pages_{phase}": metrics.pages,
         f"number_of_total_errors_{phase}": (
             metrics.critical_violations
