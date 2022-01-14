@@ -7,7 +7,7 @@ import sys
 import traceback
 
 from access_eval.analysis import plotting
-from access_eval.analysis.core import load_access_eval_2021_dataset
+from access_eval.analysis.core import flatten_access_eval_2021_dataset, load_access_eval_2021_dataset
 
 ###############################################################################
 
@@ -44,12 +44,14 @@ def main() -> None:
 
         # Load data
         data = load_access_eval_2021_dataset()
+        flat_data = flatten_access_eval_2021_dataset(data)
 
         # Generate full plots
         plotting.plot_computed_fields_over_vote_share(data)
         plotting.plot_pre_post_fields_compare(data)
-        plotting.plot_categorical_against_errors_boxplots()
-        plotting.plot_locations_against_errors_boxplots()
+        plotting.plot_categorical_against_errors_boxplots(flat_data)
+        plotting.plot_locations_against_errors_boxplots(flat_data)
+        plotting.plot_error_types_boxplots(flat_data)
 
     except Exception as e:
         log.error("=============================================")

@@ -221,3 +221,54 @@ def plot_locations_against_errors_boxplots(
     location_plots.save(str(save_path))
 
     return save_path
+
+
+def plot_error_types_boxplots(
+    data: Optional[pd.DataFrame] = None,
+) -> Path:
+    """
+    Input data should be the "flattened" dataset.
+    """
+    # Load default data
+    if data is None:
+        data = flatten_access_eval_2021_dataset()
+
+    # Use all pre-computed avg error type features
+    common_error_cols = [col for col in data.columns if "avg_error-type_" in col]
+
+    # Create plot
+    err_type_plots = alt.vconcat()
+    for err_type in common_error_cols:
+        cat_var_plot = alt.hconcat()
+        for cat_var in [
+            DatasetFields.electoral_position,
+            DatasetFields.candidate_position,
+            DatasetFields.candidate_history,
+            DatasetFields.election_result,
+            DatasetFields.contacted,
+            DatasetFields.location,
+        ]:
+            cat_var_plot |= (
+                alt.Chart(data)
+                .mark_boxplot(ticks=True)
+                .encode(
+                    x=alt.X(
+                        f"{DatasetFields.trial}:O",
+                        title=None,
+                        axis=alt.Axis(labels=False, ticks=False),
+                        scale=alt.Scale(padding=1),
+                    ),
+                    y=alt.Y(f"{err_type}:Q"),
+                    color=f"{DatasetFields.trial}:N",
+                    column=alt.Column(
+                        f"{cat_var}:N", spacing=60, header=alt.Header(orient="bottom")
+                    ),
+                )
+            )
+
+        err_type_plots &= cat_var_plot
+
+    save_path = Path("error-types-by-category-splits.png").resolve()
+    err_type_plots.save(str(save_path))
+
+    return save_path
