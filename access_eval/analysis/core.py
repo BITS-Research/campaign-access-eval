@@ -400,6 +400,25 @@ def load_access_eval_2021_dataset(
         if isinstance(attr, ComputedField):
             data[attr.name] = attr.func(data)
 
+    # Collect error type cols with a value above 0 at the 25th percentile
+    common_error_cols = []
+    for col in data.columns:
+        if "error-type_" in col and data[col].quantile(0.75) > 0:
+            common_error_cols.append(col)
+
+    # Create norm cols
+    for common_error_col in common_error_cols:
+        error_type = common_error_col.replace("_pre", "").replace("_post", "")
+        if "_pre" in common_error_col:
+            avg_error_type_col_name = f"avg_{error_type}_per_page_pre"
+            norm_col = DatasetFields.number_of_pages_pre
+        else:
+            avg_error_type_col_name = f"avg_{error_type}_per_page_post"
+            norm_col = DatasetFields.number_of_pages_post
+
+        # Norm
+        data[avg_error_type_col_name] = data[common_error_col] / data[norm_col]
+
     return data
 
 
