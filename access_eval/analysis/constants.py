@@ -40,6 +40,17 @@ class DatasetFields:
     Use this class as a data dictionary.
     """
 
+    location = "location"
+    """
+    str: The municipality or general location where the election
+    took place.
+
+    Examples
+    --------
+    - "Seattle, WA"
+    - "New Orleans, LA"
+    """
+
     campaign_website_url = "campaign_website_url"
     """
     str: The public URL for the campaign website.
@@ -133,6 +144,20 @@ class DatasetFields:
     --------
     - 12345
     - 2468
+
+    Notes
+    -----
+    Pulled from external data source.
+    """
+
+    number_of_votes_for_race = "number_of_votes_for_race"
+    """
+    int: The total number of votes returned in the election.
+
+    Examples
+    --------
+    - 123456
+    - 24680
 
     Notes
     -----
@@ -367,6 +392,21 @@ class DatasetFields:
     --------
     - 123
     - 42
+    """
+
+    trial = "trial"
+    """
+    str: The categorical variable added when the data has been flattened
+    from "pre" and "post" having independent columns to now sharing columns.
+    
+    Examples
+    --------
+    - "Pre"
+    - "Post"
+
+    Notes
+    -----
+    This is only added with the flattened data.
     """
 
 
