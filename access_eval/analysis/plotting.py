@@ -236,7 +236,7 @@ def plot_locations_against_errors_boxplots(
                         ),
                         color=f"{DatasetFields.trial}:N",
                         column=alt.Column(
-                            f"{DatasetFields.candidate_history}:N",
+                            f"{DatasetFields.candidate_position}:N",
                             spacing=60,
                             header=alt.Header(orient="bottom"),
                         ),
@@ -271,9 +271,7 @@ def plot_error_types_boxplots(
         for cat_var in [
             DatasetFields.electoral_position,
             DatasetFields.candidate_position,
-            DatasetFields.candidate_history,
             DatasetFields.election_result,
-            DatasetFields.contacted,
             DatasetFields.location,
         ]:
             cat_var_plot |= (
