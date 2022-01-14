@@ -409,6 +409,22 @@ class DatasetFields:
     This is only added with the flattened data.
     """
 
+    error_type_x = "error_type_x"
+    """
+    int: There are many columns that begin with 'error-type_'.
+    Such columns are just the aggregate value of that error type X for that campaign.
+
+    Examples
+    --------
+    - "error-type_label_pre": 12
+    - "error-type_frame-title_post": 4
+
+    Notes
+    -----
+    These columns have a computed field as well which is the `avg_error-type_x` for both
+    pre and post.
+    """
+
 
 class ComputedFields:
 
