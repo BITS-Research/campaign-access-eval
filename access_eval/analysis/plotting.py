@@ -147,6 +147,11 @@ def plot_categorical_against_errors_boxplots(
             ComputedFields.avg_serious_errors_per_page_post.name,
             ComputedFields.avg_critical_errors_per_page_post.name,
         ]:
+            feature_name = err.replace("_post", "")
+            scale_name = ComputedFields.avg_errors_per_page_post.name.replace(
+                "_post", ""
+            )
+
             error_types |= (
                 alt.Chart(data)
                 .mark_boxplot(ticks=True)
@@ -157,7 +162,16 @@ def plot_categorical_against_errors_boxplots(
                         axis=alt.Axis(labels=False, ticks=False),
                         scale=alt.Scale(padding=1),
                     ),
-                    y=alt.Y(f"{err.replace('_post', '')}:Q"),
+                    y=alt.Y(
+                        f"{feature_name}:Q",
+                        scale=alt.Scale(
+                            domain=(
+                                data[scale_name].min(),
+                                data[scale_name].max(),
+                            ),
+                            padding=1,
+                        ),
+                    ),
                     color=f"{DatasetFields.trial}:N",
                     column=alt.Column(
                         f"{cat_var}:N", spacing=40, header=alt.Header(orient="bottom")
@@ -195,6 +209,11 @@ def plot_locations_against_errors_boxplots(
                 ComputedFields.avg_serious_errors_per_page_post.name,
                 ComputedFields.avg_critical_errors_per_page_post.name,
             ]:
+                feature_name = err.replace("_post", "")
+                scale_name = ComputedFields.avg_errors_per_page_post.name.replace(
+                    "_post", ""
+                )
+
                 error_types |= (
                     alt.Chart(location_subset)
                     .mark_boxplot(ticks=True)
@@ -205,7 +224,16 @@ def plot_locations_against_errors_boxplots(
                             axis=alt.Axis(labels=False, ticks=False),
                             scale=alt.Scale(padding=1),
                         ),
-                        y=alt.Y(f"{err.replace('_post', '')}:Q"),
+                        y=alt.Y(
+                            f"{feature_name}:Q",
+                            scale=alt.Scale(
+                                domain=(
+                                    data[scale_name].min(),
+                                    data[scale_name].max(),
+                                ),
+                                padding=1,
+                            ),
+                        ),
                         color=f"{DatasetFields.trial}:N",
                         column=alt.Column(
                             f"{DatasetFields.candidate_history}:N",
@@ -258,7 +286,16 @@ def plot_error_types_boxplots(
                         axis=alt.Axis(labels=False, ticks=False),
                         scale=alt.Scale(padding=1),
                     ),
-                    y=alt.Y(f"{err_type}:Q"),
+                    y=alt.Y(
+                        f"{err_type}:Q",
+                        scale=alt.Scale(
+                            domain=(
+                                data[err_type].min(),
+                                data[err_type].max(),
+                            ),
+                            padding=1,
+                        ),
+                    ),
                     color=f"{DatasetFields.trial}:N",
                     column=alt.Column(
                         f"{cat_var}:N", spacing=60, header=alt.Header(orient="bottom")
