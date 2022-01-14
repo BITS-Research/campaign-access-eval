@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from pathlib import Path
-from typing import Optional, Union
+from typing import List, Optional, Union
 
 import altair as alt
 import pandas as pd
 
 from .constants import ComputedFields, DatasetFields
-from .core import load_access_eval_2021_dataset
+from .core import load_access_eval_2021_dataset, flatten_access_eval_2021_dataset
 
 ###############################################################################
 
@@ -113,4 +113,111 @@ def plot_pre_post_fields_compare(
         )
 
     pre_post.save(str(save_path.resolve()))
+    return save_path
+
+
+def plot_categorical_against_errors_boxplots(
+    data: Optional[pd.DataFrame] = None,
+) -> List[Path]:
+    """
+    Input data should be the "flattened" dataset.
+    """
+    # Load default data
+    if data is None:
+        data = flatten_access_eval_2021_dataset()
+
+    # Set of categorical variables to use for box plot generation
+    categorical_variables = [
+        DatasetFields.electoral_position,
+        DatasetFields.candidate_position,
+        DatasetFields.candidate_history,
+        DatasetFields.election_result,
+        DatasetFields.contacted,
+    ]
+
+    # For each categorical variable, create a row of the different error measures
+    save_paths = []
+    for cat_var in categorical_variables:
+        # Break down the categorical variable into all errors and subsets of error type
+        error_types = alt.hconcat()
+        for err in [
+            ComputedFields.avg_errors_per_page_post.name,
+            ComputedFields.avg_minor_errors_per_page_post.name,
+            ComputedFields.avg_moderate_errors_per_page_post.name,
+            ComputedFields.avg_serious_errors_per_page_post.name,
+            ComputedFields.avg_critical_errors_per_page_post.name,
+        ]:
+            error_types |= (
+                alt.Chart(data)
+                .mark_boxplot(ticks=True)
+                .encode(
+                    x=alt.X(
+                        f"{DatasetFields.trial}:O",
+                        title=None,
+                        axis=alt.Axis(labels=False, ticks=False),
+                        scale=alt.Scale(padding=1),
+                    ),
+                    y=alt.Y(f"{err.replace('_post', '')}:Q"),
+                    color=f"{DatasetFields.trial}:N",
+                    column=alt.Column(
+                        f"{cat_var}:N", spacing=40, header=alt.Header(orient="bottom")
+                    ),
+                )
+            )
+
+        save_path = Path(f"{cat_var}-errors-split.png").resolve()
+        error_types.save(str(save_path))
+        save_paths.append(save_path)
+
+    return save_paths
+
+
+def plot_locations_against_errors_boxplots(
+    data: Optional[pd.DataFrame] = None,
+) -> Path:
+    """
+    Input data should be the "flattened" dataset.
+    """
+    # Load default data
+    if data is None:
+        data = flatten_access_eval_2021_dataset()
+
+    location_plots = alt.vconcat()
+    for location in data[DatasetFields.location].unique():
+        location_subset = data.loc[data[DatasetFields.location] == location]
+
+        if len(location_subset) > 4:
+            error_types = alt.hconcat()
+            for err in [
+                ComputedFields.avg_errors_per_page_post.name,
+                ComputedFields.avg_minor_errors_per_page_post.name,
+                ComputedFields.avg_moderate_errors_per_page_post.name,
+                ComputedFields.avg_serious_errors_per_page_post.name,
+                ComputedFields.avg_critical_errors_per_page_post.name,
+            ]:
+                error_types |= (
+                    alt.Chart(location_subset)
+                    .mark_boxplot(ticks=True)
+                    .encode(
+                        x=alt.X(
+                            f"{DatasetFields.trial}:O",
+                            title=location,
+                            axis=alt.Axis(labels=False, ticks=False),
+                            scale=alt.Scale(padding=1),
+                        ),
+                        y=alt.Y(f"{err.replace('_post', '')}:Q"),
+                        color=f"{DatasetFields.trial}:N",
+                        column=alt.Column(
+                            f"{DatasetFields.candidate_history}:N",
+                            spacing=60,
+                            header=alt.Header(orient="bottom"),
+                        ),
+                    )
+                )
+
+            location_plots &= error_types
+
+    save_path = Path("location-errors-split.png").resolve()
+    location_plots.save(str(save_path))
+
     return save_path
