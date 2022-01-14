@@ -36,6 +36,14 @@ access\_eval.analysis.parse\_axe\_results module
    :undoc-members:
    :show-inheritance:
 
+access\_eval.analysis.plotting module
+-------------------------------------
+
+.. automodule:: access_eval.analysis.plotting
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 access\_eval.analysis.utils module
 ----------------------------------
 

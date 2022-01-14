@@ -138,6 +138,139 @@
 <section id="module-access_eval.analysis.constants">
 <span id="access-eval-analysis-constants-module"></span><h2>access_eval.analysis.constants module<a class="headerlink" href="#module-access_eval.analysis.constants" title="Permalink to this headline"></a></h2>
 <dl class="py class">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">access_eval.analysis.constants.</span></span><span class="sig-name descname"><span class="pre">ComputedField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/access_eval/analysis/constants.html#ComputedField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.constants.ComputedField" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NamedTuple</span></code></p>
+<p>Create new instance of ComputedField(name, func)</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedField.func">
+<span class="sig-name descname"><span class="pre">func</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedField.func" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedField.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedField.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">access_eval.analysis.constants.</span></span><span class="sig-name descname"><span class="pre">ComputedFields</span></span><a class="reference internal" href="_modules/access_eval/analysis/constants.html#ComputedFields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.avg_critical_errors_per_page_post">
+<span class="sig-name descname"><span class="pre">avg_critical_errors_per_page_post</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='avg_critical_errors_per_page_post',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.avg_critical_errors_per_page_post" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.avg_critical_errors_per_page_pre">
+<span class="sig-name descname"><span class="pre">avg_critical_errors_per_page_pre</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='avg_critical_errors_per_page_pre',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.avg_critical_errors_per_page_pre" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.avg_errors_per_page_post">
+<span class="sig-name descname"><span class="pre">avg_errors_per_page_post</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='avg_errors_per_page_post',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.avg_errors_per_page_post" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.avg_errors_per_page_pre">
+<span class="sig-name descname"><span class="pre">avg_errors_per_page_pre</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='avg_errors_per_page_pre',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.avg_errors_per_page_pre" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.avg_minor_errors_per_page_post">
+<span class="sig-name descname"><span class="pre">avg_minor_errors_per_page_post</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='avg_minor_errors_per_page_post',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.avg_minor_errors_per_page_post" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.avg_minor_errors_per_page_pre">
+<span class="sig-name descname"><span class="pre">avg_minor_errors_per_page_pre</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='avg_minor_errors_per_page_pre',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.avg_minor_errors_per_page_pre" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.avg_moderate_errors_per_page_post">
+<span class="sig-name descname"><span class="pre">avg_moderate_errors_per_page_post</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='avg_moderate_errors_per_page_post',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.avg_moderate_errors_per_page_post" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.avg_moderate_errors_per_page_pre">
+<span class="sig-name descname"><span class="pre">avg_moderate_errors_per_page_pre</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='avg_moderate_errors_per_page_pre',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.avg_moderate_errors_per_page_pre" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.avg_number_of_words_per_page">
+<span class="sig-name descname"><span class="pre">avg_number_of_words_per_page</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='avg_number_of_words_per_page',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.avg_number_of_words_per_page" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.avg_serious_errors_per_page_post">
+<span class="sig-name descname"><span class="pre">avg_serious_errors_per_page_post</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='avg_serious_errors_per_page_post',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.avg_serious_errors_per_page_post" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.avg_serious_errors_per_page_pre">
+<span class="sig-name descname"><span class="pre">avg_serious_errors_per_page_pre</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='avg_serious_errors_per_page_pre',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.avg_serious_errors_per_page_pre" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.diff_critical_errors">
+<span class="sig-name descname"><span class="pre">diff_critical_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='diff_critical_errors',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.diff_critical_errors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.diff_errors">
+<span class="sig-name descname"><span class="pre">diff_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='diff_errors',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.diff_errors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.diff_minor_errors">
+<span class="sig-name descname"><span class="pre">diff_minor_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='diff_minor_errors',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.diff_minor_errors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.diff_moderate_errors">
+<span class="sig-name descname"><span class="pre">diff_moderate_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='diff_moderate_errors',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.diff_moderate_errors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.diff_pages">
+<span class="sig-name descname"><span class="pre">diff_pages</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='diff_pages',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.diff_pages" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.diff_serious_errors">
+<span class="sig-name descname"><span class="pre">diff_serious_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='diff_serious_errors',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.diff_serious_errors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.vote_share_per_critical_error">
+<span class="sig-name descname"><span class="pre">vote_share_per_critical_error</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='vote_share_per_critical_error',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.vote_share_per_critical_error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.vote_share_per_error">
+<span class="sig-name descname"><span class="pre">vote_share_per_error</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='vote_share_per_error',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.vote_share_per_error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.vote_share_per_minor_error">
+<span class="sig-name descname"><span class="pre">vote_share_per_minor_error</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='vote_share_per_minor_error',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.vote_share_per_minor_error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.vote_share_per_moderate_error">
+<span class="sig-name descname"><span class="pre">vote_share_per_moderate_error</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='vote_share_per_moderate_error',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.vote_share_per_moderate_error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.ComputedFields.vote_share_per_serious_error">
+<span class="sig-name descname"><span class="pre">vote_share_per_serious_error</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ComputedField(name='vote_share_per_serious_error',</span> <span class="pre">func=&lt;function</span> <span class="pre">ComputedFields.&lt;lambda&gt;&gt;)</span></em><a class="headerlink" href="#access_eval.analysis.constants.ComputedFields.vote_share_per_serious_error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">access_eval.analysis.constants.</span></span><span class="sig-name descname"><span class="pre">DatasetFields</span></span><a class="reference internal" href="_modules/access_eval/analysis/constants.html#DatasetFields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -235,106 +368,6 @@ equal.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_critical_errors">
-<span class="sig-name descname"><span class="pre">diff_critical_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'diff_critical_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_critical_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The difference in the number of errors categorized as “critical” by aXe
-before and after contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>12</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_errors">
-<span class="sig-name descname"><span class="pre">diff_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'diff_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The difference in the number of errors before and after contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>12</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_minor_errors">
-<span class="sig-name descname"><span class="pre">diff_minor_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'diff_minor_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_minor_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The difference in the number of errors categorized as “minor” by aXe
-before and after contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>12</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_moderate_errors">
-<span class="sig-name descname"><span class="pre">diff_moderate_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'diff_moderate_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_moderate_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The difference in the number of errors categorized as “moderate” by aXe
-before and after contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>12</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_pages">
-<span class="sig-name descname"><span class="pre">diff_pages</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'diff_pages'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_pages" title="Permalink to this definition"></a></dt>
-<dd><p>The difference in the number of pages before and after contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>1</p></li>
-<li><p>2</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.diff_serious_errors">
-<span class="sig-name descname"><span class="pre">diff_serious_errors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'diff_serious_errors'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.diff_serious_errors" title="Permalink to this definition"></a></dt>
-<dd><p>The difference in the number of errors categorized as “serious” by aXe
-before and after contact.</p>
-<p class="rubric">Examples</p>
-<ul class="simple">
-<li><p>12</p></li>
-<li><p>42</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.ease_of_reading">
 <span class="sig-name descname"><span class="pre">ease_of_reading</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ease_of_reading'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.ease_of_reading" title="Permalink to this definition"></a></dt>
 <dd><p>The lexical complexity of the entire website.
@@ -423,6 +456,26 @@ for more information.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.error_type_x">
+<span class="sig-name descname"><span class="pre">error_type_x</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'error_type_x'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.error_type_x" title="Permalink to this definition"></a></dt>
+<dd><p>There are many columns that begin with ‘<a href="#id15"><span class="problematic" id="id16">error-type_</span></a>’.
+Such columns are just the aggregate value of that error type X for that campaign.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>“error-type_label_pre”: 12</p></li>
+<li><p>“error-type_frame-title_post”: 4</p></li>
+</ul>
+<p class="rubric">Notes</p>
+<p>These columns have a computed field as well which is the <cite>avg_error-type_x</cite> for both
+pre and post.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.funding_share">
 <span class="sig-name descname"><span class="pre">funding_share</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'funding_share'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.funding_share" title="Permalink to this definition"></a></dt>
 <dd><p>The amount of money the candidate received in donations over the amount of
@@ -435,6 +488,23 @@ money all candidates received during the campaign.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.location">
+<span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'location'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.location" title="Permalink to this definition"></a></dt>
+<dd><p>The municipality or general location where the election
+took place.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>“Seattle, WA”</p></li>
+<li><p>“New Orleans, LA”</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -675,6 +745,24 @@ Calculated on the latest version of the website.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_votes_for_race">
+<span class="sig-name descname"><span class="pre">number_of_votes_for_race</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_votes_for_race'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_votes_for_race" title="Permalink to this definition"></a></dt>
+<dd><p>The total number of votes returned in the election.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>123456</p></li>
+<li><p>24680</p></li>
+</ul>
+<p class="rubric">Notes</p>
+<p>Pulled from external data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.number_of_words">
 <span class="sig-name descname"><span class="pre">number_of_words</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'number_of_words'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.number_of_words" title="Permalink to this definition"></a></dt>
 <dd><p>The total number of words found in the whole campaign website.
@@ -710,6 +798,25 @@ Calculated on the latest version of the website.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.trial">
+<span class="sig-name descname"><span class="pre">trial</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'trial'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.trial" title="Permalink to this definition"></a></dt>
+<dd><p>The categorical variable added when the data has been flattened
+from “pre” and “post” having independent columns to now sharing columns.</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>“Pre”</p></li>
+<li><p>“Post”</p></li>
+</ul>
+<p class="rubric">Notes</p>
+<p>This is only added with the flattened data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.constants.DatasetFields.vote_share">
 <span class="sig-name descname"><span class="pre">vote_share</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'vote_share'</span></em><a class="headerlink" href="#access_eval.analysis.constants.DatasetFields.vote_share" title="Permalink to this definition"></a></dt>
 <dd><p>The number of votes the candidate received over the number of votes possible.</p>
@@ -732,7 +839,7 @@ Calculated on the latest version of the website.</p>
 <span id="access-eval-analysis-core-module"></span><h2>access_eval.analysis.core module<a class="headerlink" href="#module-access_eval.analysis.core" title="Permalink to this headline"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="access_eval.analysis.core.CompiledMetrics">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">access_eval.analysis.core.</span></span><span class="sig-name descname"><span class="pre">CompiledMetrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minor_violations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moderate_violations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serious_violations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">critical_violations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_words</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_unique_words</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ease_of_reading</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/access_eval/analysis/core.html#CompiledMetrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.core.CompiledMetrics" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">access_eval.analysis.core.</span></span><span class="sig-name descname"><span class="pre">CompiledMetrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minor_violations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moderate_violations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serious_violations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">critical_violations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_words</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_unique_words</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ease_of_reading</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/access_eval/analysis/core.html#CompiledMetrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.core.CompiledMetrics" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.core.CompiledMetrics.critical_violations">
@@ -742,6 +849,11 @@ Calculated on the latest version of the website.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="access_eval.analysis.core.CompiledMetrics.ease_of_reading">
 <span class="sig-name descname"><span class="pre">ease_of_reading</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#access_eval.analysis.core.CompiledMetrics.ease_of_reading" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="access_eval.analysis.core.CompiledMetrics.error_types">
+<span class="sig-name descname"><span class="pre">error_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#access_eval.analysis.core.CompiledMetrics.error_types" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -961,6 +1073,49 @@ directory should be: <cite>pre-data/website.org</cite></p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="access_eval.analysis.core.flatten_access_eval_2021_dataset">
+<span class="sig-prename descclassname"><span class="pre">access_eval.analysis.core.</span></span><span class="sig-name descname"><span class="pre">flatten_access_eval_2021_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.core.frame.DataFrame</span></span></span><a class="reference internal" href="_modules/access_eval/analysis/core.html#flatten_access_eval_2021_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.core.flatten_access_eval_2021_dataset" title="Permalink to this definition"></a></dt>
+<dd><p>Flatten the access eval 2021 dataset by adding a new column called “Trial”
+which stores a categorical value for “Pre” or “Post” which allows us
+to simplify the columns into just “avg_errors_per_page” for example instead
+of having both “avg_errors_per_page_pre” and “avg_errors_per_page_post”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>pd.DataFrame</em>) – Preloaded access eval data.
+Default: None (load access eval 2021 data)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>flattened</strong> – The flattened dataset.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This only provides a subset of the full dataset back.
+Notably dropping the “diff” computed fields.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="access_eval.analysis.core.load_access_eval_2021_dataset">
+<span class="sig-prename descclassname"><span class="pre">access_eval.analysis.core.</span></span><span class="sig-name descname"><span class="pre">load_access_eval_2021_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.core.frame.DataFrame</span></span></span><a class="reference internal" href="_modules/access_eval/analysis/core.html#load_access_eval_2021_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.core.load_access_eval_2021_dataset" title="Permalink to this definition"></a></dt>
+<dd><p>Load the default access eval 2021 dataset or a provided custom dataset
+and add all computed fields.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Optional[Union[str, Path]]</em>) – An optional path for custom data to load.
+Default: None (load official 2021 access eval dataset)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>data</strong> – The loaded dataframe object with all extra computed fields added.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="access_eval.analysis.core.process_axe_evaluations_and_extras">
 <span class="sig-prename descclassname"><span class="pre">access_eval.analysis.core.</span></span><span class="sig-name descname"><span class="pre">process_axe_evaluations_and_extras</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axe_results_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generate_extras</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#access_eval.analysis.core.CompiledMetrics" title="access_eval.analysis.core.CompiledMetrics"><span class="pre">access_eval.analysis.core.CompiledMetrics</span></a></span></span><a class="reference internal" href="_modules/access_eval/analysis/core.html#process_axe_evaluations_and_extras"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.core.process_axe_evaluations_and_extras" title="Permalink to this definition"></a></dt>
 <dd><p>Process all aXe evaluations and generate extra features
@@ -1152,6 +1307,37 @@ statistics both for single page and whole website.</p>
 </dd>
 </dl>
 </dd></dl>
+
+</section>
+<section id="module-access_eval.analysis.plotting">
+<span id="access-eval-analysis-plotting-module"></span><h2>access_eval.analysis.plotting module<a class="headerlink" href="#module-access_eval.analysis.plotting" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="access_eval.analysis.plotting.plot_categorical_against_errors_boxplots">
+<span class="sig-prename descclassname"><span class="pre">access_eval.analysis.plotting.</span></span><span class="sig-name descname"><span class="pre">plot_categorical_against_errors_boxplots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/access_eval/analysis/plotting.html#plot_categorical_against_errors_boxplots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.plotting.plot_categorical_against_errors_boxplots" title="Permalink to this definition"></a></dt>
+<dd><p>Input data should be the “flattened” dataset.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="access_eval.analysis.plotting.plot_computed_fields_over_vote_share">
+<span class="sig-prename descclassname"><span class="pre">access_eval.analysis.plotting.</span></span><span class="sig-name descname"><span class="pre">plot_computed_fields_over_vote_share</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pathlib.Path</span></span></span><a class="reference internal" href="_modules/access_eval/analysis/plotting.html#plot_computed_fields_over_vote_share"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.plotting.plot_computed_fields_over_vote_share" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="access_eval.analysis.plotting.plot_error_types_boxplots">
+<span class="sig-prename descclassname"><span class="pre">access_eval.analysis.plotting.</span></span><span class="sig-name descname"><span class="pre">plot_error_types_boxplots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pathlib.Path</span></span></span><a class="reference internal" href="_modules/access_eval/analysis/plotting.html#plot_error_types_boxplots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.plotting.plot_error_types_boxplots" title="Permalink to this definition"></a></dt>
+<dd><p>Input data should be the “flattened” dataset.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="access_eval.analysis.plotting.plot_locations_against_errors_boxplots">
+<span class="sig-prename descclassname"><span class="pre">access_eval.analysis.plotting.</span></span><span class="sig-name descname"><span class="pre">plot_locations_against_errors_boxplots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pathlib.Path</span></span></span><a class="reference internal" href="_modules/access_eval/analysis/plotting.html#plot_locations_against_errors_boxplots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.plotting.plot_locations_against_errors_boxplots" title="Permalink to this definition"></a></dt>
+<dd><p>Input data should be the “flattened” dataset.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="access_eval.analysis.plotting.plot_pre_post_fields_compare">
+<span class="sig-prename descclassname"><span class="pre">access_eval.analysis.plotting.</span></span><span class="sig-name descname"><span class="pre">plot_pre_post_fields_compare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pathlib.Path</span></span></span><a class="reference internal" href="_modules/access_eval/analysis/plotting.html#plot_pre_post_fields_compare"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#access_eval.analysis.plotting.plot_pre_post_fields_compare" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 </section>
 <section id="module-access_eval.analysis.utils">

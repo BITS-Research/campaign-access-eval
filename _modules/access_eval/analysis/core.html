@@ -121,9 +121,14 @@
 <span class="kn">from</span> <span class="nn">textstat</span> <span class="kn">import</span> <span class="n">flesch_reading_ease</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
-<span class="kn">from</span> <span class="nn">..constants</span> <span class="kn">import</span> <span class="n">SINGLE_PAGE_AXE_RESULTS_FILENAME</span>
+<span class="kn">from</span> <span class="nn">..constants</span> <span class="kn">import</span> <span class="n">AGGREGATE_AXE_RESULTS_FILENAME</span><span class="p">,</span> <span class="n">SINGLE_PAGE_AXE_RESULTS_FILENAME</span>
 <span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">clean_url</span>
-<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="n">DatasetFields</span>
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ACCESS_EVAL_2021_DATASET</span><span class="p">,</span>
+    <span class="n">ComputedField</span><span class="p">,</span>
+    <span class="n">ComputedFields</span><span class="p">,</span>
+    <span class="n">DatasetFields</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="c1">###############################################################################</span>
 
@@ -161,7 +166,8 @@
     <span class="n">critical_violations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">number_of_words</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">number_of_unique_words</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">ease_of_reading</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span></div>
+    <span class="n">ease_of_reading</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">error_types</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
 <span class="c1">###############################################################################</span>
@@ -300,6 +306,14 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">ease_of_reading</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">reading_measures</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">reading_measures</span><span class="p">)</span>
 
+    <span class="c1"># Compile error types</span>
+    <span class="n">agg_error_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">axe_results_dir</span> <span class="o">/</span> <span class="n">AGGREGATE_AXE_RESULTS_FILENAME</span><span class="p">)</span>
+    <span class="n">error_types</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">agg_error_results</span><span class="p">[</span>
+        <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;number_of_elements_in_violation&quot;</span><span class="p">]</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">error_types</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">number_of_elements_in_violation</span>
+
     <span class="k">return</span> <span class="n">CompiledMetrics</span><span class="p">(</span>
         <span class="n">pages</span><span class="o">=</span><span class="n">parsed_metrics</span><span class="o">.</span><span class="n">pages</span><span class="p">,</span>
         <span class="n">minor_violations</span><span class="o">=</span><span class="n">parsed_metrics</span><span class="o">.</span><span class="n">minor_violations</span><span class="p">,</span>
@@ -309,6 +323,7 @@
         <span class="n">number_of_words</span><span class="o">=</span><span class="n">words</span><span class="p">,</span>
         <span class="n">number_of_unique_words</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_words</span><span class="p">),</span>
         <span class="n">ease_of_reading</span><span class="o">=</span><span class="n">ease_of_reading</span><span class="p">,</span>
+        <span class="n">error_types</span><span class="o">=</span><span class="n">error_types</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
@@ -316,7 +331,16 @@
     <span class="n">metrics</span><span class="p">:</span> <span class="n">CompiledMetrics</span><span class="p">,</span>
     <span class="n">phase</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="c1"># Unpack error types</span>
+    <span class="k">if</span> <span class="n">metrics</span><span class="o">.</span><span class="n">error_types</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">error_types</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="sa">f</span><span class="s2">&quot;error-type_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">error_types</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">error_types</span> <span class="o">=</span> <span class="p">{}</span>
+
     <span class="k">return</span> <span class="p">{</span>
+        <span class="o">**</span><span class="n">error_types</span><span class="p">,</span>
         <span class="sa">f</span><span class="s2">&quot;number_of_pages_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">pages</span><span class="p">,</span>
         <span class="sa">f</span><span class="s2">&quot;number_of_total_errors_</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">(</span>
             <span class="n">metrics</span><span class="o">.</span><span class="n">critical_violations</span>
@@ -449,6 +473,122 @@
         <span class="sa">f</span><span class="s2">&quot;because they were missing a pre or post aXe result directory.&quot;</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">expanded_data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_access_eval_2021_dataset"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.load_access_eval_2021_dataset">[docs]</a><span class="k">def</span> <span class="nf">load_access_eval_2021_dataset</span><span class="p">(</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load the default access eval 2021 dataset or a provided custom dataset</span>
+<span class="sd">    and add all computed fields.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path: Optional[Union[str, Path]]</span>
+<span class="sd">        An optional path for custom data to load.</span>
+<span class="sd">        Default: None (load official 2021 access eval dataset)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data: pd.DataFrame</span>
+<span class="sd">        The loaded dataframe object with all extra computed fields added.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">ACCESS_EVAL_2021_DATASET</span>
+
+    <span class="c1"># Load base data</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">ACCESS_EVAL_2021_DATASET</span><span class="p">)</span>
+
+    <span class="c1"># Add computed fields</span>
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">ComputedFields</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">ComputedField</span><span class="p">):</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">attr</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># Collect error type cols with a value above 0 at the 25th percentile</span>
+    <span class="n">common_error_cols</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;error-type_&quot;</span> <span class="ow">in</span> <span class="n">col</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">common_error_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+
+    <span class="c1"># Create norm cols</span>
+    <span class="k">for</span> <span class="n">common_error_col</span> <span class="ow">in</span> <span class="n">common_error_cols</span><span class="p">:</span>
+        <span class="n">error_type</span> <span class="o">=</span> <span class="n">common_error_col</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_pre&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;_pre&quot;</span> <span class="ow">in</span> <span class="n">common_error_col</span><span class="p">:</span>
+            <span class="n">avg_error_type_col_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;avg_</span><span class="si">{</span><span class="n">error_type</span><span class="si">}</span><span class="s2">_per_page_pre&quot;</span>
+            <span class="n">norm_col</span> <span class="o">=</span> <span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_pages_pre</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">avg_error_type_col_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;avg_</span><span class="si">{</span><span class="n">error_type</span><span class="si">}</span><span class="s2">_per_page_post&quot;</span>
+            <span class="n">norm_col</span> <span class="o">=</span> <span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_pages_post</span>
+
+        <span class="c1"># Norm</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">avg_error_type_col_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">common_error_col</span><span class="p">]</span> <span class="o">/</span> <span class="n">data</span><span class="p">[</span><span class="n">norm_col</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="flatten_access_eval_2021_dataset"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.flatten_access_eval_2021_dataset">[docs]</a><span class="k">def</span> <span class="nf">flatten_access_eval_2021_dataset</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Flatten the access eval 2021 dataset by adding a new column called &quot;Trial&quot;</span>
+<span class="sd">    which stores a categorical value for &quot;Pre&quot; or &quot;Post&quot; which allows us</span>
+<span class="sd">    to simplify the columns into just &quot;avg_errors_per_page&quot; for example instead</span>
+<span class="sd">    of having both &quot;avg_errors_per_page_pre&quot; and &quot;avg_errors_per_page_post&quot;.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data: pd.DataFrame</span>
+<span class="sd">        Preloaded access eval data.</span>
+<span class="sd">        Default: None (load access eval 2021 data)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    flattened: pd.DataFrame</span>
+<span class="sd">        The flattened dataset.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This only provides a subset of the full dataset back.</span>
+<span class="sd">    Notably dropping the &quot;diff&quot; computed fields.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load default data</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">load_access_eval_2021_dataset</span><span class="p">()</span>
+
+    <span class="c1"># Drop general columns</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">ComputedFields</span><span class="o">.</span><span class="n">diff_pages</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">ComputedFields</span><span class="o">.</span><span class="n">diff_errors</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">ComputedFields</span><span class="o">.</span><span class="n">diff_minor_errors</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">ComputedFields</span><span class="o">.</span><span class="n">diff_moderate_errors</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">ComputedFields</span><span class="o">.</span><span class="n">diff_serious_errors</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">ComputedFields</span><span class="o">.</span><span class="n">diff_critical_errors</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Get a list of the column names with pre and post in them</span>
+    <span class="c1"># (just for pre, we will use string edit to swap to post)</span>
+    <span class="n">cols_pre</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s2">&quot;_pre&quot;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span>
+    <span class="n">cols_post</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_pre&quot;</span><span class="p">,</span> <span class="s2">&quot;_post&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols_pre</span><span class="p">]</span>
+
+    <span class="c1"># Get all data for pre and post</span>
+    <span class="c1"># For pre, this means, take all columns _except_ post columns</span>
+    <span class="c1"># For post, this means, take all columns _except_ pre columns</span>
+    <span class="n">pre</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cols_post</span><span class="p">]]</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cols_pre</span><span class="p">]]</span>
+
+    <span class="c1"># Drop the pre and post from the column names for the error data</span>
+    <span class="n">pre</span> <span class="o">=</span> <span class="n">pre</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_pre&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">pre</span><span class="o">.</span><span class="n">columns</span><span class="p">})</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="n">post</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">post</span><span class="o">.</span><span class="n">columns</span><span class="p">})</span>
+
+    <span class="c1"># Add the tag for pre and post</span>
+    <span class="n">pre</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;A - Pre&quot;</span>
+    <span class="n">post</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;B - Post&quot;</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

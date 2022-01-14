@@ -4,6 +4,14 @@ access\_eval.bin package
 Submodules
 ----------
 
+access\_eval.bin.analyze\_access\_eval\_2021\_dataset module
+------------------------------------------------------------
+
+.. automodule:: access_eval.bin.analyze_access_eval_2021_dataset
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 access\_eval.bin.generate\_access\_eval\_2021\_dataset module
 -------------------------------------------------------------
 
