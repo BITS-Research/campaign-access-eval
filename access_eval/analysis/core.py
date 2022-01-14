@@ -382,3 +382,67 @@ def load_access_eval_2021_dataset(
             data[attr.name] = attr.func(data)
 
     return data
+
+
+def flatten_access_eval_2021_dataset(
+    data: Optional[pd.DataFrame] = None,
+) -> pd.DataFrame:
+    """
+    Flatten the access eval 2021 dataset by adding a new column called "Trial"
+    which stores a categorical value for "Pre" or "Post" which allows us
+    to simplify the columns into just "avg_errors_per_page" for example instead
+    of having both "avg_errors_per_page_pre" and "avg_errors_per_page_post".
+
+    Parameters
+    ----------
+    data: pd.DataFrame
+        Preloaded access eval data.
+        Default: None (load access eval 2021 data)
+
+    Returns
+    -------
+    flattened: pd.DataFrame
+        The flattened dataset.
+
+    Notes
+    -----
+    This only provides a subset of the full dataset back.
+    Notably dropping the "diff" computed fields.
+    """
+    # Load default data
+    if data is None:
+        data = load_access_eval_2021_dataset()
+
+    # Drop general columns
+    data = data.drop(
+        [
+            ComputedFields.diff_pages.name,
+            ComputedFields.diff_errors.name,
+            ComputedFields.diff_minor_errors.name,
+            ComputedFields.diff_moderate_errors.name,
+            ComputedFields.diff_serious_errors.name,
+            ComputedFields.diff_critical_errors.name,
+        ],
+        axis=1,
+    )
+
+    # Get a list of the column names with pre and post in them
+    # (just for pre, we will use string edit to swap to post)
+    cols_pre = [col for col in data.columns if "_pre" in col]
+    cols_post = [col.replace("_pre", "_post") for col in cols_pre]
+
+    # Get all data for pre and post
+    # For pre, this means, take all columns _except_ post columns
+    # For post, this means, take all columns _except_ pre columns
+    pre = data[[col for col in data.columns if col not in cols_post]]
+    post = data[[col for col in data.columns if col not in cols_pre]]
+
+    # Drop the pre and post from the column names for the error data
+    pre = pre.rename(columns={col: col.replace("_pre", "") for col in pre.columns})
+    post = post.rename(columns={col: col.replace("_post", "") for col in post.columns})
+
+    # Add the tag for pre and post
+    pre[DatasetFields.trial] = "A - Pre"
+    post[DatasetFields.trial] = "B - Post"
+
+    return pd.concat([pre, post], ignore_index=True)
