@@ -398,7 +398,7 @@ class DatasetFields:
     """
     str: The categorical variable added when the data has been flattened
     from "pre" and "post" having independent columns to now sharing columns.
-    
+
     Examples
     --------
     - "Pre"

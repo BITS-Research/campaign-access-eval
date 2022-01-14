@@ -8,7 +8,7 @@ import altair as alt
 import pandas as pd
 
 from .constants import ComputedFields, DatasetFields
-from .core import load_access_eval_2021_dataset, flatten_access_eval_2021_dataset
+from .core import flatten_access_eval_2021_dataset, load_access_eval_2021_dataset
 
 ###############################################################################
 
