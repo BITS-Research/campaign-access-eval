@@ -3,9 +3,9 @@
 
 import argparse
 import logging
-from shutil import rmtree
 import sys
 import traceback
+from shutil import rmtree
 
 from access_eval.analysis import plotting
 from access_eval.analysis.core import (
