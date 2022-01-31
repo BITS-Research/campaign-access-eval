@@ -107,13 +107,17 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">altair</span> <span class="k">as</span> <span class="nn">alt</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="n">ComputedFields</span><span class="p">,</span> <span class="n">DatasetFields</span>
 <span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">flatten_access_eval_2021_dataset</span><span class="p">,</span> <span class="n">load_access_eval_2021_dataset</span>
+
+<span class="c1">###############################################################################</span>
+
+<span class="n">PLOTTING_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;plots/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
 
 <span class="c1">###############################################################################</span>
 
@@ -128,10 +132,11 @@
 
     <span class="c1"># Apply default save path</span>
     <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">save_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;vote-share.png&quot;</span><span class="p">)</span>
+        <span class="n">save_path</span> <span class="o">=</span> <span class="n">PLOTTING_DIR</span> <span class="o">/</span> <span class="s2">&quot;vote-share.png&quot;</span>
 
     <span class="c1"># Ensure save path is Path object</span>
-    <span class="n">save_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+    <span class="n">save_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="n">save_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># Generate chart</span>
     <span class="n">vote_share</span> <span class="o">=</span> <span class="p">(</span>
@@ -178,10 +183,11 @@
 
     <span class="c1"># Apply default save path</span>
     <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">save_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;pre-post.png&quot;</span><span class="p">)</span>
+        <span class="n">save_path</span> <span class="o">=</span> <span class="n">PLOTTING_DIR</span> <span class="o">/</span> <span class="s2">&quot;pre-post.png&quot;</span>
 
     <span class="c1"># Ensure save path is Path object</span>
-    <span class="n">save_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+    <span class="n">save_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="n">save_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="n">pre_post</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">hconcat</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">pre</span><span class="p">,</span> <span class="n">post</span> <span class="ow">in</span> <span class="p">[</span>
@@ -231,13 +237,15 @@
     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">flatten_access_eval_2021_dataset</span><span class="p">()</span>
 
+    <span class="c1"># Only work against the post data for summary stats as there was no difference</span>
+    <span class="c1"># pre and post (trial / contact)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B - Post&quot;</span><span class="p">]</span>
+
     <span class="c1"># Set of categorical variables to use for box plot generation</span>
     <span class="n">categorical_variables</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">DatasetFields</span><span class="o">.</span><span class="n">electoral_position</span><span class="p">,</span>
         <span class="n">DatasetFields</span><span class="o">.</span><span class="n">candidate_position</span><span class="p">,</span>
-        <span class="n">DatasetFields</span><span class="o">.</span><span class="n">candidate_history</span><span class="p">,</span>
         <span class="n">DatasetFields</span><span class="o">.</span><span class="n">election_result</span><span class="p">,</span>
-        <span class="n">DatasetFields</span><span class="o">.</span><span class="n">contacted</span><span class="p">,</span>
     <span class="p">]</span>
 
     <span class="c1"># For each categorical variable, create a row of the different error measures</span>
@@ -261,12 +269,6 @@
                 <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
                 <span class="o">.</span><span class="n">mark_boxplot</span><span class="p">(</span><span class="n">ticks</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-                    <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="si">}</span><span class="s2">:O&quot;</span><span class="p">,</span>
-                        <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                        <span class="n">axis</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Axis</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-                        <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-                    <span class="p">),</span>
                     <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span>
                         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">feature_name</span><span class="si">}</span><span class="s2">:Q&quot;</span><span class="p">,</span>
                         <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span>
@@ -277,14 +279,14 @@
                             <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                         <span class="p">),</span>
                     <span class="p">),</span>
-                    <span class="n">color</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="si">}</span><span class="s2">:N&quot;</span><span class="p">,</span>
                     <span class="n">column</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span>
                         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cat_var</span><span class="si">}</span><span class="s2">:N&quot;</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Header</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
                     <span class="p">),</span>
                 <span class="p">)</span>
             <span class="p">)</span>
 
-        <span class="n">save_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cat_var</span><span class="si">}</span><span class="s2">-errors-split.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+        <span class="n">save_path</span> <span class="o">=</span> <span class="n">PLOTTING_DIR</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cat_var</span><span class="si">}</span><span class="s2">-errors-split.png&quot;</span>
+        <span class="n">save_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">error_types</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">save_path</span><span class="p">))</span>
         <span class="n">save_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
 
@@ -300,6 +302,15 @@
     <span class="c1"># Load default data</span>
     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">flatten_access_eval_2021_dataset</span><span class="p">()</span>
+
+    <span class="c1"># Only work against the post data for summary stats as there was no difference</span>
+    <span class="c1"># pre and post (trial / contact)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B - Post&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Drop any locations with less than two campaigns</span>
+    <span class="n">location_counts</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">location</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+    <span class="n">viable_locations</span> <span class="o">=</span> <span class="n">location_counts</span><span class="p">[</span><span class="n">location_counts</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">location</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">viable_locations</span><span class="p">)]</span>
 
     <span class="n">location_plots</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">vconcat</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">location</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
@@ -323,12 +334,6 @@
                     <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">location_subset</span><span class="p">)</span>
                     <span class="o">.</span><span class="n">mark_boxplot</span><span class="p">(</span><span class="n">ticks</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                     <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-                        <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="si">}</span><span class="s2">:O&quot;</span><span class="p">,</span>
-                            <span class="n">title</span><span class="o">=</span><span class="n">location</span><span class="p">,</span>
-                            <span class="n">axis</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Axis</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-                            <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-                        <span class="p">),</span>
                         <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span>
                             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">feature_name</span><span class="si">}</span><span class="s2">:Q&quot;</span><span class="p">,</span>
                             <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span>
@@ -339,7 +344,6 @@
                                 <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                             <span class="p">),</span>
                         <span class="p">),</span>
-                        <span class="n">color</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="si">}</span><span class="s2">:N&quot;</span><span class="p">,</span>
                         <span class="n">column</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span>
                             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">candidate_position</span><span class="si">}</span><span class="s2">:N&quot;</span><span class="p">,</span>
                             <span class="n">spacing</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
@@ -350,7 +354,8 @@
 
             <span class="n">location_plots</span> <span class="o">&amp;=</span> <span class="n">error_types</span>
 
-    <span class="n">save_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;location-errors-split.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="n">save_path</span> <span class="o">=</span> <span class="n">PLOTTING_DIR</span> <span class="o">/</span> <span class="s2">&quot;location-errors-split.png&quot;</span>
+    <span class="n">save_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">location_plots</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">save_path</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">save_path</span></div>
@@ -366,6 +371,10 @@
     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">flatten_access_eval_2021_dataset</span><span class="p">()</span>
 
+    <span class="c1"># Only work against the post data for summary stats as there was no difference</span>
+    <span class="c1"># pre and post (trial / contact)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B - Post&quot;</span><span class="p">]</span>
+
     <span class="c1"># Use all pre-computed avg error type features</span>
     <span class="n">common_error_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s2">&quot;avg_error-type_&quot;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span>
 
@@ -377,18 +386,11 @@
             <span class="n">DatasetFields</span><span class="o">.</span><span class="n">electoral_position</span><span class="p">,</span>
             <span class="n">DatasetFields</span><span class="o">.</span><span class="n">candidate_position</span><span class="p">,</span>
             <span class="n">DatasetFields</span><span class="o">.</span><span class="n">election_result</span><span class="p">,</span>
-            <span class="n">DatasetFields</span><span class="o">.</span><span class="n">location</span><span class="p">,</span>
         <span class="p">]:</span>
             <span class="n">cat_var_plot</span> <span class="o">|=</span> <span class="p">(</span>
                 <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
                 <span class="o">.</span><span class="n">mark_boxplot</span><span class="p">(</span><span class="n">ticks</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-                    <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="si">}</span><span class="s2">:O&quot;</span><span class="p">,</span>
-                        <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                        <span class="n">axis</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Axis</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-                        <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-                    <span class="p">),</span>
                     <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span>
                         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">err_type</span><span class="si">}</span><span class="s2">:Q&quot;</span><span class="p">,</span>
                         <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span>
@@ -399,7 +401,6 @@
                             <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                         <span class="p">),</span>
                     <span class="p">),</span>
-                    <span class="n">color</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="si">}</span><span class="s2">:N&quot;</span><span class="p">,</span>
                     <span class="n">column</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span>
                         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cat_var</span><span class="si">}</span><span class="s2">:N&quot;</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Header</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
                     <span class="p">),</span>
@@ -408,10 +409,281 @@
 
         <span class="n">err_type_plots</span> <span class="o">&amp;=</span> <span class="n">cat_var_plot</span>
 
-    <span class="n">save_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;error-types-by-category-splits.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="n">save_path</span> <span class="o">=</span> <span class="n">PLOTTING_DIR</span> <span class="o">/</span> <span class="s2">&quot;error-types-by-category-splits.png&quot;</span>
+    <span class="n">save_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">err_type_plots</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">save_path</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">save_path</span></div>
+
+
+<span class="k">def</span> <span class="nf">_plot_and_fig_text</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">plot_cols</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">fig_text_prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">subset_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">column</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">alt</span><span class="o">.</span><span class="n">Column</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">consistent_scale</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">consistent_scale</span><span class="p">:</span>
+        <span class="n">scale_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">([</span><span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">plot_cols</span><span class="p">])</span>
+        <span class="n">scale_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">plot_cols</span><span class="p">])</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span>
+            <span class="n">domain</span><span class="o">=</span><span class="p">(</span><span class="n">scale_min</span><span class="p">,</span> <span class="n">scale_max</span><span class="p">),</span>
+            <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">()</span>
+
+    <span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">hconcat</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">plot_cols</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">column</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">chart</span> <span class="o">|=</span> <span class="p">(</span>
+                <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">mark_boxplot</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+                    <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span>
+                        <span class="n">col</span><span class="p">,</span>
+                        <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">chart</span> <span class="o">|=</span> <span class="p">(</span>
+                <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">mark_boxplot</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+                    <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span>
+                        <span class="n">col</span><span class="p">,</span>
+                        <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="n">column</span><span class="o">=</span><span class="n">column</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">fig_text_prefix</span> <span class="o">+=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;mean: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;std: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;min: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;max: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+    <span class="n">chart</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Campaign Website Content&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Save fig and text</span>
+    <span class="n">fig_save_path</span> <span class="o">=</span> <span class="n">PLOTTING_DIR</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">subset_name</span><span class="si">}</span><span class="s2">.png&quot;</span>
+    <span class="n">fig_save_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">chart</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">fig_save_path</span><span class="p">))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fig_save_path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">&quot;.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">open_f</span><span class="p">:</span>
+        <span class="n">open_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fig_text_prefix</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="plot_summary_stats"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.plotting.plot_summary_stats">[docs]</a><span class="k">def</span> <span class="nf">plot_summary_stats</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">subset_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">keep_cols</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">plot_kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Input data should be the &quot;flattened&quot; dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load default data</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">flatten_access_eval_2021_dataset</span><span class="p">()</span>
+
+    <span class="c1"># Only work against the post data for summary stats as there was no difference</span>
+    <span class="c1"># pre and post (trial / contact)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B - Post&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Split into different commonly grouped stats</span>
+    <span class="c1"># Content is the actual website content</span>
+    <span class="n">content_cols</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_pages_post</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+        <span class="n">DatasetFields</span><span class="o">.</span><span class="n">ease_of_reading</span><span class="p">,</span>
+        <span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_words</span><span class="p">,</span>
+        <span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_unique_words</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Error count norm stats</span>
+    <span class="n">error_counts_normed_cols</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_minor_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_moderate_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_serious_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_critical_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Error types are the actual error value (what was the error)</span>
+    <span class="n">error_types_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s2">&quot;avg_error-type_&quot;</span> <span class="ow">in</span> <span class="n">c</span><span class="p">]</span>
+
+    <span class="c1"># Create content plots</span>
+    <span class="n">_plot_and_fig_text</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">[[</span><span class="o">*</span><span class="n">content_cols</span><span class="p">,</span> <span class="o">*</span><span class="n">keep_cols</span><span class="p">]],</span>
+        <span class="n">plot_cols</span><span class="o">=</span><span class="n">content_cols</span><span class="p">,</span>
+        <span class="n">fig_text_prefix</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;Distributions for key content statistics &quot;</span>
+            <span class="s2">&quot;gathered while scraping campaign websites.&quot;</span>
+        <span class="p">),</span>
+        <span class="n">subset_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">subset_name</span><span class="si">}</span><span class="s2">content-stats&quot;</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">plot_kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Create norm stats plots</span>
+    <span class="n">_plot_and_fig_text</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">[[</span><span class="o">*</span><span class="n">error_counts_normed_cols</span><span class="p">,</span> <span class="o">*</span><span class="n">keep_cols</span><span class="p">]],</span>
+        <span class="n">plot_cols</span><span class="o">=</span><span class="n">error_counts_normed_cols</span><span class="p">,</span>
+        <span class="n">fig_text_prefix</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;Distributions for normalized error severity counts &quot;</span>
+            <span class="s2">&quot;(counts for each error severity / number of pages) &quot;</span>
+            <span class="s2">&quot;statistics gathered from scraping campaign websites.&quot;</span>
+        <span class="p">),</span>
+        <span class="n">subset_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">subset_name</span><span class="si">}</span><span class="s2">error-severity&quot;</span><span class="p">,</span>
+        <span class="n">consistent_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">plot_kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Create error types plots</span>
+    <span class="n">_plot_and_fig_text</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">[[</span><span class="o">*</span><span class="n">error_types_cols</span><span class="p">,</span> <span class="o">*</span><span class="n">keep_cols</span><span class="p">]],</span>
+        <span class="n">plot_cols</span><span class="o">=</span><span class="n">error_types_cols</span><span class="p">,</span>
+        <span class="n">fig_text_prefix</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;Distributions for normalized error types counts &quot;</span>
+            <span class="s2">&quot;(counts for each error type / number of pages) &quot;</span>
+            <span class="s2">&quot;statistics gathered from scraping campaign websites.&quot;</span>
+        <span class="p">),</span>
+        <span class="n">subset_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">subset_name</span><span class="si">}</span><span class="s2">error-types&quot;</span><span class="p">,</span>
+        <span class="n">consistent_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">plot_kwargs</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="plot_location_based_summary_stats"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.plotting.plot_location_based_summary_stats">[docs]</a><span class="k">def</span> <span class="nf">plot_location_based_summary_stats</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Input data should be the &quot;flattened&quot; dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load default data</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">flatten_access_eval_2021_dataset</span><span class="p">()</span>
+
+    <span class="c1"># Only work against the post data for summary stats as there was no difference</span>
+    <span class="c1"># pre and post (trial / contact)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B - Post&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Drop any locations with less than two campaigns</span>
+    <span class="n">location_counts</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">location</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+    <span class="n">viable_locations</span> <span class="o">=</span> <span class="n">location_counts</span><span class="p">[</span><span class="n">location_counts</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">location</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">viable_locations</span><span class="p">)]</span>
+
+    <span class="c1"># Plot basic stats</span>
+    <span class="n">plot_summary_stats</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span>
+        <span class="n">subset_name</span><span class="o">=</span><span class="s2">&quot;location-split-&quot;</span><span class="p">,</span>
+        <span class="n">keep_cols</span><span class="o">=</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">location</span><span class="p">],</span>
+        <span class="n">plot_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;column&quot;</span><span class="p">:</span> <span class="n">alt</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">location</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">60</span><span class="p">)},</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="plot_election_result_based_summary_stats"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.plotting.plot_election_result_based_summary_stats">[docs]</a><span class="k">def</span> <span class="nf">plot_election_result_based_summary_stats</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Input data should be the &quot;flattened&quot; dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load default data</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">flatten_access_eval_2021_dataset</span><span class="p">()</span>
+
+    <span class="c1"># Only work against the post data for summary stats as there was no difference</span>
+    <span class="c1"># pre and post (trial / contact)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B - Post&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Plot basic stats</span>
+    <span class="n">plot_summary_stats</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span>
+        <span class="n">subset_name</span><span class="o">=</span><span class="s2">&quot;election-result-split-&quot;</span><span class="p">,</span>
+        <span class="n">keep_cols</span><span class="o">=</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">election_result</span><span class="p">],</span>
+        <span class="n">plot_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;column&quot;</span><span class="p">:</span> <span class="n">alt</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">election_result</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">40</span><span class="p">)},</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="plot_electoral_position_based_summary_stats"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.plotting.plot_electoral_position_based_summary_stats">[docs]</a><span class="k">def</span> <span class="nf">plot_electoral_position_based_summary_stats</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Input data should be the &quot;flattened&quot; dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load default data</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">flatten_access_eval_2021_dataset</span><span class="p">()</span>
+
+    <span class="c1"># Only work against the post data for summary stats as there was no difference</span>
+    <span class="c1"># pre and post (trial / contact)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B - Post&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Plot basic stats</span>
+    <span class="n">plot_summary_stats</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span>
+        <span class="n">subset_name</span><span class="o">=</span><span class="s2">&quot;election-position-split-&quot;</span><span class="p">,</span>
+        <span class="n">keep_cols</span><span class="o">=</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">electoral_position</span><span class="p">],</span>
+        <span class="n">plot_kwargs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;column&quot;</span><span class="p">:</span> <span class="n">alt</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">electoral_position</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+        <span class="p">},</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="plot_candidate_position_based_summary_stats"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.plotting.plot_candidate_position_based_summary_stats">[docs]</a><span class="k">def</span> <span class="nf">plot_candidate_position_based_summary_stats</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Input data should be the &quot;flattened&quot; dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load default data</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">flatten_access_eval_2021_dataset</span><span class="p">()</span>
+
+    <span class="c1"># Only work against the post data for summary stats as there was no difference</span>
+    <span class="c1"># pre and post (trial / contact)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B - Post&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Plot basic stats</span>
+    <span class="n">plot_summary_stats</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span>
+        <span class="n">subset_name</span><span class="o">=</span><span class="s2">&quot;candidate-position-split-&quot;</span><span class="p">,</span>
+        <span class="n">keep_cols</span><span class="o">=</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">candidate_position</span><span class="p">],</span>
+        <span class="n">plot_kwargs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;column&quot;</span><span class="p">:</span> <span class="n">alt</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">candidate_position</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+        <span class="p">},</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="plot_pre_post_errors"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.plotting.plot_pre_post_errors">[docs]</a><span class="k">def</span> <span class="nf">plot_pre_post_errors</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Input data should be the &quot;flattened&quot; dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load default data</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">flatten_access_eval_2021_dataset</span><span class="p">()</span>
+
+    <span class="c1"># Make pre post chart with split by contacted</span>
+    <span class="n">chart</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">mark_boxplot</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">contacted</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_post&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="si">:}</span><span class="s2">:Q&quot;</span><span class="p">,</span>
+            <span class="n">column</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">contacted</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Save</span>
+    <span class="n">PLOTTING_DIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">chart</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">PLOTTING_DIR</span> <span class="o">/</span> <span class="s2">&quot;pre-post-errors.png&quot;</span><span class="p">))</span></div>
 </pre></div>
 
            </div>
