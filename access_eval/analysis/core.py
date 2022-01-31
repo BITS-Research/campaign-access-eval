@@ -505,7 +505,7 @@ def get_statistical_difference_crucial_stats(
     # of variance between samples
     mayoral_races = data[data[DatasetFields.electoral_position] == "Mayor"]
     council_races = data[data[DatasetFields.electoral_position] == "Council"]
-    stats["mayoral vs council | df"] = len(mayoral_races) + len(council_races) - 1
+    stats["mayoral vs council | df"] = len(mayoral_races) + len(council_races) - 2
 
     # Shorten number of pages col title
     number_of_pages = DatasetFields.number_of_pages_post.replace("_post", "")
@@ -589,14 +589,22 @@ def get_statistical_difference_crucial_stats(
         losing_races[DatasetFields.number_of_unique_words],
         equal_var=False,
     )
-    stats["win vs lose | number of avg errors per page"] = sci_stats.ttest_ind(
+    stats[
+        "win vs lose | number of avg errors per page -- t-test"
+    ] = sci_stats.ttest_ind(
         winning_races[
             ComputedFields.avg_errors_per_page_post.name.replace("_post", "")
         ],
         losing_races[ComputedFields.avg_errors_per_page_post.name.replace("_post", "")],
         equal_var=False,
     )
-    stats["winning vs losing | df"] = len(winning_races) + len(losing_races) - 1
+    stats["win vs lose | number of avg errors per page -- anova"] = sci_stats.f_oneway(
+        winning_races[
+            ComputedFields.avg_errors_per_page_post.name.replace("_post", "")
+        ],
+        losing_races[ComputedFields.avg_errors_per_page_post.name.replace("_post", "")],
+    )
+    stats["winning vs losing | df"] = len(winning_races) + len(losing_races) - 2
     stats["n winning campaigns"] = len(winning_races)
 
     return stats
