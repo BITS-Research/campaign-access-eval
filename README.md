@@ -31,7 +31,9 @@ pip install .
 analyze-access-eval-2021-dataset
 ```
 
-This will generate a few folders:
+This will generate all of the plots used in our paper and place them
+in a directory called `plots/`. It will also create a file called `stats.json`
+which contains the statistics used in our paper (generated from t-tests, ANOVA, etc.)
 
 ## aXe Scraper Usage
 
