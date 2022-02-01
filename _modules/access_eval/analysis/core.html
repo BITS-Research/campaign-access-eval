@@ -594,9 +594,17 @@
 
 <div class="viewcode-block" id="get_statistical_difference_crucial_stats"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.get_statistical_difference_crucial_stats">[docs]</a><span class="k">def</span> <span class="nf">get_statistical_difference_crucial_stats</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">sci_stats</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Ttest_indResult</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    aasdasd</span>
+<span class="sd">    Generate statistics we found useful in the 2021 paper.</span>
+
+<span class="sd">    This includes:</span>
+<span class="sd">    * mayoral vs council campaigns by content features.</span>
+<span class="sd">    * percent of total errors per each error severity level</span>
+<span class="sd">    * majority of ease of reading range</span>
+<span class="sd">    * ordered most common error types</span>
+<span class="sd">    * winning vs losing campaigns by content features</span>
+<span class="sd">    * winning vs losing campaigns by average errors by page</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Load default data</span>
     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -711,6 +719,19 @@
     <span class="p">)</span>
     <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;winning vs losing | df&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">winning_races</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">losing_races</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span>
     <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;n winning campaigns&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">winning_races</span><span class="p">)</span>
+
+    <span class="c1"># Clean stats</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">stats</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">v</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="n">sci_stats</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Ttest_indResult</span><span class="p">,</span>
+                <span class="n">sci_stats</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">F_onewayResult</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">):</span>
+            <span class="n">stats</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;statistic&quot;</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">statistic</span><span class="p">,</span> <span class="s2">&quot;pvalue&quot;</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">pvalue</span><span class="p">}</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+            <span class="n">stats</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="n">stats</span></div>
 </pre></div>
