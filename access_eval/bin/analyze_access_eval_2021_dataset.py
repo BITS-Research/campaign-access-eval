@@ -2,17 +2,17 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import json
 import logging
 import sys
 import traceback
 from shutil import rmtree
-import json
 
 from access_eval.analysis import plotting
 from access_eval.analysis.core import (
     flatten_access_eval_2021_dataset,
-    load_access_eval_2021_dataset,
     get_statistical_difference_crucial_stats,
+    load_access_eval_2021_dataset,
 )
 
 ###############################################################################
