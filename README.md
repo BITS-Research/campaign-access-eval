@@ -28,8 +28,10 @@ To recreate our analysis of our preliminary 2021 study:
 
 ```bash
 pip install .
-process-access-eval-2021-results
+analyze-access-eval-2021-dataset
 ```
+
+This will generate a few folders:
 
 ## aXe Scraper Usage
 
