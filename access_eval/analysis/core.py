@@ -524,6 +524,26 @@ def get_crucial_stats(
     )
     num_pages_col = DatasetFields.number_of_pages_post.replace("_post", "")
 
+    # Run contacted comparison vs non-contacted comparison and store for later
+    contacted = data.loc[data[DatasetFields.contacted] == "Contacted"]
+    not_contacted = data[data[DatasetFields.contacted] == "Not-Contacted"]
+    contacted_t_test = sci_stats.ttest_rel(
+        contacted.loc[contacted[DatasetFields.trial] == "A - Pre"][
+            avg_errs_per_page_col
+        ],
+        contacted.loc[contacted[DatasetFields.trial] == "B - Post"][
+            avg_errs_per_page_col
+        ],
+    )
+    not_contacted_t_test = sci_stats.ttest_rel(
+        not_contacted[not_contacted[DatasetFields.trial] == "A - Pre"][
+            avg_errs_per_page_col
+        ],
+        not_contacted[not_contacted[DatasetFields.trial] == "B - Post"][
+            avg_errs_per_page_col
+        ],
+    )
+
     # Generate demographics and tables
     with open("overall-stats-by-trial.txt", "w") as open_f:
         open_f.write(
@@ -537,7 +557,7 @@ def get_crucial_stats(
     # Important:
     # At this point we subset the data to just "post" or trial "b"
     #####
-    data = data[data[DatasetFields.trial] == "B - Post"]
+    data = data.loc[data[DatasetFields.trial] == "B - Post"]
     print("Number of sites in trial b:", len(data))
     print(
         "Number of sites contacted:",
@@ -579,14 +599,16 @@ def get_crucial_stats(
         )
 
     # Store all stats in dict to be returned
-    stats: Dict[str, sci_stats.stats.Ttest_indResult] = {}
+    stats: Dict[str, sci_stats.stats.Ttest_indResult] = {
+        "contacted pre and post | avg errors per page": contacted_t_test,
+        "not contacted pre and post | avg errors per page": not_contacted_t_test,
+    }
 
     # Get trends in mayoral vs council races
     # Have to use Welch t-test here because we don't know / can't be certain
     # of variance between samples
     mayoral_races = data[data[DatasetFields.electoral_position] == "Mayor"]
     council_races = data[data[DatasetFields.electoral_position] == "Council"]
-    stats["mayoral vs council | df"] = len(mayoral_races) + len(council_races) - 2
 
     # Shorten number of pages col title
     number_of_pages = DatasetFields.number_of_pages_post.replace("_post", "")
@@ -597,16 +619,135 @@ def get_crucial_stats(
         council_races[number_of_pages],
         equal_var=False,
     )
+    stats["mayoral | number of pages | mean and std"] = {
+        "mean": mayoral_races[number_of_pages].mean(),
+        "std": mayoral_races[number_of_pages].std(),
+    }
+    stats["council | number of pages | mean and std"] = {
+        "mean": council_races[number_of_pages].mean(),
+        "std": council_races[number_of_pages].std(),
+    }
+
+    # number of pages and number of words correlation
+    stats["number of pages | number of words | corr"] = sci_stats.pearsonr(
+        data[number_of_pages],
+        data[DatasetFields.number_of_words],
+    )
+    stats["number of pages | number of unique words | corr"] = sci_stats.pearsonr(
+        data[number_of_pages],
+        data[DatasetFields.number_of_unique_words],
+    )
+
+    # number of words mayor vs council
     stats["mayoral vs council | number of words"] = sci_stats.ttest_ind(
         mayoral_races[DatasetFields.number_of_words],
         council_races[DatasetFields.number_of_words],
         equal_var=False,
     )
+    stats["mayoral | number of words | mean and std"] = {
+        "mean": mayoral_races[DatasetFields.number_of_words].mean(),
+        "std": mayoral_races[DatasetFields.number_of_words].std(),
+    }
+    stats["council | number of words | mean and std"] = {
+        "mean": council_races[DatasetFields.number_of_words].mean(),
+        "std": council_races[DatasetFields.number_of_words].std(),
+    }
+
+    # number of unique words mayor vs council
     stats["mayoral vs council | number of unique words"] = sci_stats.ttest_ind(
         mayoral_races[DatasetFields.number_of_unique_words],
         council_races[DatasetFields.number_of_unique_words],
         equal_var=False,
     )
+    stats["mayoral | number of unique words | mean and std"] = {
+        "mean": mayoral_races[DatasetFields.number_of_unique_words].mean(),
+        "std": mayoral_races[DatasetFields.number_of_unique_words].std(),
+    }
+    stats["council | number of unique words | mean and std"] = {
+        "mean": council_races[DatasetFields.number_of_unique_words].mean(),
+        "std": council_races[DatasetFields.number_of_unique_words].std(),
+    }
+
+    # number of pages, number of words, number of unique words by candidate position
+    candidate_position_grouped = data.groupby(DatasetFields.candidate_position)
+    candidate_position_split = [
+        candidate_position_grouped.get_group(g)
+        for g in candidate_position_grouped.groups.keys()
+    ]
+    candidate_position_split_n_pages = [
+        df[num_pages_col] for df in candidate_position_split
+    ]
+    stats["n pages | candidate position"] = sci_stats.f_oneway(
+        *candidate_position_split_n_pages
+    )
+    candidate_position_split_n_words = [
+        df[DatasetFields.number_of_words] for df in candidate_position_split
+    ]
+    stats["n words | candidate position"] = sci_stats.f_oneway(
+        *candidate_position_split_n_words
+    )
+    candidate_position_split_n_unique_words = [
+        df[DatasetFields.number_of_unique_words] for df in candidate_position_split
+    ]
+    stats["n unique words | candidate position"] = sci_stats.f_oneway(
+        *candidate_position_split_n_unique_words
+    )
+
+    def sig_str(p: float) -> str:
+        if p >= 0.05:
+            return "n.s."
+        if p >= 0.01:
+            return "p<.05 *"
+        if p >= 0.005:
+            return "p<.01 **"
+        if p >= 0.001:
+            return "p<.005 ***"
+        return "p<.001 ***"
+
+    # Average errors per page by candidate position
+    # electoral position and election outcome
+    err_severity_table_gen: Dict[str, Dict[str, str]] = {}
+    for err_col in [
+        avg_errs_per_page_col,
+        avg_minor_errs_per_page_col,
+        avg_moderate_errs_per_page_col,
+        avg_serious_errs_per_page_col,
+        avg_critical_errs_per_page_col,
+    ]:
+        this_measure_stats: Dict[str, str] = {}
+
+        # Handle candidate position
+        cp_err_col = [df[err_col] for df in candidate_position_split]
+        anova = sci_stats.f_oneway(*cp_err_col)
+
+        this_measure_stats[
+            DatasetFields.candidate_position
+        ] = f"F(2, 57) = {round(anova.statistic, 2)}, {sig_str(anova.pvalue)}"
+
+        # Handle t-tests
+        for group_col in [
+            DatasetFields.election_result,
+            DatasetFields.electoral_position,
+        ]:
+            subset_group = data.groupby(group_col)
+            subset_split = [
+                subset_group.get_group(g) for g in subset_group.groups.keys()
+            ]
+            subset_split_err_col = [df[err_col] for df in subset_split]
+            t_result = sci_stats.ttest_ind(
+                *subset_split_err_col,
+                equal_var=False,
+            )
+            this_measure_stats[
+                group_col
+            ] = f"t(58) = {round(t_result.statistic, 2)}, {sig_str(t_result.pvalue)}"
+
+        # Attach this measure stats to table data
+        err_severity_table_gen[err_col] = this_measure_stats
+
+    # Convert table gen to table
+    with open("err-severity-stats.txt", "w") as open_f:
+        open_f.write(pd.DataFrame(err_severity_table_gen).T.to_latex())
 
     # Get avg percent of errors severities
     avg_errors = data[avg_errs_per_page_col].mean()
@@ -623,19 +764,26 @@ def get_crucial_stats(
     stats["majority ease of reading"] = data[DatasetFields.ease_of_reading].quantile(
         [0.25, 0.75]
     )
+    stats["ease of reading | mean and std"] = {
+        "mean": data[DatasetFields.ease_of_reading].mean(),
+        "std": data[DatasetFields.ease_of_reading].std(),
+    }
 
     # Rank error types
     avg_error_type_cols = [col for col in data.columns if "avg_error-type" in col]
-    err_type_averages: Dict[str, float] = {}
+    err_type_averages: Dict[str, Dict[str, float]] = {}
     for col in avg_error_type_cols:
-        err_type_averages[col] = data[col].mean()
-    stats["ordered most common error types"] = dict(
-        sorted(
-            err_type_averages.items(),
-            key=lambda item: item[1],
-            reverse=True,
-        )
+        err_type_averages[col] = {
+            "mean": data[col].mean(),
+            "std": data[col].std(),
+        }
+    err_type_averages_df = (
+        pd.DataFrame(err_type_averages)
+        .sort_values(by="mean", axis=1, ascending=False)
+        .round(3)
     )
+    with open("err-types-stats.txt", "w") as open_f:
+        open_f.write(err_type_averages_df.T.to_latex())
 
     # Get trends for election outcome
     winning_races = data[data[DatasetFields.election_result] == "Won"]
@@ -660,20 +808,6 @@ def get_crucial_stats(
         losing_races[DatasetFields.number_of_unique_words],
         equal_var=False,
     )
-    stats[
-        "win vs lose | number of avg errors per page -- t-test"
-    ] = sci_stats.ttest_ind(
-        winning_races[avg_errs_per_page_col],
-        losing_races[avg_errs_per_page_col],
-        equal_var=False,
-    )
-    stats["win vs lose | number of avg errors per page -- anova"] = sci_stats.f_oneway(
-        winning_races[avg_errs_per_page_col],
-        losing_races[avg_errs_per_page_col],
-    )
-    stats["winning vs losing | df"] = len(winning_races) + len(losing_races) - 2
-    stats["n winning campaigns"] = len(winning_races)
-
     # Clean stats
     for k, v in stats.items():
         if isinstance(
@@ -681,6 +815,7 @@ def get_crucial_stats(
             (
                 sci_stats.stats.Ttest_indResult,
                 sci_stats.stats.F_onewayResult,
+                sci_stats.stats.Ttest_relResult,
             ),
         ):
             stats[k] = {"statistic": v.statistic, "pvalue": v.pvalue}

@@ -131,3 +131,5 @@ plots/
 stats.json
 demographics.txt
 overall-stats-by-trial.txt
+err-severity-stats.txt
+err-types-stats.txt
