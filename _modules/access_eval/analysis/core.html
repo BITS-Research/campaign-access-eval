@@ -113,6 +113,7 @@
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Union</span>
 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">dataclasses_json</span> <span class="kn">import</span> <span class="n">dataclass_json</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span> <span class="k">as</span> <span class="n">sci_stats</span>
@@ -592,7 +593,7 @@
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pre</span><span class="p">,</span> <span class="n">post</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="get_statistical_difference_crucial_stats"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.get_statistical_difference_crucial_stats">[docs]</a><span class="k">def</span> <span class="nf">get_statistical_difference_crucial_stats</span><span class="p">(</span>
+<div class="viewcode-block" id="get_crucial_stats"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.get_crucial_stats">[docs]</a><span class="k">def</span> <span class="nf">get_crucial_stats</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -610,15 +611,109 @@
     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">flatten_access_eval_2021_dataset</span><span class="p">()</span>
 
+    <span class="c1"># Create standard column name for long format table</span>
+    <span class="n">avg_errs_per_page_col</span> <span class="o">=</span> <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+        <span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+    <span class="p">)</span>
+    <span class="n">avg_minor_errs_per_page_col</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_minor_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">avg_moderate_errs_per_page_col</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_moderate_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">avg_serious_errs_per_page_col</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_serious_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">avg_critical_errs_per_page_col</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_critical_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">num_pages_col</span> <span class="o">=</span> <span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_pages_post</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Run contacted comparison vs non-contacted comparison and store for later</span>
+    <span class="n">contacted</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">contacted</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Contacted&quot;</span><span class="p">]</span>
+    <span class="n">not_contacted</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">contacted</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Not-Contacted&quot;</span><span class="p">]</span>
+    <span class="n">contacted_t_test</span> <span class="o">=</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">ttest_rel</span><span class="p">(</span>
+        <span class="n">contacted</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">contacted</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;A - Pre&quot;</span><span class="p">][</span>
+            <span class="n">avg_errs_per_page_col</span>
+        <span class="p">],</span>
+        <span class="n">contacted</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">contacted</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B - Post&quot;</span><span class="p">][</span>
+            <span class="n">avg_errs_per_page_col</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">not_contacted_t_test</span> <span class="o">=</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">ttest_rel</span><span class="p">(</span>
+        <span class="n">not_contacted</span><span class="p">[</span><span class="n">not_contacted</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;A - Pre&quot;</span><span class="p">][</span>
+            <span class="n">avg_errs_per_page_col</span>
+        <span class="p">],</span>
+        <span class="n">not_contacted</span><span class="p">[</span><span class="n">not_contacted</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B - Post&quot;</span><span class="p">][</span>
+            <span class="n">avg_errs_per_page_col</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Generate demographics and tables</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;overall-stats-by-trial.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">open_f</span><span class="p">:</span>
+        <span class="n">open_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">,</span> <span class="n">num_pages_col</span><span class="p">,</span> <span class="n">avg_errs_per_page_col</span><span class="p">]]</span>
+            <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">])</span>
+            <span class="o">.</span><span class="n">to_latex</span><span class="p">()</span>
+        <span class="p">)</span>
+
+    <span class="c1">#####</span>
+    <span class="c1"># Important:</span>
+    <span class="c1"># At this point we subset the data to just &quot;post&quot; or trial &quot;b&quot;</span>
+    <span class="c1">#####</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">trial</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B - Post&quot;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of sites in trial b:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Number of sites contacted:&quot;</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">contacted</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Contacted&quot;</span><span class="p">]),</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Number of mayoral campaigns:&quot;</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">electoral_position</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Mayor&quot;</span><span class="p">]),</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Number of council campaigns:&quot;</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">electoral_position</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Council&quot;</span><span class="p">]),</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Number of open campaigns:&quot;</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">candidate_position</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Open&quot;</span><span class="p">]),</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Number of incumbent campaigns:&quot;</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">candidate_position</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Incumbent&quot;</span><span class="p">]),</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Number of challenger campaigns:&quot;</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">candidate_position</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Challenger&quot;</span><span class="p">]),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Generate election outcome by location and position</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;demographics.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">open_f</span><span class="p">:</span>
+        <span class="n">open_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">DatasetFields</span><span class="o">.</span><span class="n">location</span><span class="p">,</span>
+                    <span class="n">DatasetFields</span><span class="o">.</span><span class="n">electoral_position</span><span class="p">,</span>
+                    <span class="n">DatasetFields</span><span class="o">.</span><span class="n">candidate_position</span><span class="p">,</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="o">.</span><span class="n">size</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">to_latex</span><span class="p">()</span>
+        <span class="p">)</span>
+
     <span class="c1"># Store all stats in dict to be returned</span>
-    <span class="n">stats</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Ttest_indResult</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">stats</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Ttest_indResult</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;contacted pre and post | avg errors per page&quot;</span><span class="p">:</span> <span class="n">contacted_t_test</span><span class="p">,</span>
+        <span class="s2">&quot;not contacted pre and post | avg errors per page&quot;</span><span class="p">:</span> <span class="n">not_contacted_t_test</span><span class="p">,</span>
+    <span class="p">}</span>
 
     <span class="c1"># Get trends in mayoral vs council races</span>
     <span class="c1"># Have to use Welch t-test here because we don&#39;t know / can&#39;t be certain</span>
     <span class="c1"># of variance between samples</span>
     <span class="n">mayoral_races</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">electoral_position</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Mayor&quot;</span><span class="p">]</span>
     <span class="n">council_races</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">electoral_position</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Council&quot;</span><span class="p">]</span>
-    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;mayoral vs council | df&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mayoral_races</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">council_races</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span>
 
     <span class="c1"># Shorten number of pages col title</span>
     <span class="n">number_of_pages</span> <span class="o">=</span> <span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_pages_post</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
@@ -629,33 +724,142 @@
         <span class="n">council_races</span><span class="p">[</span><span class="n">number_of_pages</span><span class="p">],</span>
         <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;mayoral | number of pages | mean and std&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="n">mayoral_races</span><span class="p">[</span><span class="n">number_of_pages</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">mayoral_races</span><span class="p">[</span><span class="n">number_of_pages</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+    <span class="p">}</span>
+    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;council | number of pages | mean and std&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="n">council_races</span><span class="p">[</span><span class="n">number_of_pages</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">council_races</span><span class="p">[</span><span class="n">number_of_pages</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+    <span class="p">}</span>
+
+    <span class="c1"># number of pages and number of words correlation</span>
+    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;number of pages | number of words | corr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">number_of_pages</span><span class="p">],</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_words</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;number of pages | number of unique words | corr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">number_of_pages</span><span class="p">],</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_unique_words</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="c1"># number of words mayor vs council</span>
     <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;mayoral vs council | number of words&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span>
         <span class="n">mayoral_races</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_words</span><span class="p">],</span>
         <span class="n">council_races</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_words</span><span class="p">],</span>
         <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;mayoral | number of words | mean and std&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="n">mayoral_races</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_words</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">mayoral_races</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_words</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+    <span class="p">}</span>
+    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;council | number of words | mean and std&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="n">council_races</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_words</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">council_races</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_words</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+    <span class="p">}</span>
+
+    <span class="c1"># number of unique words mayor vs council</span>
     <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;mayoral vs council | number of unique words&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span>
         <span class="n">mayoral_races</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_unique_words</span><span class="p">],</span>
         <span class="n">council_races</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_unique_words</span><span class="p">],</span>
         <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;mayoral | number of unique words | mean and std&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="n">mayoral_races</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_unique_words</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">mayoral_races</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_unique_words</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+    <span class="p">}</span>
+    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;council | number of unique words | mean and std&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="n">council_races</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_unique_words</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">council_races</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_unique_words</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+    <span class="p">}</span>
+
+    <span class="c1"># number of pages, number of words, number of unique words by candidate position</span>
+    <span class="n">candidate_position_grouped</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">candidate_position</span><span class="p">)</span>
+    <span class="n">candidate_position_split</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">candidate_position_grouped</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">candidate_position_grouped</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="p">]</span>
+    <span class="n">candidate_position_split_n_pages</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">num_pages_col</span><span class="p">]</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">candidate_position_split</span>
+    <span class="p">]</span>
+    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;n pages | candidate position&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span>
+        <span class="o">*</span><span class="n">candidate_position_split_n_pages</span>
+    <span class="p">)</span>
+    <span class="n">candidate_position_split_n_words</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_words</span><span class="p">]</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">candidate_position_split</span>
+    <span class="p">]</span>
+    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;n words | candidate position&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span>
+        <span class="o">*</span><span class="n">candidate_position_split_n_words</span>
+    <span class="p">)</span>
+    <span class="n">candidate_position_split_n_unique_words</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_unique_words</span><span class="p">]</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">candidate_position_split</span>
+    <span class="p">]</span>
+    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;n unique words | candidate position&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span>
+        <span class="o">*</span><span class="n">candidate_position_split_n_unique_words</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">sig_str</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="o">&gt;=</span> <span class="mf">0.05</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;n.s.&quot;</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="o">&gt;=</span> <span class="mf">0.01</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;p&lt;.05 *&quot;</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="o">&gt;=</span> <span class="mf">0.005</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;p&lt;.01 **&quot;</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="o">&gt;=</span> <span class="mf">0.001</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;p&lt;.005 ***&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;p&lt;.001 ***&quot;</span>
+
+    <span class="c1"># Average errors per page by candidate position</span>
+    <span class="c1"># electoral position and election outcome</span>
+    <span class="n">err_severity_table_gen</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">err_col</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="n">avg_errs_per_page_col</span><span class="p">,</span>
+        <span class="n">avg_minor_errs_per_page_col</span><span class="p">,</span>
+        <span class="n">avg_moderate_errs_per_page_col</span><span class="p">,</span>
+        <span class="n">avg_serious_errs_per_page_col</span><span class="p">,</span>
+        <span class="n">avg_critical_errs_per_page_col</span><span class="p">,</span>
+    <span class="p">]:</span>
+        <span class="n">this_measure_stats</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Handle candidate position</span>
+        <span class="n">cp_err_col</span> <span class="o">=</span> <span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">err_col</span><span class="p">]</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">candidate_position_split</span><span class="p">]</span>
+        <span class="n">anova</span> <span class="o">=</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span><span class="o">*</span><span class="n">cp_err_col</span><span class="p">)</span>
+
+        <span class="n">this_measure_stats</span><span class="p">[</span>
+            <span class="n">DatasetFields</span><span class="o">.</span><span class="n">candidate_position</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;F(2, 57) = </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">anova</span><span class="o">.</span><span class="n">statistic</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">sig_str</span><span class="p">(</span><span class="n">anova</span><span class="o">.</span><span class="n">pvalue</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># Handle t-tests</span>
+        <span class="k">for</span> <span class="n">group_col</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="n">DatasetFields</span><span class="o">.</span><span class="n">election_result</span><span class="p">,</span>
+            <span class="n">DatasetFields</span><span class="o">.</span><span class="n">electoral_position</span><span class="p">,</span>
+        <span class="p">]:</span>
+            <span class="n">subset_group</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">group_col</span><span class="p">)</span>
+            <span class="n">subset_split</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">subset_group</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">subset_group</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="p">]</span>
+            <span class="n">subset_split_err_col</span> <span class="o">=</span> <span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">err_col</span><span class="p">]</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">subset_split</span><span class="p">]</span>
+            <span class="n">t_result</span> <span class="o">=</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span>
+                <span class="o">*</span><span class="n">subset_split_err_col</span><span class="p">,</span>
+                <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">this_measure_stats</span><span class="p">[</span>
+                <span class="n">group_col</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;t(58) = </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">t_result</span><span class="o">.</span><span class="n">statistic</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">sig_str</span><span class="p">(</span><span class="n">t_result</span><span class="o">.</span><span class="n">pvalue</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># Attach this measure stats to table data</span>
+        <span class="n">err_severity_table_gen</span><span class="p">[</span><span class="n">err_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_measure_stats</span>
+
+    <span class="c1"># Convert table gen to table</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;err-severity-stats.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">open_f</span><span class="p">:</span>
+        <span class="n">open_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">err_severity_table_gen</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to_latex</span><span class="p">())</span>
 
     <span class="c1"># Get avg percent of errors severities</span>
-    <span class="n">avg_errors</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span>
-        <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-    <span class="n">avg_minor_errors</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span>
-        <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_minor_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-    <span class="n">avg_moderate_errors</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span>
-        <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_moderate_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-    <span class="n">avg_serious_errors</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span>
-        <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_serious_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-    <span class="n">avg_critical_errors</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span>
-        <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_critical_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">avg_errors</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">avg_errs_per_page_col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">avg_minor_errors</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">avg_minor_errs_per_page_col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">avg_moderate_errors</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">avg_moderate_errs_per_page_col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">avg_serious_errors</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">avg_serious_errs_per_page_col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">avg_critical_errors</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">avg_critical_errs_per_page_col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
     <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;percent minor errors of total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg_minor_errors</span> <span class="o">/</span> <span class="n">avg_errors</span>
     <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;percent moderate errors of total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg_moderate_errors</span> <span class="o">/</span> <span class="n">avg_errors</span>
     <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;percent serious errors of total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg_serious_errors</span> <span class="o">/</span> <span class="n">avg_errors</span>
@@ -665,19 +869,26 @@
     <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;majority ease of reading&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">ease_of_reading</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span>
         <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">]</span>
     <span class="p">)</span>
+    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;ease of reading | mean and std&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">ease_of_reading</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+        <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">ease_of_reading</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+    <span class="p">}</span>
 
     <span class="c1"># Rank error types</span>
     <span class="n">avg_error_type_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s2">&quot;avg_error-type&quot;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span>
-    <span class="n">err_type_averages</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">err_type_averages</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">avg_error_type_cols</span><span class="p">:</span>
-        <span class="n">err_type_averages</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;ordered most common error types&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
-        <span class="nb">sorted</span><span class="p">(</span>
-            <span class="n">err_type_averages</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
-            <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="n">err_type_averages</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+            <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span>
+        <span class="p">}</span>
+    <span class="n">err_type_averages_df</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">err_type_averages</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
     <span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;err-types-stats.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">open_f</span><span class="p">:</span>
+        <span class="n">open_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">err_type_averages_df</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to_latex</span><span class="p">())</span>
 
     <span class="c1"># Get trends for election outcome</span>
     <span class="n">winning_races</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">election_result</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Won&quot;</span><span class="p">]</span>
@@ -702,24 +913,6 @@
         <span class="n">losing_races</span><span class="p">[</span><span class="n">DatasetFields</span><span class="o">.</span><span class="n">number_of_unique_words</span><span class="p">],</span>
         <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">stats</span><span class="p">[</span>
-        <span class="s2">&quot;win vs lose | number of avg errors per page -- t-test&quot;</span>
-    <span class="p">]</span> <span class="o">=</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span>
-        <span class="n">winning_races</span><span class="p">[</span>
-            <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="p">],</span>
-        <span class="n">losing_races</span><span class="p">[</span><span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)],</span>
-        <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;win vs lose | number of avg errors per page -- anova&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sci_stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span>
-        <span class="n">winning_races</span><span class="p">[</span>
-            <span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="p">],</span>
-        <span class="n">losing_races</span><span class="p">[</span><span class="n">ComputedFields</span><span class="o">.</span><span class="n">avg_errors_per_page_post</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_post&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)],</span>
-    <span class="p">)</span>
-    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;winning vs losing | df&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">winning_races</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">losing_races</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span>
-    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;n winning campaigns&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">winning_races</span><span class="p">)</span>
-
     <span class="c1"># Clean stats</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">stats</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
@@ -727,6 +920,7 @@
             <span class="p">(</span>
                 <span class="n">sci_stats</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Ttest_indResult</span><span class="p">,</span>
                 <span class="n">sci_stats</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">F_onewayResult</span><span class="p">,</span>
+                <span class="n">sci_stats</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">Ttest_relResult</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">):</span>
             <span class="n">stats</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;statistic&quot;</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">statistic</span><span class="p">,</span> <span class="s2">&quot;pvalue&quot;</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">pvalue</span><span class="p">}</span>
