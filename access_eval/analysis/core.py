@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Optional, Set, Union
 
+import numpy as np
 import pandas as pd
 from dataclasses_json import dataclass_json
 from scipy import stats as sci_stats
@@ -487,7 +488,7 @@ def flatten_access_eval_2021_dataset(
     return pd.concat([pre, post], ignore_index=True)
 
 
-def get_statistical_difference_crucial_stats(
+def get_crucial_stats(
     data: Optional[pd.DataFrame] = None,
 ) -> Dict[str, Any]:
     """
@@ -504,6 +505,78 @@ def get_statistical_difference_crucial_stats(
     # Load default data
     if data is None:
         data = flatten_access_eval_2021_dataset()
+
+    # Create standard column name for long format table
+    avg_errs_per_page_col = ComputedFields.avg_errors_per_page_post.name.replace(
+        "_post", ""
+    )
+    avg_minor_errs_per_page_col = (
+        ComputedFields.avg_minor_errors_per_page_post.name.replace("_post", "")
+    )
+    avg_moderate_errs_per_page_col = (
+        ComputedFields.avg_moderate_errors_per_page_post.name.replace("_post", "")
+    )
+    avg_serious_errs_per_page_col = (
+        ComputedFields.avg_serious_errors_per_page_post.name.replace("_post", "")
+    )
+    avg_critical_errs_per_page_col = (
+        ComputedFields.avg_critical_errors_per_page_post.name.replace("_post", "")
+    )
+    num_pages_col = DatasetFields.number_of_pages_post.replace("_post", "")
+
+    # Generate demographics and tables
+    with open("overall-stats-by-trial.txt", "w") as open_f:
+        open_f.write(
+            data[[DatasetFields.trial, num_pages_col, avg_errs_per_page_col]]
+            .groupby(DatasetFields.trial)
+            .agg([np.mean, np.std])
+            .to_latex()
+        )
+
+    #####
+    # Important:
+    # At this point we subset the data to just "post" or trial "b"
+    #####
+    data = data[data[DatasetFields.trial] == "B - Post"]
+    print("Number of sites in trial b:", len(data))
+    print(
+        "Number of sites contacted:",
+        len(data.loc[data[DatasetFields.contacted] == "Contacted"]),
+    )
+    print(
+        "Number of mayoral campaigns:",
+        len(data.loc[data[DatasetFields.electoral_position] == "Mayor"]),
+    )
+    print(
+        "Number of council campaigns:",
+        len(data.loc[data[DatasetFields.electoral_position] == "Council"]),
+    )
+    print(
+        "Number of open campaigns:",
+        len(data.loc[data[DatasetFields.candidate_position] == "Open"]),
+    )
+    print(
+        "Number of incumbent campaigns:",
+        len(data.loc[data[DatasetFields.candidate_position] == "Incumbent"]),
+    )
+    print(
+        "Number of challenger campaigns:",
+        len(data.loc[data[DatasetFields.candidate_position] == "Challenger"]),
+    )
+
+    # Generate election outcome by location and position
+    with open("demographics.txt", "w") as open_f:
+        open_f.write(
+            data.groupby(
+                [
+                    DatasetFields.location,
+                    DatasetFields.electoral_position,
+                    DatasetFields.candidate_position,
+                ]
+            )
+            .size()
+            .to_latex()
+        )
 
     # Store all stats in dict to be returned
     stats: Dict[str, sci_stats.stats.Ttest_indResult] = {}
@@ -536,21 +609,11 @@ def get_statistical_difference_crucial_stats(
     )
 
     # Get avg percent of errors severities
-    avg_errors = data[
-        ComputedFields.avg_errors_per_page_post.name.replace("_post", "")
-    ].mean()
-    avg_minor_errors = data[
-        ComputedFields.avg_minor_errors_per_page_post.name.replace("_post", "")
-    ].mean()
-    avg_moderate_errors = data[
-        ComputedFields.avg_moderate_errors_per_page_post.name.replace("_post", "")
-    ].mean()
-    avg_serious_errors = data[
-        ComputedFields.avg_serious_errors_per_page_post.name.replace("_post", "")
-    ].mean()
-    avg_critical_errors = data[
-        ComputedFields.avg_critical_errors_per_page_post.name.replace("_post", "")
-    ].mean()
+    avg_errors = data[avg_errs_per_page_col].mean()
+    avg_minor_errors = data[avg_minor_errs_per_page_col].mean()
+    avg_moderate_errors = data[avg_moderate_errs_per_page_col].mean()
+    avg_serious_errors = data[avg_serious_errs_per_page_col].mean()
+    avg_critical_errors = data[avg_critical_errs_per_page_col].mean()
     stats["percent minor errors of total"] = avg_minor_errors / avg_errors
     stats["percent moderate errors of total"] = avg_moderate_errors / avg_errors
     stats["percent serious errors of total"] = avg_serious_errors / avg_errors
@@ -600,17 +663,13 @@ def get_statistical_difference_crucial_stats(
     stats[
         "win vs lose | number of avg errors per page -- t-test"
     ] = sci_stats.ttest_ind(
-        winning_races[
-            ComputedFields.avg_errors_per_page_post.name.replace("_post", "")
-        ],
-        losing_races[ComputedFields.avg_errors_per_page_post.name.replace("_post", "")],
+        winning_races[avg_errs_per_page_col],
+        losing_races[avg_errs_per_page_col],
         equal_var=False,
     )
     stats["win vs lose | number of avg errors per page -- anova"] = sci_stats.f_oneway(
-        winning_races[
-            ComputedFields.avg_errors_per_page_post.name.replace("_post", "")
-        ],
-        losing_races[ComputedFields.avg_errors_per_page_post.name.replace("_post", "")],
+        winning_races[avg_errs_per_page_col],
+        losing_races[avg_errs_per_page_col],
     )
     stats["winning vs losing | df"] = len(winning_races) + len(losing_races) - 2
     stats["n winning campaigns"] = len(winning_races)
