@@ -1,34 +1,74 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
   <title>access_eval.analysis.core &mdash; access-eval 0.0.0 documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/js/theme.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
+
+   
   <div class="wy-grid-for-nav">
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
+          
+
+          
             <a href="../../../index.html" class="icon icon-home"> access-eval
+          
+
+          
           </a>
+
+          
+            
+            
               <div class="version">
                 0.0.0
               </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -36,7 +76,18 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
@@ -52,7 +103,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../access_eval.html#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../access_eval.html#module-access_eval.constants">access_eval.constants module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../access_eval.html#module-access_eval.settings">access_eval.settings module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../access_eval.html#module-access_eval.utils">access_eval.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../access_eval.html#module-access_eval.utils">access_eval.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../access_eval.html#access_eval.utils.clean_url"><code class="docutils literal notranslate"><span class="pre">clean_url()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../../../access_eval.html#module-access_eval.version">access_eval.version module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../access_eval.html#module-access_eval">Module contents</a></li>
 </ul>
@@ -78,30 +132,69 @@
 </li>
 </ul>
 
+            
+          
         </div>
+        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">access-eval</a>
+        
       </nav>
 
+
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
+    
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
           <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
       <li>access_eval.analysis.core</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+            
   <h1>Source code for access_eval.analysis.core</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
@@ -253,7 +346,7 @@
     <span class="n">axe_results_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
     <span class="n">generate_extras</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CompiledMetrics</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Process all aXe evaluations and generate extra features</span>
 <span class="sd">    (words, ease of reading, etc.) for the provided aXe result tree.</span>
 <span class="sd">    Extras are optional to generate.</span>
@@ -362,7 +455,7 @@
     <span class="n">pre_contact_axe_scraping_results</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
     <span class="n">post_contact_axe_scraping_results</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Combine election data CSV (or in memory DataFrame) with the axe results for each</span>
 <span class="sd">    campaign website.</span>
 
@@ -471,7 +564,7 @@
             <span class="p">)</span>
 
     <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Dropped </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">election_data</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">expanded_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> rows from dataset &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Dropped </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">election_data</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">expanded_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> rows from dataset &quot;</span>
         <span class="sa">f</span><span class="s2">&quot;because they were missing a pre or post aXe result directory.&quot;</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">expanded_data</span><span class="p">)</span></div>
@@ -480,7 +573,7 @@
 <div class="viewcode-block" id="load_access_eval_2021_dataset"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.load_access_eval_2021_dataset">[docs]</a><span class="k">def</span> <span class="nf">load_access_eval_2021_dataset</span><span class="p">(</span>
     <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load the default access eval 2021 dataset or a provided custom dataset</span>
 <span class="sd">    and add all computed fields.</span>
 
@@ -532,7 +625,7 @@
 <div class="viewcode-block" id="flatten_access_eval_2021_dataset"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.flatten_access_eval_2021_dataset">[docs]</a><span class="k">def</span> <span class="nf">flatten_access_eval_2021_dataset</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Flatten the access eval 2021 dataset by adding a new column called &quot;Trial&quot;</span>
 <span class="sd">    which stores a categorical value for &quot;Pre&quot; or &quot;Post&quot; which allows us</span>
 <span class="sd">    to simplify the columns into just &quot;avg_errors_per_page&quot; for example instead</span>
@@ -596,7 +689,7 @@
 <div class="viewcode-block" id="get_crucial_stats"><a class="viewcode-back" href="../../../access_eval.analysis.html#access_eval.analysis.core.get_crucial_stats">[docs]</a><span class="k">def</span> <span class="nf">get_crucial_stats</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate statistics we found useful in the 2021 paper.</span>
 
 <span class="sd">    This includes:</span>
@@ -827,7 +920,7 @@
 
         <span class="n">this_measure_stats</span><span class="p">[</span>
             <span class="n">DatasetFields</span><span class="o">.</span><span class="n">candidate_position</span>
-        <span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;F(2, 57) = </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">anova</span><span class="o">.</span><span class="n">statistic</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">sig_str</span><span class="p">(</span><span class="n">anova</span><span class="o">.</span><span class="n">pvalue</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;F(2, 57) = </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">anova</span><span class="o">.</span><span class="n">statistic</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">sig_str</span><span class="p">(</span><span class="n">anova</span><span class="o">.</span><span class="n">pvalue</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
 
         <span class="c1"># Handle t-tests</span>
         <span class="k">for</span> <span class="n">group_col</span> <span class="ow">in</span> <span class="p">[</span>
@@ -845,7 +938,7 @@
             <span class="p">)</span>
             <span class="n">this_measure_stats</span><span class="p">[</span>
                 <span class="n">group_col</span>
-            <span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;t(58) = </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">t_result</span><span class="o">.</span><span class="n">statistic</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">sig_str</span><span class="p">(</span><span class="n">t_result</span><span class="o">.</span><span class="n">pvalue</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;t(58) = </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">t_result</span><span class="o">.</span><span class="n">statistic</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">sig_str</span><span class="p">(</span><span class="n">t_result</span><span class="o">.</span><span class="n">pvalue</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
 
         <span class="c1"># Attach this measure stats to table data</span>
         <span class="n">err_severity_table_gen</span><span class="p">[</span><span class="n">err_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_measure_stats</span>
@@ -931,30 +1024,46 @@
 </pre></div>
 
            </div>
+           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, BITS-Research.</p>
-  </div>
+    <p>
+        &#169; Copyright 2021, BITS-Research.
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
         </div>
       </div>
+
     </section>
+
   </div>
-  <script>
+  
+
+  <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>  
+  </script>
+
+  
+  
+    
+    
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script
     async

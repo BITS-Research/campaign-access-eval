@@ -20,6 +20,14 @@ access\_eval.bin.generate\_access\_eval\_2021\_dataset module
    :undoc-members:
    :show-inheritance:
 
+access\_eval.bin.get\_sentiment\_for\_landing\_content module
+-------------------------------------------------------------
+
+.. automodule:: access_eval.bin.get_sentiment_for_landing_content
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 access\_eval.bin.post\_process\_access\_eval module
 ---------------------------------------------------
 
